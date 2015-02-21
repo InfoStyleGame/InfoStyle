@@ -2,7 +2,7 @@
 
 namespace infostyle.Controllers
 {
-    public class AppController : ControllerBase
+    public class AppController : Controller
     {
         public ActionResult Index()
         {

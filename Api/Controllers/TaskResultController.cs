@@ -4,7 +4,7 @@ using log4net;
 
 namespace Api.Controllers
 {
-    public class TaskResultController : ApiController
+    public class TaskResultController : ControllerBase
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(TaskResultController));
 

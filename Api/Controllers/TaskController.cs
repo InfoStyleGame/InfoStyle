@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Web.Http;
 using Api.Helpers;
 using Api.Models;
 using EF;
@@ -8,7 +7,7 @@ using EF.Enums;
 
 namespace Api.Controllers
 {
-    public class TaskController : ApiController
+    public class TaskController : ControllerBase
     {
         private readonly TaskMapper taskMapper;
 
