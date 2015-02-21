@@ -51,10 +51,9 @@
                 animation: scroll 20s infinite linear;
             }
         </style>
-        <div class="marquee">
+        <div class="marquee" on-tap="{{clickAction}}">
             <div class="crawlLineCounters">
-                <span>Баллы: <span id="points">1</span></span>
-                <span>Скорость<span id="speed">2</span></span>
+                <span>Баллы: <span id="points">{{points}}</span></span>
             </div>
             <div id="text" class="crawlLineContent">
             </div>
@@ -68,10 +67,10 @@
                     self.data = task.Data.Text;
                     self.init();
                 });
+                this.points = 0;
             },
 
-            init: function () {
-                console.log(this);
+            init: function() {
                 var text = this.$.text;
                 for (var i = 0; i < this.data.length; i++) {
                     var word = this.buildWord(this.data[i]);
@@ -79,16 +78,26 @@
                 }
             },
 
-            buildWord: function (datum) {
+            buildWord: function(datum) {
                 if (datum.Type == TextTypes.Normal) {
                     return $("<span/>").text(datum.Text)[0];
                 } else if (datum.Type == TextTypes.Stop) {
-                    return $("<paper-button>/>").addClass("stopWord").text(datum.Text)[0];
+                    return $("<paper-button>/>").attr("on-tap", "{{clickAction}}").addClass("stopWord").text(datum.Text)[0];
                 } else {
                     console.warn("Unknown text type" + datum.Type);
                     return $("<span/>")[0];
                 }
+            },
+
+            clickAction: function(e) {
+                var t = e.target;
+                if (t.localName === 'paper-button') {
+                    this.points++;
+                } else {
+                    if(this.points > 0)
+                        this.points--;
+                }
             }
         });
-  </script>
+</script>
 </polymer-element>
