@@ -1,13 +1,7 @@
 ﻿window.Api = {
-<<<<<<< .merge_file_a04856
-    root: "/api",
+    root: "http://norris.kontur:4444/api",
     GetTask: function (type, subject) {
         return $.get(Api.root + "/task", { type: type, subject: subject })
-=======
-    root: "http://norris.kontur:4444/api",
-    GetTask: function (type) {
-        return $.get(Api.root + "/task", { type: type })
->>>>>>> .merge_file_a13616
             .fail(function(data) { alert("Error"); });
     }
 };
