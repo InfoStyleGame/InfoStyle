@@ -12,7 +12,7 @@ namespace infostyle
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}",
-                defaults: new { controller = "App", action = "Index"}
+                defaults: new { controller = "Map", action = "Index"}
             );
         }
     }
