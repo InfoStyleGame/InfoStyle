@@ -5,9 +5,8 @@
             .fail(function(data) { alert("Error"); });
     },
 
-    SubmitTaskResults: function(score) {
-        var userId = undefined; // TODO
-        return $.get(Api.address + "/taskResult/submit", { Score: score });
+    SubmitTaskResults: function(score, taskId) {
+        return $.get(Api.address + "/taskResult/submit", { Score: score, TaskId: taskId });
     }
 };
 
