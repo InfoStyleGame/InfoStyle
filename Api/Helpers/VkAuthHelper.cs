@@ -4,13 +4,21 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
+using log4net;
 
 namespace Api.Helpers
 {
     public class VkAuthHelper
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(VkAuthHelper));
+
         public static string GetCurrentUserId(HttpRequestHeaders requestParams)
         {
+            //todo выпилить на боевой
+            var debugUser = GetUserIdDebugEdition(requestParams);
+            if (debugUser != null)
+                return debugUser;
+
             const string cookieKey = "vk_app_" + VkAuthParameters.VkAppId;
             var cookie = requestParams.GetCookies(cookieKey).FirstOrDefault();
             if (cookie == null)
@@ -18,14 +26,24 @@ namespace Api.Helpers
 
             try
             {
-                var parameters = VkAuthParameters.Parse(cookie[cookieKey].Value);
+                var parameters = VkAuthParameters.Parse(cookie[cookieKey].Values.ToString());
                 VerifyParameters(parameters);
                 return parameters.UserId;
             }
             catch (Exception ex)
             {
+                log.Warn("Strange user", ex);
                 return null;
             }
+        }
+
+        private static string GetUserIdDebugEdition(HttpRequestHeaders requestParams)
+        {
+            const string cookieKey = "userId";
+            var cookie = requestParams.GetCookies(cookieKey).FirstOrDefault();
+            if (cookie == null)
+                return null;
+            return cookie[cookieKey].Values.ToString();
         }
 
         private static void VerifyParameters(VkAuthParameters parameters)

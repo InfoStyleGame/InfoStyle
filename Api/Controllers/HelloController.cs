@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Api.Helpers;
 using log4net;
 
 namespace Api.Controllers
@@ -9,8 +10,9 @@ namespace Api.Controllers
 
         public string Get()
         {
-            log.Info("Me was asked about hello, master!");
-            return "Hello, I'm Infostyle Api";
+            var user = VkAuthHelper.GetCurrentUserId(Request.Headers) ?? "stranger";
+            log.InfoFormat("Me was asked about hello, master! And he was {0}", user);
+            return string.Format("Hello, {0}, I'm Infostyle Api", user);
         } 
     }
 }
