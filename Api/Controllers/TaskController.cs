@@ -14,9 +14,9 @@ namespace Api.Controllers
                 Type = TaskType.CrawlLine,
                 Text = new[]
                 {
-                    new Phrase {Text = "Все в порядке.", Type = TextType.Normal},
+                    new Phrase {Text = "Все в порядке. ", Type = TextType.Normal},
                     new Phrase {Text = "СТОП!", Type = TextType.Stop},
-                    new Phrase {Text = "И снова все в порядке.", Type = TextType.Normal}
+                    new Phrase {Text = " И снова все в порядке.", Type = TextType.Normal}
                 }
             };
         }
