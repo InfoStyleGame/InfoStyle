@@ -3,6 +3,11 @@
     GetTask: function (type, subject) {
         return $.get(Api.root + "/task", { type: type, subject: subject })
             .fail(function(data) { alert("Error"); });
+    },
+
+    SubmitTaskResults: function(score) {
+        var userId = undefined; // TODO
+        return $.get(Api.address + "/taskResult/submit", { Score: score });
     }
 };
 

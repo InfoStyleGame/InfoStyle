@@ -35,44 +35,111 @@
                 }
             }
 
-
             .marquee {
                 display: block;
                 width: 1000px;
+                font-size: 30px;
                 white-space: nowrap;
                 overflow: hidden;
             }
 
-            .marquee .crawlLineContent {
+            .marquee .animateMarquee {
                 display: inline-block;
                 padding-left: 100%;
-                -webkit-animation: scroll 50s infinite linear;
-                -moz-animation: scroll 50s infinite linear;
-                animation: scroll 50s infinite linear;
+                -webkit-animation: scroll 10s linear;
+                -moz-animation: scroll 10s linear;
+                animation: scroll 10s linear;
             }
         </style>
-        <div class="marquee" on-tap="{{clickAction}}">
+        <div id="start">
+            <paper-button on-tap="{{startGame}}">Начать</paper-button>
+        </div>
+        <div style="display:none" id="game" class="marquee" on-tap="{{clickAction}}">
             <div class="crawlLineCounters">
                 <span>Баллы: <span id="points">{{points}}</span></span>
             </div>
-            <div id="text" class="crawlLineContent">
+            <div id="text">
              
             </div>
         </div>
+        <div id="end" style="display:none;">
+            <div>Всего стоп-слов: <span>{{stopWordsCount}}</span></div>
+            <div>Вы угадали: <span>{{hits}}</span></div>
+            <div>Штраф за промахи: <span>{{misses}}</span></div>
+            <div>Итого баллов: <span>{{points}}</span></div>
+            <div>
+                <paper-button on-tap="{{endGame}}">Завершить</paper-button>
+            </div>
+        </div>
+        
     </template>
     <script>
         Polymer({
             ready: function () {
+            },
+
+            startGame: function () {
+                this.points = 0;
+                this.hits = 0;
+                this.misses = 0;
+                $(this.$.start).hide();
+                $(this.$.game).show();
                 var self = this;
+
                 Api.GetTask(TaskTypes.CrawlLine, Subjects.Stop).done(function (task) {
                     self.data = task.Data.Text;
                     self.init();
+                    self.$.text.className = 'animateMarquee';
+                    self.initAnimationEnd();
                 });
-                this.points = 0;
+                
+            },
+
+            endGame: function() {
+                
+            },
+
+            initAnimationEnd: function () {
+
+                function whichAnimationEvent() {
+                    var t,
+                        el = document.createElement("fakeelement");
+
+                    var animations = {
+                        "animation": "animationend",
+                        "OAnimation": "oAnimationEnd",
+                        "MozAnimation": "animationend",
+                        "WebkitAnimation": "webkitAnimationEnd"
+                    }
+
+                    for (t in animations) {
+                        if (el.style[t] !== undefined) {
+                            return animations[t];
+                        }
+                    }
+                }
+
+                var text = this.$.text, animationEndEvent = whichAnimationEvent();
+                text.addEventListener(animationEndEvent, onAnimationEnd);
+
+                var self = this;
+                function onAnimationEnd(event) {
+                    text.removeEventListener(animationEndEvent, onAnimationEnd);
+                    self.submitTaskResults();
+                }
+
+            },
+
+            submitTaskResults: function() {
+                $(this.$.game).hide();
+                $(this.$.end).show();
+                Api.SubmitTaskResults(this.points);
+                // TODO submit results
             },
 
             init: function() {
                 var text = this.$.text;
+                this.stopWordsCount = 0;
                 for (var i = 0; i < this.data.length; i++) {
                     var word = this.buildWord(this.data[i]);
                     text.appendChild(word);
@@ -83,6 +150,7 @@
                 if (datum.Type == TextTypes.Normal) {
                     return $("<span/>").text(datum.Text)[0];
                 } else if (datum.Type == TextTypes.Stop) {
+                    this.stopWordsCount++;
                     return $("<paper-button>/>").attr("on-tap", "{{clickAction}}").addClass("stopWord").text(datum.Text)[0];
                 } else {
                     console.warn("Unknown text type" + datum.Type);
@@ -93,10 +161,16 @@
             clickAction: function(e) {
                 var t = e.target;
                 if (t.localName === 'paper-button') {
-                    this.points++;
+                    if (!e.target.hit) {
+                        this.points++;
+                        this.hits++;
+                        e.target.hit = true;
+                    }
+
+                    
                 } else {
-                    if(this.points > 0)
-                        this.points--;
+                    this.points--;
+                    this.misses++;
                 }
             }
         });
