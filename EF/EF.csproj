@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FillTestStorage.sql" />
+    <Compile Include="Enums\Subject.cs" />
     <Compile Include="Enums\TaskType.cs" />
     <Compile Include="Infostyle.Context.cs">
       <AutoGen>True</AutoGen>
