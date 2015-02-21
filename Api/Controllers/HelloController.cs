@@ -1,8 +1,10 @@
-﻿namespace Api.Controllers
+﻿using System.Web.Http;
+
+namespace Api.Controllers
 {
-    public class HelloController
+    public class HelloController : ApiController
     {
-        public string Run()
+        public string Get()
         {
             return "Hello, I'm Infostyle Api";
         } 
