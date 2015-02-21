@@ -4,6 +4,7 @@ using System.Web.Http;
 using Api.Helpers;
 using Api.Models;
 using EF;
+using EF.Enums;
 
 namespace Api.Controllers
 {
@@ -16,11 +17,13 @@ namespace Api.Controllers
             taskMapper = new TaskMapper();
         }
 
-        public TaskViewModel Get()
+        public TaskViewModel Get(TaskType type, Subject subject)
         {
             using (var context = new InfostyleEntities())
             {
-                var task = context.Tasks.OrderBy(_ => Guid.NewGuid()).FirstOrDefault();
+                var task = context.Tasks.Where(t => t.Type == type && t.Subject == subject)
+                        .OrderBy(_ => Guid.NewGuid())
+                        .FirstOrDefault();
                 if (task == null)
                     throw new Exception("No content");
 

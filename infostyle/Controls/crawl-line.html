@@ -64,7 +64,7 @@
         Polymer({
             ready: function () {
                 var self = this;
-                Api.GetTask(TaskTypes.CrawlLine).done(function (task) {
+                Api.GetTask(TaskTypes.CrawlLine, Subjects.Stop).done(function (task) {
                     self.data = task.Data.Text;
                     self.init();
                 });
