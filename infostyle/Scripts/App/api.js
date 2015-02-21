@@ -7,6 +7,10 @@
 
     SubmitTaskResults: function(score, taskId) {
         return $.post(Api.root + "/taskResult?score=" + score + "&taskId=" + taskId);
+    },
+
+    GetUserInfo: function() {
+        return $.get(Api.root + "/userInfo");
     }
 };
 

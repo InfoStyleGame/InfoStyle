@@ -139,13 +139,16 @@
     <Compile Include="Controllers\HelloController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TaskResultController.cs" />
+    <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\TaskMapper.cs" />
+    <Compile Include="Helpers\VkApiHelper.cs" />
     <Compile Include="Helpers\VkAuthHelper.cs" />
     <Compile Include="Helpers\VkAuthParameters.cs" />
     <Compile Include="Models\TaskViewModel.cs" />
+    <Compile Include="Models\UserInfoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

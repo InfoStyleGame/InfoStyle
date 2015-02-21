@@ -1,0 +1,42 @@
+﻿<polymer-element name="user-info">
+    <template>
+        <style>
+            .user-info {
+              display: inline-block;
+              height: 100%;
+              position: absolute;
+              top: 0;
+              right: 20px;
+              font-family: "Lora";
+              font-style: italic;
+            }
+            .user-info div {
+              display: inline-block;
+              vertical-align: middle;
+            }
+            .user-info .aligner {
+              width: 0;
+              height: 100%;
+            }
+        </style>
+        <div class="user-info">
+            <div><img src="{{pictureSrc}}" alt="{{name}}"></div>
+            <div>{{name}}</div>
+            <div class="aligner"></div>
+        </div>
+
+    </template>
+    <script>
+        Polymer({
+            name: "",
+            pictureSrc: "",
+            created: function () {
+                var self = this;
+                Api.GetUserInfo().done(function(info) {
+                    self.name = info.Name;
+                    self.pictureSrc = info.PictureSrc;
+                });
+            }
+        });
+    </script>
+</polymer-element>
