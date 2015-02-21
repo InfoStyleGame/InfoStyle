@@ -87,6 +87,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HelloController.cs" />
+    <Compile Include="Helpers\VkAuthHelper.cs" />
+    <Compile Include="Helpers\VkAuthParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup>
