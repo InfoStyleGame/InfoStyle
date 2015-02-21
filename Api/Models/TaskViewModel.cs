@@ -5,7 +5,7 @@ using Newtonsoft.Json.Converters;
 
 namespace Api.Models
 {
-    public class GameTaskViewModel
+    public class TaskViewModel
     {
         public Guid Id { get; set; }
 

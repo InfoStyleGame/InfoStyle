@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http;
+using Api.Helpers;
 using Api.Models;
 using EF;
 using EF.Enums;
@@ -9,23 +10,22 @@ namespace Api.Controllers
 {
     public class TaskController : ApiController
     {
-        public GameTaskViewModel Get()
+        private readonly TaskParser taskParser;
+
+        public TaskController()
         {
-            using (var entities = new InfostyleEntities())
+            taskParser = new TaskParser();
+        }
+
+        public TaskViewModel Get()
+        {
+            using (var context = new InfostyleEntities())
             {
-                var entity = entities.Tasks.FirstOrDefault();
-                if (entity == null)
+                var task = context.Tasks.OrderBy(_ => Guid.NewGuid()).FirstOrDefault();
+                if (task == null)
                     throw new Exception("No content");
 
-                return new GameTaskViewModel
-                {
-                    Id = Guid.NewGuid(),
-                    Type = TaskType.CrawlLine,
-                    Data = new[]
-                    {
-                        new Phrase {Text = entity.Text, Type = TextType.Normal},
-                    }
-                };
+                return taskParser.Parse(task);
             }
         }
     }
