@@ -25,6 +25,8 @@ namespace infostyle
             bundles.Add(new StyleBundle("~/Content/css")
                 .Include("~/Content/site.css")
                 .Include("~/Content/App.css")
+                .Include("~/Content/styles.css")
+                .Include("~/Content/running-style.css")
                 );
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(

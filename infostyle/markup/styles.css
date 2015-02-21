@@ -1,0 +1,136 @@
+#greeting {
+  background-color: #F8F8F8;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 24px;
+  margin: 15px;
+}
+
+body.main {
+  margin: 0;
+  height: 100%;
+  /*background-image: url("resources/wave.png");*/
+  background: #A8D8E8;
+  font-family: "RobotoDraft";
+  padding-top: 70px;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  height: 70px;
+  width: 100%;
+  background-color: #C48FFF;
+  box-shadow: 0 0 10px rgba(0,0,0,.2);
+  color: white;
+  z-index: 1000;
+}
+
+.logo {
+  padding-left: 60px;
+  background: transparent url('resources/logo-image.png') no-repeat 0 5px;
+  display: inline-block;
+  height: 100%;
+  font-family: "Lora";
+  font-style: italic;
+  font-size: 20px;
+  line-height: 70px;
+  margin-left: 20px;
+}
+
+.user-info {
+  display: inline-block;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 20px;
+  font-family: "Lora";
+  font-style: italic;
+}
+
+.user-info div {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.user-info .aligner {
+  width: 0;
+  height: 100%;
+}
+
+.content {
+  position: relative;
+  margin: 0 auto;
+  width: 1000px;
+}
+
+.island-first {
+  position: absolute;
+  top: 200px;
+  left: 0;
+  width: 440px;
+  height: 328px;
+  background: transparent url("resources/island_1.png") no-repeat;
+}
+
+.island-second {
+  position: absolute;
+  top: 50px;
+  left: 450px;
+  width: 286px;
+  height: 309px;
+  background: transparent url("resources/island_2.png") no-repeat;
+}
+
+.island-ezh {
+  position: absolute;
+  top: 250px;
+  right: 100px;
+  width: 185px;
+  height: 314px;
+  background: transparent url("resources/island-ezh.png") no-repeat;
+}
+
+.level {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border: solid 3px green;
+  border-radius: 50px;
+  color: green;
+}
+
+.level span {
+  position: absolute;
+  text-align: center;
+  left: 50%;
+  top: 50%;
+  width: 30px;
+  margin-left: -15px;
+  margin-top: -10px;
+}
+
+.level.current {
+  /* F5A623 — orange */
+  color: #F5A623;
+  border-color: #F5A623;
+}
+
+.level.disable {
+  color: lightgrey;
+  border-color: lightgrey;
+}
+
+.level.first {
+  left: 60px;
+  top: 150px;
+}
+
+.level.second {
+  left: 150px;
+  top: 50px;
+}
+
+.level.third {
+  left: 280px;
+  top: 120px;
+}

@@ -1,17 +1,25 @@
 ﻿<polymer-element name="crawl-line">
     <template>
         <style>
-            @-webkit-keyframes scroll {
-                0% {
-                    -webkit-transform: translate(0, 0);
-                    transform: translate(0, 0);
-                }
-
-                100% {
-                    -webkit-transform: translate(-100%, 0);
-                    transform: translate(-100%, 0);
-                }
+            
+            .crawl-line {
             }
+
+            .crawl-line:hover {
+                cursor: url(/Content/resources/cursor-gun.png), auto;
+            }
+
+             @-webkit-keyframes scroll {
+                 0% {
+                     -webkit-transform: translate(0, 0);
+                     transform: translate(0, 0);
+                 }
+
+                 100% {
+                     -webkit-transform: translate(-100%, 0);
+                     transform: translate(-100%, 0);
+                 }
+             }
 
             @-moz-keyframes scroll {
                 0% {
@@ -41,25 +49,51 @@
                 font-size: 30px;
                 white-space: nowrap;
                 overflow: hidden;
+                
+            }
+
+            .border {
+                border: solid 1px grey;
             }
 
             .marquee .animateMarquee {
                 display: inline-block;
                 padding-left: 100%;
-                -webkit-animation: scroll 40s linear;
-                -moz-animation: scroll 40s linear;
-                animation: scroll 40s linear;
+                -webkit-animation: scroll 20s linear;
+                -moz-animation: scroll 20s linear;
+                animation: scroll 20s linear;
+            }
+
+            .marquee paper-button {
+                cursor: url(/Content/resources/cursor-gun.png), auto;
+            }
+
+            paper-button {
+                text-transform: none;
+            }
+
+            paper-button.start {
+                border: solid 1px #006caa;
+                color: #006caa;
+                font-family: "Lora";
+                font-style: italic;
+                font-size: 25px;
+            }
+
+            .crawlLineCounters {
+                padding: 10px 0;
+                font-size: 20px;
             }
         </style>
         <div id="start">
-            <paper-button on-tap="{{startGame}}">Начать</paper-button>
+            <paper-button on-tap="{{startGame}}" class="start">Начать</paper-button>
         </div>
         <div style="display:none" id="game" class="marquee" on-tap="{{clickAction}}">
+            <div class="border">
+                <div id="text" class="crawl-line"></div>
+            </div>
             <div class="crawlLineCounters">
                 <span>Баллы: <span id="points">{{points}}</span></span>
-            </div>
-            <div id="text">
-             
             </div>
         </div>
         <div id="end" style="display:none;">
@@ -90,7 +124,7 @@
                     self.data = task.Data.Text;
                     self.taskId = task.Id;
                     self.init();
-                    self.$.text.className = 'animateMarquee';
+                    self.$.text.className = self.$.text.className.concat(' animateMarquee');
                     self.initAnimationEnd();
                 });
                 
