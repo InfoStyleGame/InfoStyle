@@ -12,7 +12,7 @@ namespace Api.Helpers
             {
                 Id = task.Id,
                 Type = task.Type,
-                Data = Parse(task.Text)
+                Data = new TaskData {Text = Parse(task.Text)},
             };
         }
 

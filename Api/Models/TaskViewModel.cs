@@ -12,7 +12,12 @@ namespace Api.Models
         [JsonConverter(typeof(StringEnumConverter))]
         public TaskType Type { get; set; }
 
-        public Phrase[] Data { get; set; }
+        public TaskData Data { get; set; }
+    }
+
+    public class TaskData
+    {
+        public Phrase[] Text { get; set; }
     }
 
     public class Phrase

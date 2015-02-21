@@ -62,7 +62,7 @@
     </template>
     <script>
         Polymer({
-            ready: function() {
+            ready: function () {
                 var self = this;
                 Api.GetTask(TaskTypes.CrawlLine).done(function (task) {
                     self.data = task.Data.Text;
