@@ -135,8 +135,14 @@
     </Compile>
     <Compile Include="Helpers\VkAuthHelper.cs" />
     <Compile Include="Helpers\VkAuthParameters.cs" />
-    <Compile Include="Models\GameTask.cs" />
+    <Compile Include="Models\GameTaskViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EF\EF.csproj">
+      <Project>{81216DB4-D0B1-4D39-95D9-D81BBC2A0BC3}</Project>
+      <Name>EF</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

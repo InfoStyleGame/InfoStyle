@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Web.Http;
 using Api.Models;
+using EF.Models;
 
 namespace Api.Controllers
 {
     public class TaskController : ApiController
     {
-        public GameTask Get()
+        public GameTaskViewModel Get()
         {
-            return new GameTask
+            return new GameTaskViewModel
             {
                 Id = Guid.NewGuid(),
                 Type = TaskType.CrawlLine,
