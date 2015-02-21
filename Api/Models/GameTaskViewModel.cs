@@ -1,5 +1,5 @@
 ﻿using System;
-using EF.Models;
+using EF.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 

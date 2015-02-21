@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.Http;
 using Api.Models;
-using EF.Models;
+using EF.Enums;
 
 namespace Api.Controllers
 {
