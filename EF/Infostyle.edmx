@@ -11,11 +11,11 @@ warning 6002: The table/view 'Infostyle.dbo.Scores' does not have a primary key 
           <Key>
             <PropertyRef Name="TaskId" />
             <PropertyRef Name="UserId" />
-            <PropertyRef Name="Score" />
+            <PropertyRef Name="Value" />
           </Key>
           <Property Name="TaskId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Score" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Value" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'Infostyle.dbo.Tasks' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -35,7 +35,7 @@ warning 6002: The table/view 'Infostyle.dbo.Tasks' does not have a primary key d
             <DefiningQuery>SELECT 
     [Scores].[TaskId] AS [TaskId], 
     [Scores].[UserId] AS [UserId], 
-    [Scores].[Score] AS [Score]
+    [Scores].[Value] AS [Value]
     FROM [dbo].[Scores] AS [Scores]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Tasks" EntityType="Self.Tasks" store:Type="Tables" store:Schema="dbo">
@@ -72,11 +72,11 @@ warning 6002: The table/view 'Infostyle.dbo.Tasks' does not have a primary key d
           <Key>
             <PropertyRef Name="TaskId" />
             <PropertyRef Name="UserId" />
-            <PropertyRef Name="Score1" />
+            <PropertyRef Name="Value" />
           </Key>
           <Property Name="TaskId" Type="Guid" Nullable="false" />
-          <Property Name="UserId" Type="Guid" Nullable="false" />
-          <Property Name="Score1" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -97,7 +97,7 @@ warning 6002: The table/view 'Infostyle.dbo.Tasks' does not have a primary key d
           <EntitySetMapping Name="Scores">
             <EntityTypeMapping TypeName="InfostyleModel.Score">
               <MappingFragment StoreEntitySet="Scores">
-                <ScalarProperty Name="Score1" ColumnName="Score" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="TaskId" ColumnName="TaskId" />
               </MappingFragment>
