@@ -13,7 +13,7 @@ namespace Api.Controllers
             {
                 Id = Guid.NewGuid(),
                 Type = TaskType.CrawlLine,
-                Text = new[]
+                Data = new[]
                 {
                     new Phrase {Text = "Все в порядке. ", Type = TextType.Normal},
                     new Phrase {Text = "СТОП!", Type = TextType.Stop},
