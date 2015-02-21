@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Http;
 using Api.Models;
+using EF;
 using EF.Enums;
 
 namespace Api.Controllers
@@ -9,17 +11,22 @@ namespace Api.Controllers
     {
         public GameTaskViewModel Get()
         {
-            return new GameTaskViewModel
+            using (var entities = new InfostyleEntities())
             {
-                Id = Guid.NewGuid(),
-                Type = TaskType.CrawlLine,
-                Data = new[]
+                var entity = entities.Tasks.FirstOrDefault();
+                if (entity == null)
+                    throw new Exception("No content");
+
+                return new GameTaskViewModel
                 {
-                    new Phrase {Text = "Все в порядке. ", Type = TextType.Normal},
-                    new Phrase {Text = "СТОП!", Type = TextType.Stop},
-                    new Phrase {Text = " И снова все в порядке.", Type = TextType.Normal}
-                }
-            };
+                    Id = Guid.NewGuid(),
+                    Type = TaskType.CrawlLine,
+                    Data = new[]
+                    {
+                        new Phrase {Text = entity.Text, Type = TextType.Normal},
+                    }
+                };
+            }
         }
     }
 }

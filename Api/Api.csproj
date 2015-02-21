@@ -40,6 +40,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
@@ -140,7 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EF\EF.csproj">
-      <Project>{81216DB4-D0B1-4D39-95D9-D81BBC2A0BC3}</Project>
+      <Project>{BA8BCCA7-BC88-431E-8962-D82C6C0F8097}</Project>
       <Name>EF</Name>
     </ProjectReference>
   </ItemGroup>
