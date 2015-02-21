@@ -125,6 +125,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AppController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1756,6 +1757,7 @@
     <Content Include="Scripts\polymer\webcomponentsjs\tests\tools\mocha\LICENSE" />
     <Content Include="Scripts\polymer\webcomponentsjs\tests\tools\mocha\Readme.md" />
     <Content Include="Views\App\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
