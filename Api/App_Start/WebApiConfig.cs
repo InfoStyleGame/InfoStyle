@@ -1,5 +1,8 @@
-﻿using System.Net.Http.Headers;
+﻿using System.IO;
+using System.Net.Http.Headers;
+using System.Web.Hosting;
 using System.Web.Http;
+using log4net.Config;
 
 namespace Api
 {
@@ -15,6 +18,9 @@ namespace Api
             );
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+
+            var l4NetPath = HostingEnvironment.MapPath("~/bin/log4net.config");
+            XmlConfigurator.ConfigureAndWatch(new FileInfo(l4NetPath));
         }
     }
 }
