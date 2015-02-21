@@ -6,6 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="e06b437eb67042ffaa1e1bceb589a557" Name="Diagram1">
         <EntityTypeShape EntityType="InfostyleModel.Task" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InfostyleModel.Score" Width="1.5" PointX="5.125" PointY="1.25" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

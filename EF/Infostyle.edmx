@@ -6,6 +6,18 @@
     <edmx:StorageModels>
     <Schema Namespace="InfostyleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
+warning 6002: The table/view 'Infostyle.dbo.Scores' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Scores">
+          <Key>
+            <PropertyRef Name="TaskId" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="Score" />
+          </Key>
+          <Property Name="TaskId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Score" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'Infostyle.dbo.Tasks' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Tasks">
           <Key>
@@ -19,6 +31,13 @@ warning 6002: The table/view 'Infostyle.dbo.Tasks' does not have a primary key d
           <Property Name="Text" Type="nvarchar(max)" />
         </EntityType>
         <EntityContainer Name="InfostyleModelStoreContainer">
+          <EntitySet Name="Scores" EntityType="Self.Scores" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Scores].[TaskId] AS [TaskId], 
+    [Scores].[UserId] AS [UserId], 
+    [Scores].[Score] AS [Score]
+    FROM [dbo].[Scores] AS [Scores]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="Tasks" EntityType="Self.Tasks" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Tasks].[Id] AS [Id], 
@@ -45,9 +64,20 @@ warning 6002: The table/view 'Infostyle.dbo.Tasks' does not have a primary key d
         </EntityType>
         <EntityContainer Name="InfostyleEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Tasks" EntityType="Self.Task" />
+          <EntitySet Name="Scores" EntityType="InfostyleModel.Score" />
         </EntityContainer>
         <EnumType Name="TaskType" a:ExternalTypeName="Enums.TaskType" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
         <EnumType Name="Subject" a:ExternalTypeName="Enums.Subject" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        <EntityType Name="Score">
+          <Key>
+            <PropertyRef Name="TaskId" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="Score1" />
+          </Key>
+          <Property Name="TaskId" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="Score1" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -61,6 +91,15 @@ warning 6002: The table/view 'Infostyle.dbo.Tasks' does not have a primary key d
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Scores">
+            <EntityTypeMapping TypeName="InfostyleModel.Score">
+              <MappingFragment StoreEntitySet="Scores">
+                <ScalarProperty Name="Score1" ColumnName="Score" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

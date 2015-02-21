@@ -26,5 +26,6 @@ namespace EF
         }
     
         public virtual DbSet<Task> Tasks { get; set; }
+        public virtual DbSet<Score> Scores { get; set; }
     }
 }
