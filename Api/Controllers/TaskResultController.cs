@@ -1,18 +1,20 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using Api.Helpers;
-using log4net;
+using EF;
 
 namespace Api.Controllers
 {
-    public class TaskResultController : ControllerBase
+    public class TaskResultController : ApiController
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(TaskResultController));
-
-        [HttpPost]
-        public void Post(int score)
+        public void Post(Guid taskId, int score)
         {
-            var user = VkAuthHelper.GetCurrentUserId(Request.Headers) ?? "stranger";
-            log.InfoFormat("{0} scored {1}", user, score);
+            var userId = VkAuthHelper.GetCurrentUserId(Request.Headers) ?? "stranger";
+            using (var context = new InfostyleEntities())
+            {
+                context.Scores.Add(new Score {Id = Guid.NewGuid(), UserId = userId, TaskId = taskId, Value = score});
+                context.SaveChanges();
+            }
         }
     }
 }
