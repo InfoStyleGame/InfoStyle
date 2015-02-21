@@ -7,72 +7,7 @@
 }
 
 <link rel="import" href="~/Scripts/polymer/paper-button/paper-button.html">
-@Scripts.Render("~/Scripts/App/crawlLine.js")
+<link rel="import" href="~/Controls/crawl-line.html">
 
 <h2>Бегущая строка</h2>
-
-<style type="text/css">
-    @@-webkit-keyframes scroll {
-    0% {
-        -webkit-transform: translate(0, 0);
-        transform: translate(0, 0);
-    }
-    100% {
-        -webkit-transform: translate(-100%, 0);
-        transform: translate(-100%, 0)
-    }
-}
-
-@@-moz-keyframes scroll {
-    0% {
-        -moz-transform: translate(0, 0);
-        transform: translate(0, 0);
-    }
-    100% {
-        -moz-transform: translate(-100%, 0);
-        transform: translate(-100%, 0)
-    }
-}
-
-
-@@keyframes scroll {
-    0% {
-        transform: translate(0, 0);
-    }
-    100% {
-        transform: translate(-100%, 0)
-    }
-}
-
-
-.marquee {
-    display: block;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.marquee .content {
-    display: inline-block;
-    padding-left: 100%;
-    -webkit-animation: scroll 10s infinite linear;
-    -moz-animation: scroll 10s infinite linear;
-    animation: scroll 10s infinite linear;
-}
-</style>
-
-<h1 class="marquee"><span class="content">This is a <paper-button>test button</paper-button> marquee. Text, text, text...</span></h1>
-
-<div id="appContent"></div>
-
-<script type="text/javascript">
-    $(function () {
-        Api.GetTask(TaskTypes.CrawlLine).done(function(data) {
-            var crawlLine = new CrawlLine({
-                data: data,
-                $container: $("#appContent")
-            });
-            crawlLine.init();
-        });
-    });
-</script>
+<crawl-line></crawl-line>
