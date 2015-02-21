@@ -19,9 +19,14 @@ namespace Api.Helpers
         private static Phrase[] Parse(string text)
         {
             var tokens = text.Split('{', '}');
-            return tokens.Select((t, i) => new Phrase {Text = t, Type = i%2 == 0 ? TextType.Normal : TextType.Stop})
+            return tokens.Select((t, i) => new Phrase {Text = t, Type = i%2 == 0 ? TextType.Normal : ParseMarked(t)})
                     .Where(p => !string.IsNullOrEmpty(p.Text))
                     .ToArray();
+        }
+
+        private static TextType ParseMarked(string token)
+        {
+            return TextType.Stop;
         }
     }
 }
