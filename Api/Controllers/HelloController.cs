@@ -8,6 +8,7 @@ namespace Api.Controllers
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(HelloController));
 
+        [HttpGet]
         public string Get()
         {
             var user = VkAuthHelper.GetCurrentUserId(Request.Headers) ?? "stranger";

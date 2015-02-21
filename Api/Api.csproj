@@ -136,7 +136,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HelloController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
-    <Compile Include="Controllers\TaskResult.cs" />
+    <Compile Include="Controllers\TaskResultController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
