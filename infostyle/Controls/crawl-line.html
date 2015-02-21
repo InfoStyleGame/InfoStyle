@@ -88,7 +88,7 @@
 
                 Api.GetTask(TaskTypes.CrawlLine, Subjects.Stop).done(function (task) {
                     self.data = task.Data.Text;
-                    self.TaskId = task.Id;
+                    self.taskId = task.Id;
                     self.init();
                     self.$.text.className = 'animateMarquee';
                     self.initAnimationEnd();

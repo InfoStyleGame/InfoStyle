@@ -6,7 +6,7 @@
     },
 
     SubmitTaskResults: function(score, taskId) {
-        return $.get(Api.address + "/taskResult/submit", { Score: score, TaskId: taskId });
+        return $.post(Api.root + "/taskResult?score=" + score + "&taskId=" + taskId);
     }
 };
 
