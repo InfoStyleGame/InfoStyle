@@ -4,17 +4,16 @@ using System.Web.Http;
 using Api.Helpers;
 using Api.Models;
 using EF;
-using EF.Enums;
 
 namespace Api.Controllers
 {
     public class TaskController : ApiController
     {
-        private readonly TaskParser taskParser;
+        private readonly TaskMapper taskMapper;
 
         public TaskController()
         {
-            taskParser = new TaskParser();
+            taskMapper = new TaskMapper();
         }
 
         public TaskViewModel Get()
@@ -25,7 +24,7 @@ namespace Api.Controllers
                 if (task == null)
                     throw new Exception("No content");
 
-                return taskParser.Parse(task);
+                return taskMapper.Parse(task);
             }
         }
     }

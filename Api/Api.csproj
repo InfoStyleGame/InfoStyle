@@ -140,7 +140,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\TaskParser.cs" />
+    <Compile Include="Helpers\TaskMapper.cs" />
     <Compile Include="Helpers\VkAuthHelper.cs" />
     <Compile Include="Helpers\VkAuthParameters.cs" />
     <Compile Include="Models\TaskViewModel.cs" />
