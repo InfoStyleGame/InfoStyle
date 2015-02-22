@@ -154,6 +154,7 @@
     <Compile Include="Helpers\VkApiHelper.cs" />
     <Compile Include="Helpers\VkAuthHelper.cs" />
     <Compile Include="Helpers\VkAuthParameters.cs" />
+    <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Models\TaskViewModel.cs" />
     <Compile Include="Models\UserInfoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

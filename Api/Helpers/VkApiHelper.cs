@@ -7,9 +7,9 @@ namespace Api.Helpers
 {
     public class VkApiHelper
     {
-        public static UserInfoModel GetUserInfo(string userId)
+        public static UserInfoModel GetUserInfo(string vkLogin)
         {
-            var vkInfo = GetJson("https://api.vk.com/method/getProfiles?uids=" + userId + "&fields=photo_50");
+            var vkInfo = GetJson("https://api.vk.com/method/getProfiles?uids=" + vkLogin + "&fields=photo_50");
             var humanInfo = ((JArray)vkInfo["response"])[0];
             return new UserInfoModel
             {

@@ -16,11 +16,11 @@ namespace Api.Controllers
             taskMapper = new TaskMapper();
         }
 
-        public TaskViewModel Get(TaskType type, Subject subject)
+        public TaskViewModel Get(TaskType type, int level)
         {
             using (var context = new InfostyleEntities())
             {
-                var task = context.Tasks.Where(t => t.Type == type && t.Subject == subject)
+                var task = context.Tasks.Where(t => t.Type == type && t.Level == level)
                         .OrderBy(_ => Guid.NewGuid())
                         .FirstOrDefault();
                 if (task == null)

@@ -11,9 +11,9 @@ namespace Api.Controllers
         [HttpGet]
         public string Get()
         {
-            var user = VkAuthHelper.GetCurrentUserId(Request.Headers) ?? "stranger";
+            var user = VkAuthHelper.GetCurrentUser(Request.Headers).Id;
             log.InfoFormat("Me was asked about hello, master! And he was {0}", user);
             return string.Format("Hello, {0}, I'm Infostyle Api", user);
-        } 
+        }
     }
 }

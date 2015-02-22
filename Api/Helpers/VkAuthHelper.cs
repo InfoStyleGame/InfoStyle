@@ -4,6 +4,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
+using Api.Managers;
+using EF;
 using log4net;
 
 namespace Api.Helpers
@@ -12,7 +14,15 @@ namespace Api.Helpers
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(VkAuthHelper));
 
-        public static string GetCurrentUserId(HttpRequestHeaders requestParams)
+        public static User GetCurrentUser(HttpRequestHeaders requestParams)
+        {
+            var vkLogin = GetCurrentUserVkLogin(requestParams);
+            if (vkLogin == null)
+                return null;
+            return UserManager.GetOrCreateUser(vkLogin);
+        }
+
+        private static string GetCurrentUserVkLogin(HttpRequestHeaders requestParams)
         {
             //todo выпилить на боевой
             var debugUser = GetUserIdDebugEdition(requestParams);
