@@ -92,6 +92,14 @@
                 padding: 10px 0;
                 font-size: 20px;
             }
+            .hitStopWord {
+                color: red;
+                text-decoration: line-through;
+            }
+            
+            .missedStopWord {
+                color: red;
+            }
 
             .no_selection {
     -webkit-user-select: none; /* webkit (safari, chrome) browsers */
@@ -116,6 +124,7 @@
             </div>
         </div>
         <div id="end" style="display:none;">
+            <div id="answer"></div>
             <div>Всего стоп-слов: <span>{{stopWordsCount}}</span></div>
             <div>Вы угадали: <span>{{hits}}</span></div>
             <div>Штраф за промахи: <span>{{misses}}</span></div>
@@ -184,8 +193,26 @@
 
             },
 
+            buildAnswer: function() {
+                var words = $(this.$.text).children(".word");
+                var $answer = $(this.$.answer);
+                for (var i = 0; i < words.length; i++) {
+                    var $answerWord = $("<span/>").text($(words[i]).text());
+                    $answer.append($answerWord);
+                    
+                    if (!$(words[i]).hasClass("stopWord"))
+                        continue;
+
+                    if (words[i].hit)
+                        $answerWord.addClass("hitStopWord");
+                    else
+                        $answerWord.addClass("missedStopWord");
+                }
+            },
+
             submitTaskResults: function() {
                 $(this.$.game).hide();
+                this.buildAnswer();
                 $(this.$.end).show();
                 Api.SubmitTaskResults(this.points, this.taskId);
                 // TODO submit results
@@ -196,16 +223,16 @@
                 this.stopWordsCount = 0;
                 for (var i = 0; i < this.data.length; i++) {
                     var word = this.buildWord(this.data[i]);
-                    text.appendChild(word);
+                    text.appendChild(word);    
                 }
             },
 
             buildWord: function(datum) {
                 if (datum.Type == TextTypes.Normal) {
-                    return $("<span/>").text(datum.Text)[0];
+                    return $("<span/>").addClass("word").text(datum.Text)[0];
                 } else if (datum.Type == TextTypes.Stop) {
                     this.stopWordsCount++;
-                    return $("<paper-button>/>").addClass("stopWord").text(datum.Text)[0];
+                    return $("<paper-button>/>").addClass("word").addClass("stopWord").text(datum.Text)[0];
                 } else {
                     console.warn("Unknown text type" + datum.Type);
                     return $("<span/>")[0];
