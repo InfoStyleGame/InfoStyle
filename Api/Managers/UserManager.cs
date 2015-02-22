@@ -26,5 +26,13 @@ namespace Api.Managers
                 return newUser;
             }
         }
+
+        public static int GetUserScore(int id)
+        {
+            using (var db = new InfostyleEntities())
+            {
+                return db.Scores.Where(s => s.UserId == id).Select(s => s.Score1).Sum();
+            }
+        }
     }
 }
