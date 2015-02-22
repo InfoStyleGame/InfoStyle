@@ -47,6 +47,7 @@ namespace Api.Controllers
                 foreach (var task in tasks)
                     context.User_Tasks.Add(new User_Tasks { Id = Guid.NewGuid(), UserId = userId, TaskId = task.Id });
 
+                context.SaveChanges();
                 return tasks.Select(t => taskMapper.Parse(t)).ToArray();
             }
         }
