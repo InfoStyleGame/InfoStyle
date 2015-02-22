@@ -1,10 +1,9 @@
-﻿using System.Web.Http;
-using Api.Helpers;
+﻿using Api.Helpers;
 using Api.Models;
 
 namespace Api.Controllers
 {
-    public class UserInfoController : ApiController
+    public class UserInfoController : ControllerBase
     {
         public UserInfoModel Get()
         {
