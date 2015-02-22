@@ -2,6 +2,7 @@
 {
     public enum TaskType
     {
-        CrawlLine = 0,
+        CrawlLine = 1,
+	    Card = 0
     }
 }

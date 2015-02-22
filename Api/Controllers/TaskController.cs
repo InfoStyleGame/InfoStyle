@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Http;
 using Api.Helpers;
 using Api.Models;
 using EF;
@@ -16,8 +17,19 @@ namespace Api.Controllers
             taskMapper = new TaskMapper();
         }
 
-        public TaskViewModel Get(TaskType type, int level)
-        {
+		[HttpGet]
+		public TaskViewModel[] Card(int level)
+	    {
+			using (var context = new InfostyleEntities())
+			{
+				var tasks = context.Tasks.Where(t => t.Type == TaskType.Card && t.Level == level)
+					.OrderBy(_ => Guid.NewGuid())
+					.Take(5).ToList();
+				return tasks.Select(t => taskMapper.Parse(t)).ToArray();
+			}
+		}
+
+		public TaskViewModel Get(TaskType type, int level)        {
             using (var context = new InfostyleEntities())
             {
                 var task = context.Tasks.Where(t => t.Type == type && t.Level == level)
