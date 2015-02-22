@@ -21,6 +21,8 @@ namespace Api
 
             var l4NetPath = HostingEnvironment.MapPath("~/bin/log4net.config");
             XmlConfigurator.ConfigureAndWatch(new FileInfo(l4NetPath));
+            
+            config.MessageHandlers.Add(new LoggingMessageHandler());
         }
     }
 }
