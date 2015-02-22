@@ -50,6 +50,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DailyCompare.cs">
+      <DependentUpon>Infostyle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DailyEdit.cs">
+      <DependentUpon>Infostyle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DailyText.cs">
+      <DependentUpon>Infostyle.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>Infostyle.tt</DependentUpon>
+    </Compile>
     <Content Include="FillTestStorage.sql" />
     <Compile Include="Enums\Subject.cs" />
     <Compile Include="Enums\TaskType.cs" />

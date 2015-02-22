@@ -4,44 +4,236 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="InfostyleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Alias="Self" Namespace="InfostyleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012">
+        <EntityType Name="DailyCompares">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="Time" Nullable="false" Type="datetime" />
+          <Property Name="UserId" Nullable="false" Type="int" />
+          <Property Name="EditId" Nullable="false" Type="int" />
+          <Property Name="OpponentEditId" Nullable="false" Type="int" />
+          <Property Name="Score" Nullable="false" Type="smallint" />
+        </EntityType>
+        <EntityType Name="DailyEdits">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="UserId" Nullable="false" Type="int" />
+          <Property Name="DailyTextId" Nullable="false" Type="int" />
+          <Property Name="Time" Nullable="false" Precision="7" Type="time" />
+          <Property Name="TimeTaken" Nullable="false" Precision="7" Type="datetimeoffset" />
+          <Property Name="Result" Nullable="false" MaxLength="1000" Type="nvarchar" />
+        </EntityType>
+        <EntityType Name="DailyTexts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="Text" Nullable="false" MaxLength="1024" Type="nvarchar" />
+          <Property Name="PublicationDate" Nullable="false" Type="datetime" />
+        </EntityType>
         <EntityType Name="Scores">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="TaskId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="40" Nullable="false" />
-          <Property Name="Value" Type="int" Nullable="false" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="TaskId" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="UserId" Nullable="false" Type="int" />
+          <Property Name="Value" Nullable="false" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Infostyle.dbo.Tasks' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Tasks">
           <Key>
             <PropertyRef Name="Id" />
             <PropertyRef Name="Type" />
             <PropertyRef Name="Subject" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Type" Type="int" Nullable="false" />
-          <Property Name="Subject" Type="int" Nullable="false" />
+          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="Type" Nullable="false" Type="int" />
+          <Property Name="Subject" Nullable="false" Type="int" />
           <Property Name="Text" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="Name" Nullable="false" Type="nvarchar(max)" />
+          <Property Name="Rank" Nullable="false" Type="int" />
+          <Property Name="LastDailyEditTime" Nullable="false" Type="datetime" />
+          <Property Name="VKLogin" Nullable="false" MaxLength="128" Type="nvarchar" />
+        </EntityType>
+        <Association Name="FK_DailyEditDailyCompare">
+          <End Type="Self.DailyEdits" Multiplicity="1" Role="DailyEdits" />
+          <End Type="Self.DailyCompares" Multiplicity="*" Role="DailyCompares" />
+          <ReferentialConstraint>
+            <Principal Role="DailyEdits">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DailyCompares">
+              <PropertyRef Name="EditId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DailyEditDailyCompare1">
+          <End Type="Self.DailyEdits" Multiplicity="1" Role="DailyEdits" />
+          <End Type="Self.DailyCompares" Multiplicity="*" Role="DailyCompares" />
+          <ReferentialConstraint>
+            <Principal Role="DailyEdits">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DailyCompares">
+              <PropertyRef Name="OpponentEditId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DailyTextDailyEdit">
+          <End Type="Self.DailyTexts" Multiplicity="1" Role="DailyTexts" />
+          <End Type="Self.DailyEdits" Multiplicity="*" Role="DailyEdits" />
+          <ReferentialConstraint>
+            <Principal Role="DailyTexts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DailyEdits">
+              <PropertyRef Name="DailyTextId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDailyCompare">
+          <End Type="Self.Users" Multiplicity="1" Role="Users" />
+          <End Type="Self.DailyCompares" Multiplicity="*" Role="DailyCompares" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DailyCompares">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDailyEdit">
+          <End Type="Self.Users" Multiplicity="1" Role="Users" />
+          <End Type="Self.DailyEdits" Multiplicity="*" Role="DailyEdits" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DailyEdits">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="InfostyleModelStoreContainer">
+          <EntitySet Name="DailyCompares" EntityType="Self.DailyCompares" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DailyEdits" EntityType="Self.DailyEdits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DailyTexts" EntityType="Self.DailyTexts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Scores" EntityType="Self.Scores" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tasks" EntityType="Self.Tasks" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Tasks].[Id] AS [Id], 
-    [Tasks].[Type] AS [Type], 
-    [Tasks].[Subject] AS [Subject], 
-    [Tasks].[Text] AS [Text]
-    FROM [dbo].[Tasks] AS [Tasks]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DailyEditDailyCompare" Association="Self.FK_DailyEditDailyCompare">
+            <End EntitySet="DailyEdits" Role="DailyEdits" />
+            <End EntitySet="DailyCompares" Role="DailyCompares" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DailyEditDailyCompare1" Association="Self.FK_DailyEditDailyCompare1">
+            <End EntitySet="DailyEdits" Role="DailyEdits" />
+            <End EntitySet="DailyCompares" Role="DailyCompares" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DailyTextDailyEdit" Association="Self.FK_DailyTextDailyEdit">
+            <End EntitySet="DailyTexts" Role="DailyTexts" />
+            <End EntitySet="DailyEdits" Role="DailyEdits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDailyCompare" Association="Self.FK_UserDailyCompare">
+            <End EntitySet="Users" Role="Users" />
+            <End EntitySet="DailyCompares" Role="DailyCompares" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDailyEdit" Association="Self.FK_UserDailyEdit">
+            <End EntitySet="Users" Role="Users" />
+            <End EntitySet="DailyEdits" Role="DailyEdits" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="InfostyleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="InfostyleEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DailyCompares" EntityType="InfostyleModel.DailyCompare" />
+          <EntitySet Name="DailyEdits" EntityType="InfostyleModel.DailyEdit" />
+          <EntitySet Name="DailyTexts" EntityType="InfostyleModel.DailyText" />
+          <EntitySet Name="Scores" EntityType="InfostyleModel.Score" />
+          <EntitySet Name="Tasks" EntityType="InfostyleModel.Task" />
+          <EntitySet Name="Users" EntityType="InfostyleModel.User" />
+          <AssociationSet Name="FK_DailyEditDailyCompare" Association="InfostyleModel.FK_DailyEditDailyCompare">
+            <End Role="DailyEdit" EntitySet="DailyEdits" />
+            <End Role="DailyCompare" EntitySet="DailyCompares" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DailyEditDailyCompare1" Association="InfostyleModel.FK_DailyEditDailyCompare1">
+            <End Role="DailyEdit" EntitySet="DailyEdits" />
+            <End Role="DailyCompare" EntitySet="DailyCompares" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDailyCompare" Association="InfostyleModel.FK_UserDailyCompare">
+            <End Role="User" EntitySet="Users" />
+            <End Role="DailyCompare" EntitySet="DailyCompares" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DailyTextDailyEdit" Association="InfostyleModel.FK_DailyTextDailyEdit">
+            <End Role="DailyText" EntitySet="DailyTexts" />
+            <End Role="DailyEdit" EntitySet="DailyEdits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDailyEdit" Association="InfostyleModel.FK_UserDailyEdit">
+            <End Role="User" EntitySet="Users" />
+            <End Role="DailyEdit" EntitySet="DailyEdits" />
+          </AssociationSet>
+        </EntityContainer>
+        <EnumType Name="TaskType" a:ExternalTypeName="Enums.TaskType" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        <EnumType Name="Subject" a:ExternalTypeName="Enums.Subject" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        <EntityType Name="DailyCompare">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="EditId" Type="Int32" Nullable="false" />
+          <Property Name="OpponentEditId" Type="Int32" Nullable="false" />
+          <Property Name="Score" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="DailyEdit" Relationship="InfostyleModel.FK_DailyEditDailyCompare" FromRole="DailyCompare" ToRole="DailyEdit" />
+          <NavigationProperty Name="DailyEdit1" Relationship="InfostyleModel.FK_DailyEditDailyCompare1" FromRole="DailyCompare" ToRole="DailyEdit" />
+          <NavigationProperty Name="User" Relationship="InfostyleModel.FK_UserDailyCompare" FromRole="DailyCompare" ToRole="User" />
+        </EntityType>
+        <EntityType Name="DailyEdit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="DailyTextId" Type="Int32" Nullable="false" />
+          <Property Name="Time" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="TimeTaken" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="Result" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DailyCompares" Relationship="InfostyleModel.FK_DailyEditDailyCompare" FromRole="DailyEdit" ToRole="DailyCompare" />
+          <NavigationProperty Name="DailyCompares1" Relationship="InfostyleModel.FK_DailyEditDailyCompare1" FromRole="DailyEdit" ToRole="DailyCompare" />
+          <NavigationProperty Name="DailyText" Relationship="InfostyleModel.FK_DailyTextDailyEdit" FromRole="DailyEdit" ToRole="DailyText" />
+          <NavigationProperty Name="User" Relationship="InfostyleModel.FK_UserDailyEdit" FromRole="DailyEdit" ToRole="User" />
+        </EntityType>
+        <EntityType Name="DailyText">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="PublicationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="DailyEdits" Relationship="InfostyleModel.FK_DailyTextDailyEdit" FromRole="DailyText" ToRole="DailyEdit" />
+        </EntityType>
+        <EntityType Name="Score">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="TaskId" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityType Name="Task">
           <Key>
             <PropertyRef Name="Id" />
@@ -50,37 +242,118 @@ warning 6002: The table/view 'Infostyle.dbo.Tasks' does not have a primary key d
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Type" Type="InfostyleModel.TaskType" Nullable="false" />
-          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Subject" Type="InfostyleModel.Subject" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityContainer Name="InfostyleEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Tasks" EntityType="Self.Task" />
-          <EntitySet Name="Scores" EntityType="InfostyleModel.Score" />
-        </EntityContainer>
-        <EnumType Name="TaskType" a:ExternalTypeName="Enums.TaskType" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
-        <EnumType Name="Subject" a:ExternalTypeName="Enums.Subject" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
-        <EntityType Name="Score">
+        <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="TaskId" Type="Guid" Nullable="false" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="Value" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Rank" Type="Int32" Nullable="false" />
+          <Property Name="LastDailyEditTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="VKLogin" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DailyCompares" Relationship="InfostyleModel.FK_UserDailyCompare" FromRole="User" ToRole="DailyCompare" />
+          <NavigationProperty Name="DailyEdits" Relationship="InfostyleModel.FK_UserDailyEdit" FromRole="User" ToRole="DailyEdit" />
         </EntityType>
-      </Schema>
+        <Association Name="FK_DailyEditDailyCompare">
+          <End Type="InfostyleModel.DailyEdit" Role="DailyEdit" Multiplicity="1" />
+          <End Type="InfostyleModel.DailyCompare" Role="DailyCompare" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DailyEdit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DailyCompare">
+              <PropertyRef Name="EditId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DailyEditDailyCompare1">
+          <End Type="InfostyleModel.DailyEdit" Role="DailyEdit" Multiplicity="1" />
+          <End Type="InfostyleModel.DailyCompare" Role="DailyCompare" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DailyEdit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DailyCompare">
+              <PropertyRef Name="OpponentEditId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDailyCompare">
+          <End Type="InfostyleModel.User" Role="User" Multiplicity="1" />
+          <End Type="InfostyleModel.DailyCompare" Role="DailyCompare" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DailyCompare">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DailyTextDailyEdit">
+          <End Type="InfostyleModel.DailyText" Role="DailyText" Multiplicity="1" />
+          <End Type="InfostyleModel.DailyEdit" Role="DailyEdit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DailyText">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DailyEdit">
+              <PropertyRef Name="DailyTextId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDailyEdit">
+          <End Type="InfostyleModel.User" Role="User" Multiplicity="1" />
+          <End Type="InfostyleModel.DailyEdit" Role="DailyEdit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DailyEdit">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="TaskType1" a:ExternalTypeName="EF.Enums.TaskType" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="InfostyleModelStoreContainer" CdmEntityContainer="InfostyleEntities">
-          <EntitySetMapping Name="Tasks">
-            <EntityTypeMapping TypeName="InfostyleModel.Task">
-              <MappingFragment StoreEntitySet="Tasks">
-                <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <EntitySetMapping Name="DailyCompares">
+            <EntityTypeMapping TypeName="InfostyleModel.DailyCompare">
+              <MappingFragment StoreEntitySet="DailyCompares">
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="OpponentEditId" ColumnName="OpponentEditId" />
+                <ScalarProperty Name="EditId" ColumnName="EditId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DailyEdits">
+            <EntityTypeMapping TypeName="InfostyleModel.DailyEdit">
+              <MappingFragment StoreEntitySet="DailyEdits">
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="TimeTaken" ColumnName="TimeTaken" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="DailyTextId" ColumnName="DailyTextId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DailyTexts">
+            <EntityTypeMapping TypeName="InfostyleModel.DailyText">
+              <MappingFragment StoreEntitySet="DailyTexts">
+                <ScalarProperty Name="PublicationDate" ColumnName="PublicationDate" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -90,6 +363,27 @@ warning 6002: The table/view 'Infostyle.dbo.Tasks' does not have a primary key d
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tasks">
+            <EntityTypeMapping TypeName="InfostyleModel.Task">
+              <MappingFragment StoreEntitySet="Tasks">
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="InfostyleModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="VKLogin" ColumnName="VKLogin" />
+                <ScalarProperty Name="LastDailyEditTime" ColumnName="LastDailyEditTime" />
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
