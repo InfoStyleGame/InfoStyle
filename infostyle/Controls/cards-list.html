@@ -115,7 +115,7 @@
               <span>Заработано баллов: {{points}}</span>
               <span hidden?="{{!clearLine}}">+ 3 (за чистую линию) = {{points+3}}
               </span>
-              <paper-button class="colored" raised>Дальше</paper-button>
+              <paper-button class="colored" raised on-tap="{{nextTask}}">Дальше</paper-button>
           </div>
       </div>
   </template>
@@ -125,7 +125,8 @@
     Polymer({
         ready: function () {
             var self = this;
-            Api.GetCards().done(function(response) {
+            Api.GetCards().done(function (response) {
+                self.taskId = response.Id;
                 self.initCards(response.Data);
             });
         },
@@ -145,6 +146,15 @@
             this.clearLine = true;
             this.solvedCounter = 0;
             this.points = 0;
+        },
+
+        submitTaskResults: function() {
+            Api.SubmitTaskResults(this.points, this.taskId);
+        },
+
+        nextTask: function() {
+            $("cards-list").hide();
+            $("crawl-line").show();
         },
 
         buildCard: function(cardData) {
@@ -185,6 +195,7 @@
                     this.cards[this.currentCard].attr("show", true);
                 if (this.solvedCounter == this.totalCounter) {
                     this.showResults = true;
+                    this.submitTaskResults()
                 }
             } else {
                 this.clearLine = false;

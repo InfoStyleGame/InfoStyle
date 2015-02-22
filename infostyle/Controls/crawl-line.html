@@ -9,17 +9,17 @@
                 cursor: url(/Content/resources/cursor-gun.png), auto;
             }
 
-             @-webkit-keyframes scroll {
-                 0% {
-                     -webkit-transform: translate(0, 0);
-                     transform: translate(0, 0);
-                 }
+            @-webkit-keyframes scroll {
+                0% {
+                    -webkit-transform: translate(0, 0);
+                    transform: translate(0, 0);
+                }
 
-                 100% {
-                     -webkit-transform: translate(-100%, 0);
-                     transform: translate(-100%, 0);
-                 }
-             }
+                100% {
+                    -webkit-transform: translate(-100%, 0);
+                    transform: translate(-100%, 0);
+                }
+            }
 
             @-moz-keyframes scroll {
                 0% {
@@ -72,7 +72,7 @@
             .marquee /deep/ .button-content {
                           padding-left: 0;
                           padding-right: 0;
-            }
+                      }
 
             paper-button {
                 text-transform: none;
@@ -90,13 +90,24 @@
                 padding: 10px 0;
                 font-size: 20px;
             }
+
+            .no_selection {
+    -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+    -moz-user-select: none; /* mozilla browsers */
+    -khtml-user-select: none; /* webkit (konqueror) browsers */
+    -ms-user-select: none; /* IE10+ */
+}
         </style>
+        <p>
+      Подстрели все стоп-слова:
+    </p>
+    
         <div id="start">
             <paper-button on-tap="{{startGame}}" class="start">Начать</paper-button>
         </div>
         <div style="display:none" id="game" class="marquee" on-mousedown="{{clickAction}}">
             <div class="border">
-                <div id="text" class="crawl-line"></div>
+                <div id="text" class="no_selection crawl-line"></div>
             </div>
             <div class="crawlLineCounters">
                 <span>Баллы: <span id="points">{{points}}</span></span>
@@ -108,7 +119,7 @@
             <div>Штраф за промахи: <span>{{misses}}</span></div>
             <div>Итого баллов: <span>{{points}}</span></div>
             <div>
-                <paper-button on-tap="{{endGame}}">Завершить</paper-button>
+                <paper-button on-tap="{{endGame}}">Завершить уровень</paper-button>
             </div>
         </div>
         
