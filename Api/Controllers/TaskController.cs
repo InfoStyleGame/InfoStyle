@@ -36,26 +36,21 @@ namespace Api.Controllers
 
         private TaskViewModel[] GetTasks(TaskType taskType, int level, int count)
         {
-            var userId = VkAuthHelper.GetCurrentUser(Request.Headers).Id;
+            var userId = 6;//VkAuthHelper.GetCurrentUser(Request.Headers).Id;
 
             using (var context = new InfostyleEntities())
             {
-                if (GetTasks(context, taskType, level, userId).Count() < count)
-                    foreach (var userTask in context.User_Tasks.Where(ut => ut.UserId == userId))
-                    {
-                        context.User_Tasks.Remove(userTask);
-                        context.SaveChanges();
-                    }
-            }
 
-            using (var context = new InfostyleEntities())
-            {
                 var tasks = GetTasks(context, taskType, level, userId)
                     .OrderBy(_ => Guid.NewGuid())
                     .Take(count).ToArray();
 
-                foreach (var task in tasks)
-                    context.User_Tasks.Add(new User_Tasks {Id = Guid.NewGuid(), UserId = userId, TaskId = task.Id});
+                if (GetTasks(context, taskType, level, userId).Count() < count)
+                    foreach (var userTask in context.User_Tasks.Where(ut => ut.UserId == userId))
+                        context.User_Tasks.Remove(userTask);
+                else
+                    foreach (var task in tasks)
+                        context.User_Tasks.Add(new User_Tasks {Id = Guid.NewGuid(), UserId = userId, TaskId = task.Id});
 
                 context.SaveChanges();
                 return tasks.Select(t => taskMapper.Parse(t)).ToArray();
