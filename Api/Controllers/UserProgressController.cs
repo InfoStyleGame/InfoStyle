@@ -1,4 +1,7 @@
-﻿using Api.Models;
+﻿using System.Linq;
+using Api.Helpers;
+using Api.Models;
+using EF;
 
 namespace Api.Controllers
 {
@@ -6,7 +9,11 @@ namespace Api.Controllers
     {
         public UserProgress Get()
         {
-            return new UserProgress { CurrentLevel = 1 };
+            var userId = VkAuthHelper.GetCurrentUser(Request.Headers).Id;
+            using (var context = new InfostyleEntities())
+            {
+                return new UserProgress {CurrentLevel = context.Scores.Where(s => s.UserId == userId).Max(s => s.Level)};
+            }
         }
     }
 }
