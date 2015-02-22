@@ -139,6 +139,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ExceptionHandlingAttribute.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\LoggingMessageHandler.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
