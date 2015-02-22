@@ -2,7 +2,7 @@
 
 namespace infostyle.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : ControllerBase
     {
         [HttpGet]
         public ActionResult Index()

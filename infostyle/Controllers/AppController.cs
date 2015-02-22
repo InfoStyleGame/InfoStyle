@@ -2,10 +2,11 @@
 
 namespace infostyle.Controllers
 {
-    public class AppController : Controller
+    public class AppController : ControllerBase
     {
         public ActionResult Index()
         {
+            VerifyIsLoggedIn();
             return View();
         }
     }

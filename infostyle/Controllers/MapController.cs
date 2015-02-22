@@ -2,11 +2,14 @@
 
 namespace infostyle.Controllers
 {
-    public class MapController : Controller
+    public class MapController : ControllerBase
     {
-        public ActionResult Index()
+        public ActionResult Index(bool? notLoggedIn)
         {
-            return View();
+            var checkLoggedIn = !notLoggedIn.HasValue || !notLoggedIn.Value;
+            if (checkLoggedIn)
+                VerifyIsLoggedIn();
+            return View(checkLoggedIn);
         }
     }
 }

@@ -1,8 +1,11 @@
-﻿using System.Web;
+﻿using System.IO;
+using System.Web;
+using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using log4net.Config;
 
 namespace infostyle
 {
@@ -19,6 +22,9 @@ namespace infostyle
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            var l4NetPath = HostingEnvironment.MapPath("~/bin/log4net.config");
+            XmlConfigurator.ConfigureAndWatch(new FileInfo(l4NetPath));
         }
     }
 }

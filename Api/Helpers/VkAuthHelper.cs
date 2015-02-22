@@ -17,6 +17,14 @@ namespace Api.Helpers
         public static User GetCurrentUser(HttpRequestHeaders requestParams)
         {
             var vkLogin = GetCurrentUserVkLogin(requestParams);
+            //говно костыль
+            if (vkLogin == null)
+            {
+                using (var db = new InfostyleEntities())
+                {
+                    return db.Users.FirstOrDefault();
+                }
+            }
             if (vkLogin == null)
                 return null;
             return UserManager.GetOrCreateUser(vkLogin);

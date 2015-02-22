@@ -14,7 +14,7 @@ namespace Api
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "{controller}/{action}/{id}",
-                defaults: new { controller = "Hello", id = RouteParameter.Optional }
+                defaults: new { controller = "Hello", action = "Get" }
             );
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
