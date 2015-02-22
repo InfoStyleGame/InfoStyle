@@ -1,7 +1,7 @@
 ﻿window.Api = {
     root: "http://norris.kontur:4444/api",
     GetTask: function (type, subject) {
-        return $.get(Api.root + "/task/get", { type: type, level: 0 })
+        return $.post(Api.root + "/task/get?level=0&type=" + type)
             .fail(function(data) { console.log("Error: " + data); });
     },
 
