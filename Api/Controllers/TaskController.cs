@@ -36,11 +36,18 @@ namespace Api.Controllers
 
         private TaskViewModel[] GetTasks(TaskType taskType, int level, int count)
         {
+            var userId = VkAuthHelper.GetCurrentUser(Request.Headers).Id;
+
             using (var context = new InfostyleEntities())
             {
-                return context.Tasks.Where(t => t.Type == taskType && t.Level == level)
+                var tasks = context.Tasks.Where(t => t.Type == taskType && t.Level == level)
                     .OrderBy(_ => Guid.NewGuid())
-                    .Take(count).Select(t => taskMapper.Parse(t)).ToArray();
+                    .Take(count);
+
+                foreach (var task in tasks)
+                    context.User_Tasks.Add(new User_Tasks { Id = Guid.NewGuid(), UserId = userId, TaskId = task.Id });
+
+                return tasks.Select(t => taskMapper.Parse(t)).ToArray();
             }
         }
     }
