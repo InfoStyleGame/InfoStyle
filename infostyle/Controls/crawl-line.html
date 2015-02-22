@@ -234,8 +234,8 @@
                 $(this.$.game).hide();
                 this.buildAnswer();
                 $(this.$.end).show();
-                Api.SubmitTaskResults(this.points, this.taskId);
-                // TODO submit results
+                window.totalScore += this.points;
+                Api.SubmitTaskResults(this.level, window.totalScore);
             },
 
             init: function() {

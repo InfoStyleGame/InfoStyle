@@ -12,8 +12,8 @@
             .fail(function (data) { console.log("Error: " + JSON.stringify(data)); });
     },
 
-    SubmitTaskResults: function(score, taskId) {
-        return $.post(Api.root + "/taskResult/post?score=" + score + "&taskId=" + taskId);
+    SubmitTaskResults: function(level, score) {
+        return $.post(Api.root + "/taskResult/post?score=" + score + "&level=" + level);
     },
 
     GetUserInfo: function() {

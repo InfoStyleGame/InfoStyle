@@ -130,7 +130,7 @@
 
   <script>
 
-    Polymer({
+      Polymer({
         ready: function () {
             var self = this;
             Api.GetCards(this.level).done(function (response) {
@@ -156,7 +156,7 @@
         },
 
         submitTaskResults: function() {
-            Api.SubmitTaskResults(this.points, this.taskId);
+            window.totalScore += this.points;
         },
 
         nextTask: function() {
