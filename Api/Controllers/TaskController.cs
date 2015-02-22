@@ -42,7 +42,10 @@ namespace Api.Controllers
             {
                 if (GetTasks(context, taskType, level, userId).Count() < count)
                     foreach (var userTask in context.User_Tasks.Where(ut => ut.UserId == userId))
+                    {
                         context.User_Tasks.Remove(userTask);
+                        context.SaveChanges();
+                    }
 
                 var tasks = GetTasks(context, taskType, level, userId)
                     .OrderBy(_ => Guid.NewGuid())
