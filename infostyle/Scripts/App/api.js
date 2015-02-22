@@ -35,11 +35,11 @@
     },
 
     GetUserInfo: function() {
-        return $.get(Api.root + "/userInfo");
+        return $.get(Api.root + "/userInfo/get");
     },
 
     GetUserProgress: function() {
-        return $.get(Api.root + "/userProgress");
+        return $.get(Api.root + "/userProgress/get");
     }
 };
 
