@@ -42,7 +42,7 @@ namespace Api.Controllers
             {
                 var tasks = context.Tasks.Where(t => t.Type == taskType && t.Level == level && !t.User_Tasks.Any())
                     .OrderBy(_ => Guid.NewGuid())
-                    .Take(count);
+                    .Take(count).ToArray();
 
                 foreach (var task in tasks)
                     context.User_Tasks.Add(new User_Tasks { Id = Guid.NewGuid(), UserId = userId, TaskId = task.Id });
