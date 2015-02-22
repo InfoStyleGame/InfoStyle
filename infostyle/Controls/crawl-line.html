@@ -94,7 +94,7 @@
         <div id="start">
             <paper-button on-tap="{{startGame}}" class="start">Начать</paper-button>
         </div>
-        <div style="display:none" id="game" class="marquee" on-tap="{{clickAction}}">
+        <div style="display:none" id="game" class="marquee" on-mousedown="{{clickAction}}">
             <div class="border">
                 <div id="text" class="crawl-line"></div>
             </div>
@@ -192,7 +192,7 @@
                     return $("<span/>").text(datum.Text)[0];
                 } else if (datum.Type == TextTypes.Stop) {
                     this.stopWordsCount++;
-                    return $("<paper-button>/>").attr("on-tap", "{{clickAction}}").addClass("stopWord").text(datum.Text)[0];
+                    return $("<paper-button>/>").addClass("stopWord").text(datum.Text)[0];
                 } else {
                     console.warn("Unknown text type" + datum.Type);
                     return $("<span/>")[0];

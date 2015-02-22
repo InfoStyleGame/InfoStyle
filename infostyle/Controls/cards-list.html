@@ -1,0 +1,192 @@
+<link href="/Controls/card-item.html" rel="import" />
+<polymer-element name="cards-list">
+
+  <template>
+      <style>
+          .elem /deep/ {
+              font-family: Roboto;
+          }
+
+          @-webkit-keyframes point-arise {
+              0% {
+                  opacity: 0;
+                  padding-left: -15px;
+              }
+              100% {
+                  opacity: 1;
+                  padding-left: 0px;
+              }
+          }
+
+          @-moz-keyframes point-arise {
+              0% {
+                  opacity: 0;
+                  padding-left: -15px;
+              }
+              100% {
+                  opacity: 1;
+                  padding-left: 0px;
+              }
+          }
+
+          @keyframes point-arise {
+              0% {
+                  opacity: 0;
+                  padding-left: -15px;
+              }
+              100% {
+                  opacity: 1;
+                  padding-left: 0px;
+              }
+          }
+
+          #core_card {
+              padding: 10px;
+              max-width: 650px;
+              min-width: 400px;
+              display: inline-block;
+              background-color: rgb(255, 251, 235);
+              box-shadow: 0 0 10px rgba(0,0,0,.2);
+          }
+
+          #core_card .text {
+              font-size: 16px;
+          }
+
+          #h3 {
+              font-weight: normal;
+              background: url(chrome-extension://pnoffddplpippgcfjdhbmhkofpnaalpg/packages/cde_polymer_designer/src/polymer_designer/components/element/) transparent;
+          }
+          .point {
+              display: inline-block;
+              font-family: Lora;
+              font-style: italic;
+              font-size: 16px;
+              color: green;
+          }
+
+          .point.hidden {
+              display: inline-block;
+              opacity: 0;
+          }
+
+          .point.showing {
+              -webkit-animation: point-arise 0.2s ease-in;
+              -moz-animation: point-arise 0.2s ease-in;
+              animation: point-arise 0.2s ease-in;
+          }
+
+          .result-panel {
+              position: relative;
+              display: inline-block;
+              
+              width: 650px;
+              min-width: 400px;
+              font-size: 16px;
+              font-family: Lora;
+              font-style: italic;
+              padding: 0.7em 0;
+          }
+
+          paper-button {
+              text-transform: none;
+              position: absolute;
+              top: 0;
+              right: 0;
+          }
+
+          paper-button.colored {
+              background: #ffffff;
+              color: #006CAA;
+          }
+
+          .hidden {
+              display: none;
+          }
+
+      </style>
+      <div class="elem" on-mousedown="{{clickAction}}">
+        <h3 id="h3">Найди стоп-слово</h3>
+
+          <div id="cardsContainer">
+              
+          </div>
+          <div class="result-panel" hidden?="{{!showResults}}">
+              <span>Заработано баллов: {{points}}</span>
+              <paper-button class="colored" raised>Дальше</paper-button>
+          </div>
+      </div>
+  </template>
+
+  <script>
+
+    Polymer({
+        ready: function () {
+            var self = this;
+            Api.GetCards().done(function(response) {
+                self.initCards(response.Data);
+            });
+        },
+
+        initCards: function (cards) {
+            this.totalCounter = 0;
+            var showFirst = true;
+            this.cards = [];
+            for (var i = 0; i < cards.length; i++) {
+                var $card = this.buildCard(cards[i]);
+                this.cards.push($card);
+                $(this.$.cardsContainer).append($card);
+                ++this.totalCounter;
+            }
+            this.currentCard = 0;
+            this.cards[0].attr("show", true);
+            this.clearLine = true;
+            this.solvedCounter = 0;
+            this.points = 0;
+        },
+
+        buildCard: function(cardData) {
+            var wordsHtml = "";
+            for (var i = 0; i < cardData.length; i++) {
+                var word = this.buildWord(cardData[i]);
+                wordsHtml += word[0].outerHTML;
+            }
+            return $("<card-item/>").html(wordsHtml);
+        },
+
+        buildWord: function (datum) {
+            if (datum.Type == TextTypes.Normal) {
+                return $("<span/>").text(datum.Text);
+            } else if (datum.Type == TextTypes.Stop) {
+                this.stopWordsCount++;
+                return $("<span>/>").addClass("crossable").text(datum.Text);
+            } else {
+                console.warn("Unknown text type" + datum.Type);
+                return $("<span/>");
+            }
+        },
+
+        clickAction: function (e) {
+            var t = e.target;
+            if (t.className === 'crossable') {
+                $(e.target).css({ "text-decoration": "line-through", color: "red" });
+                $(e.target).parents("card-item")[0].showPoint = true;
+                this.solvedCounter++;
+                this.points++;
+                this.currentCard++;
+                if (this.cards[this.currentCard])
+                    this.cards[this.currentCard].attr("show", true);
+                if (this.solvedCounter == this.totalCounter) {
+                    if (this.clearLine)
+                        this.points += 3;
+                    this.showResults = true;
+                }
+            } else {
+                this.clearLine = false;
+            }
+        }
+    });
+
+  </script>
+
+</polymer-element>

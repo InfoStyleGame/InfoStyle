@@ -1,0 +1,106 @@
+
+<polymer-element name="card-item" attributes="show showPoint">
+
+  <template>
+    <style>
+      @-webkit-keyframes point-arise {
+        0% {
+          opacity: 0;
+          padding-left: -15px;
+        }
+        100% {
+          opacity: 1;
+          padding-left: 0px;
+        }
+      }
+
+      @-moz-keyframes point-arise {
+        0% {
+          opacity: 0;
+          padding-left: -15px;
+        }
+        100% {
+          opacity: 1;
+          padding-left: 0px;
+        }
+      }
+
+      @keyframes point-arise {
+        0% {
+          opacity: 0;
+          padding-left: -15px;
+        }
+        100% {
+          opacity: 1;
+          padding-left: 0px;
+        }
+      }
+
+      #core_card {
+        padding: 10px;
+        max-width: 650px;
+        min-width: 400px;
+        display: inline-block;
+        background-color: rgb(255, 251, 235);
+        box-shadow: 0 0 10px rgba(0,0,0,.2);
+      }
+
+      #core_card .text {
+        font-size: 16px;
+      }
+
+      .point {
+          padding-left: 20px;
+        display: inline-block;
+        font-family: Lora;
+        font-style: italic;
+        font-size: 16px;
+        color: green;
+      }
+
+      .point.hidden {
+        display: inline-block;
+        opacity: 0;
+      }
+
+      .point.showing {
+        -webkit-animation: point-arise 0.2s ease-in;
+        -moz-animation: point-arise 0.2s ease-in;
+        animation: point-arise 0.2s ease-in;
+      }
+
+      paper-button {
+        text-transform: none;
+        position: absolute;
+        right: 0;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      paper-button {
+          height: 10px;
+      }
+
+      .row {
+          margin-bottom: 20px;
+      }
+
+    </style>
+    <div class="row" hidden?="{{!show}}">
+      <core-card id="core_card" horizontal layout>
+        <p id="p" class="text">
+          <content></content>
+        </p>
+      </core-card>
+        <div id="div" hidden?="{{!showPoint}}"class="point">+1</div>
+    </div>
+
+    </template>
+
+  <script>
+    Polymer({});
+  </script>
+
+</polymer-element>

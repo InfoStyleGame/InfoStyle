@@ -2,7 +2,31 @@
     root: "http://norris.kontur:4444/api",
     GetTask: function (type, subject) {
         return $.get(Api.root + "/task", { type: type, subject: subject })
-            .fail(function(data) { alert("Error"); });
+            .fail(function(data) { console.log("Error: " + data); });
+    },
+
+    GetCards: function() {
+        return mockDef({
+            Id: "mockId",
+            Data: [
+                [
+                    { Text: "1В рамках ежегодного фестиваля техники продемонстрировали ", Type: TextTypes.Normal },
+                    { Text: "свыше ", Type: TextTypes.Stop },
+                    { Text: "ста совершенно новых экспанатов", Type: TextTypes.Normal }
+                ],
+                [
+                    { Text: "2В рамках ежегодного фестиваля техники продемонстрировали ", Type: TextTypes.Normal },
+                    { Text: "свыше ", Type: TextTypes.Stop },
+                    { Text: "ста совершенно новых экспанатов", Type: TextTypes.Normal }
+                ],
+                [
+                    { Text: "3В рамках ежегодного фестиваля техники продемонстрировали ", Type: TextTypes.Normal },
+                    { Text: "свыше ", Type: TextTypes.Stop },
+                    { Text: "ста совершенно новых экспанатов", Type: TextTypes.Normal }
+                ],
+                
+            ]
+    })
     },
 
     SubmitTaskResults: function(score, taskId) {
