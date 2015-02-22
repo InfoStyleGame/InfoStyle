@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Web.Http;
 using Api.Helpers;
 using Api.Models;
@@ -36,7 +37,7 @@ namespace Api.Controllers
                         .OrderBy(_ => Guid.NewGuid())
                         .FirstOrDefault();
                 if (task == null)
-                    throw new Exception("No content");
+					throw new HttpResponseException(HttpStatusCode.NotFound);
 
                 return taskMapper.Parse(task);
             }

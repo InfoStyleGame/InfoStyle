@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Http;
 using Api.Helpers;
@@ -21,7 +22,7 @@ namespace Api.Controllers
 			        .FirstOrDefault();
 				// TODO: remove text, already edited by current user
 				if (text == null)
-					throw new HttpException(404, "Sorry, no texts");
+					throw new HttpResponseException(HttpStatusCode.NotFound);
 				return new DailyTextViewModel(text.Id, text.Text);
 	        }
         }
