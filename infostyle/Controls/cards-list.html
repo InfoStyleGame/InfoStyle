@@ -1,5 +1,5 @@
 <link href="/Controls/card-item.html" rel="import" />
-<polymer-element name="cards-list">
+<polymer-element name="cards-list" attributes="level">
 
   <template>
       <style>
@@ -125,7 +125,7 @@
     Polymer({
         ready: function () {
             var self = this;
-            Api.GetCards().done(function (response) {
+            Api.GetCards(this.level).done(function (response) {
                 self.initCards(response);
             });
         },

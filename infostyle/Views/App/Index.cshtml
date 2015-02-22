@@ -1,5 +1,5 @@
 ﻿@using System.Web.Optimization
-@model dynamic
+@model infostyle.Controllers.AppModel
 
 @{
     ViewBag.Title = "Игра по инфостилю";
@@ -25,7 +25,7 @@
     <p>
       Вводные слова, которые обозначают очевидность и известность фактов, требуют доказательств. Иначе они снижают доверие к тексту.
     </p>
-      <cards-list></cards-list>
-      <crawl-line></crawl-line>
+      <cards-list level="@Model.Level"></cards-list>
+      <crawl-line style="display:none;" level="@Model.Level"></crawl-line>
   </div>
 

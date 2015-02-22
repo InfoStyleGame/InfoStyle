@@ -1,4 +1,4 @@
-﻿<polymer-element name="crawl-line">
+﻿<polymer-element name="crawl-line" attributes="level">
     <template>
         <style>
             
@@ -148,7 +148,7 @@
                 $(this.$.game).show();
                 var self = this;
 
-                Api.GetTask(TaskTypes.CrawlLine, 0).done(function (task) {
+                Api.GetTask(TaskTypes.CrawlLine, this.level).done(function (task) {
                     self.data = task.Data.Text;
                     self.taskId = task.Id;
                     self.init();
