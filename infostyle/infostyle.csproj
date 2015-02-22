@@ -137,11 +137,15 @@
   <ItemGroup>
     <Content Include="Content\App.css" />
     <Content Include="Content\resources\avatar.png" />
+    <Content Include="Content\resources\Boss_disable.png" />
+    <Content Include="Content\resources\Boss_enable.png" />
     <Content Include="Content\resources\cursor-gun.png" />
+    <Content Include="Content\resources\Hedgehog.png" />
     <Content Include="Content\resources\island-ezh.png" />
     <Content Include="Content\resources\island_1.png" />
     <Content Include="Content\resources\island_2.png" />
     <Content Include="Content\resources\logo-image.png" />
+    <Content Include="Content\resources\Swamp.png" />
     <Content Include="Content\resources\wave.png" />
     <Content Include="Content\running-style.css" />
     <Content Include="Content\styles.css" />
@@ -201,6 +205,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Controls\cards-list.html" />
     <Content Include="Controls\card-item.html" />
+    <Content Include="Controls\login-frame.html" />
     <Content Include="Controls\level-link.html" />
     <Content Include="Controls\user-info.html" />
     <Content Include="Global.asax" />

@@ -65,11 +65,19 @@ body.main {
 
 .island-first {
   position: absolute;
-  top: 200px;
+  top: 100px;
   left: 0;
-  width: 440px;
-  height: 328px;
-  background: transparent url("/Content/resources/island_1.png") no-repeat;
+  width: 592px;
+  height: 320px;
+  /*background: transparent url("/Content/resources/Swamp.png") no-repeat;*/
+}
+
+.island-first img {
+    width: 592px;
+    height: 320px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .island-second {
@@ -84,10 +92,18 @@ body.main {
 .island-ezh {
   position: absolute;
   top: 250px;
-  right: 100px;
-  width: 185px;
-  height: 314px;
-  background: transparent url("/Content/resources/island-ezh.png") no-repeat;
+  right: 50px;
+  width: 463px;
+  height: 241px;
+  /*background: transparent url("/Content/resources/island-ezh.png") no-repeat;*/
+}
+
+.island-ezh img {
+  width: 463px;
+  height: 241px;
+  position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .level {

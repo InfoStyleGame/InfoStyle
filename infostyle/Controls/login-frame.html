@@ -1,0 +1,111 @@
+﻿<polymer-element name="login-frame">
+    <link href="/Scripts/polymer/paper-button/paper-button.html" rel="import" />
+    <template>
+        <style>
+            .content {
+                position: absolute;
+                top: 100px;
+                left: 50%;
+                margin-left: -175px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0,0,0,.2);
+                display: inline-block;
+                width: 350px;
+                background: #fff;
+            }
+            h1 {
+                font-family: Lora;
+                font-weight: normal;
+                font-style: italic;
+                color: #ffffff;
+                text-align: center;
+                margin: 0;
+                padding: 20px;
+                background-color: #C48FFF;
+                border-radius: 10px 10px 0 0;
+            }
+
+            .button-container {
+                padding: 50px 10px;
+                text-align: center;
+            }
+
+            .button-container p {
+                font-family: RobotoDraft;
+                font-size: 16px;
+                line-height: 1.5em;
+            }
+
+            .background {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                opacity: 0.7;
+                background-color: #000;
+            }
+
+            paper-button {
+                margin-top: 40px;
+                text-transform: none;
+                font-family: Lora;
+                font-size: 16px;
+                font-style: italic;
+                color: #fff;
+                background-color: #006caa;
+            }
+
+            paper-button /deep/ .button-content {
+                              padding: 15px 30px 15px 30px;
+            }
+        </style>
+        <div class="background"></div>
+        <div class="content">
+<!--            <h1>Это инфостиль, детка!</h1>-->
+            <div id="loginstatus"></div>
+            <div class="button-container">
+                <p>Войди, чтобы поиграть с текстом</p>
+                <paper-button id="login" onclick="logIn()" raised>Войти через ВКонтакте</paper-button>
+            </div>
+        </div>
+    </template>
+    <script src="http://vk.com/js/api/openapi.js"></script>
+    <script>
+        Polymer({
+            ready: function () {
+                function checkVkLogin(onSuccess, onError) {
+                    window.VK.Auth.getLoginStatus(function (response) {
+                        if (response.session) {
+                            onSuccess();
+                        } else {
+                            onError();
+                        }
+                    });
+                }
+
+                function vkLogin(onSuccess, onError) {
+                    window.VK.Auth.login(function (response) {
+                        if (response.session) {
+                            onSuccess();
+                        } else {
+                            onError();
+                        }
+                    });
+                }
+
+                function logIn() {
+                    vkLogin(function () { window.location.reload() }, function () { alert("Can't login") });
+                }
+
+                VK.init({
+                    apiId: 4793375
+                });
+                checkVkLogin(function () { $('#loginstatus').html('Ok') }, function () { $('#loginstatus').html('False') });
+            }
+        });
+       
+
+        
+
+        
+    </script>
+</polymer-element>

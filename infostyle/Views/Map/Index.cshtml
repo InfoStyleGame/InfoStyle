@@ -7,6 +7,7 @@
 }
 
 <link rel="import" href="~/Controls/level-link.html">
+<link rel="import" href="~/Controls/login-frame.html">
 
 <div class="header">
     <div class="content">
@@ -26,16 +27,19 @@
     }
 
     <div class="island-first">
+        <img src="/Content/resources/Swamp.png" alt="1st island" />
         <level-link number="1" x="60" y="150" disable="true"></level-link>
         <level-link number="2" x="150" y="50" disable="true"></level-link>
         <level-link number="3" x="280" y="120" disable="true"></level-link>
-    </div>
-    <div class="island-second">
         <level-link number="4" x="60" y="150" disable="true"></level-link>
         <level-link number="5" x="150" y="50" disable="true"></level-link>
     </div>
-    <div class="island-ezh"></div>
+    <div class="island-ezh">
+        <img src="/Content/resources/Hedgehog.png" alt="1st island" />
+    </div>
+    
 </div>
+@*<login-frame></login-frame>*@
 
 @if (Model)
 {
