@@ -1,0 +1,69 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Вход</title>
+    <link href="/Content/site.css" rel="stylesheet"/>
+<link href="/Content/App.css" rel="stylesheet"/>
+<link href="/Content/styles.css" rel="stylesheet"/>
+
+    <script src="/Scripts/modernizr-2.5.3.js"></script>
+
+    <script src="/Scripts/jquery-1.7.1.js"></script>
+
+    <script src="/Scripts/App/Base.js"></script>
+
+    <script src="/Scripts/App/api.js"></script>
+
+    <link href='//fonts.googleapis.com/css?family=RobotoDraft:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=ru'
+    rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lora:400,400italic' rel='stylesheet' type='text/css'>
+</head>
+<body class="main">
+    <link rel="import" href="/Scripts/polymer/polymer/polymer.html">
+    <link rel="import" href="/Controls/user-info.html">
+    
+<script src="http://vk.com/js/api/openapi.js"></script>
+<script src="/Scripts/jquery-1.7.1.min.js"></script>
+
+<h2>Статус авторизации:</h2>
+<div id="loginstatus"></div>
+<button id="login" onclick="logIn()">ВОЙТИ</button>
+
+<script>
+    VK.init({
+        apiId: 4793375
+    });
+
+    function checkVkLogin(onSuccess, onError) {
+        window.VK.Auth.getLoginStatus(function (response) {
+            if (response.session) {
+                onSuccess();
+            } else {
+                onError();
+            }
+        });
+    }
+
+    function vkLogin(onSuccess, onError) {
+        window.VK.Auth.login(function (response) {
+            if (response.session) {
+                onSuccess();
+            } else {
+                onError();
+            }
+        });
+    }
+
+    function logIn() {
+        vkLogin(function() { window.location.reload() }, function() { alert("Can't login") });
+    }
+
+    checkVkLogin(function () { $('#loginstatus').html('Ok') }, function () { $('#loginstatus').html('False') });
+</script>
+    
+</body>
+</html>
