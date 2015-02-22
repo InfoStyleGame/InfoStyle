@@ -40,7 +40,11 @@ namespace Api.Controllers
 
             using (var context = new InfostyleEntities())
             {
-                var tasks = context.Tasks.Where(t => t.Type == taskType && t.Level == level && t.User_Tasks.All(u => u.UserId != userId))
+                if (GetTasks(context, taskType, level, userId).Count() < count)
+                    foreach (var userTask in context.User_Tasks.Where(ut => ut.UserId == userId))
+                        context.User_Tasks.Remove(userTask);
+
+                var tasks = GetTasks(context, taskType, level, userId)
                     .OrderBy(_ => Guid.NewGuid())
                     .Take(count).ToArray();
 
@@ -50,6 +54,11 @@ namespace Api.Controllers
                 context.SaveChanges();
                 return tasks.Select(t => taskMapper.Parse(t)).ToArray();
             }
+        }
+
+        private static IQueryable<Task> GetTasks(InfostyleEntities context, TaskType taskType, int level, int userId)
+        {
+            return context.Tasks.Where(t => t.Type == taskType && t.Level == level && t.User_Tasks.All(u => u.UserId != userId));
         }
     }
 }
