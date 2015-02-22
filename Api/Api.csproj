@@ -159,6 +159,8 @@
     <Compile Include="Helpers\VkAuthHelper.cs" />
     <Compile Include="Helpers\VkAuthParameters.cs" />
     <Compile Include="Managers\UserManager.cs" />
+    <Compile Include="Models\DailyCompareViewModel.cs" />
+    <Compile Include="Models\DailyTextViewModel.cs" />
     <Compile Include="Models\TaskViewModel.cs" />
     <Compile Include="Models\UserInfoModel.cs" />
     <Compile Include="Models\UserProgress.cs" />
