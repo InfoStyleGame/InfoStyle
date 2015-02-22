@@ -15,9 +15,9 @@ namespace Api.Controllers
             using (var context = new InfostyleEntities())
             {
                 var scores = context.Scores.Where(s => s.UserId == userId).ToArray();
-                var currentLevel = scores.Any() ? scores.Max(s => s.Level) : defaultLevel;
-                if (currentLevel < 1)
-                    currentLevel = 1;
+                var currentLevel = scores.Any() ? scores.Max(s => s.Level) + 1 : defaultLevel;
+                if (currentLevel < 0)
+                    currentLevel = 0;
                 return new UserProgress {CurrentLevel = currentLevel};
             }
         }
