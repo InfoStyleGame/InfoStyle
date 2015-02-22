@@ -7,7 +7,7 @@ namespace Api.Controllers
 {
     public class UserProgressController : ControllerBase
     {
-        private const int defaultLevel = 1;
+        private const int defaultLevel = 0;
 
         public UserProgress Get()
         {
