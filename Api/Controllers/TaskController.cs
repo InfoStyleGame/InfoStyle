@@ -46,13 +46,16 @@ namespace Api.Controllers
                         context.User_Tasks.Remove(userTask);
                         context.SaveChanges();
                     }
+            }
 
+            using (var context = new InfostyleEntities())
+            {
                 var tasks = GetTasks(context, taskType, level, userId)
                     .OrderBy(_ => Guid.NewGuid())
                     .Take(count).ToArray();
 
                 foreach (var task in tasks)
-                    context.User_Tasks.Add(new User_Tasks { Id = Guid.NewGuid(), UserId = userId, TaskId = task.Id });
+                    context.User_Tasks.Add(new User_Tasks {Id = Guid.NewGuid(), UserId = userId, TaskId = task.Id});
 
                 context.SaveChanges();
                 return tasks.Select(t => taskMapper.Parse(t)).ToArray();
