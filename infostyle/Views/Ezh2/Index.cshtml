@@ -1,0 +1,27 @@
+﻿@using System.Web.Optimization
+@model infostyle.Controllers.AppModel
+
+@{
+    ViewBag.Title = "Игра по инфостилю";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<link rel="import" href="~/Scripts/polymer/paper-button/paper-button.html">
+<link rel="import" href="~/Controls/crawl-line.html">
+<link rel="import" href="~/Controls/cards-list.html">
+<link rel="import" href="~/Controls/theory-block.html">
+<link href='//fonts.googleapis.com/css?family=RobotoDraft:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=ru'
+    rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lora:400,400italic' rel='stylesheet' type='text/css'>
+<link href="/Content/running-style.css" rel="stylesheet" />
+  <div class="header">
+    <div class="content">
+      <div class="logo"><a href="/" style="color: #fff; text-decoration: none;">Это инфостиль, детка!</a></div>
+      <user-info></user-info>
+    </div>
+  </div>
+
+  <div class="content">
+      <a href="/"><img src="/Content/resources/ezh-2.png"/></a>
+  </div>
+

@@ -126,6 +126,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
+    <Compile Include="Controllers\Ezh2Controller.cs" />
+    <Compile Include="Controllers\EzhController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Exceptions\LoginPleaseException.cs" />
@@ -140,6 +142,8 @@
     <Content Include="Content\resources\Boss_disable.png" />
     <Content Include="Content\resources\Boss_enable.png" />
     <Content Include="Content\resources\cursor-gun.png" />
+    <Content Include="Content\resources\ezh-1.png" />
+    <Content Include="Content\resources\ezh-2.png" />
     <Content Include="Content\resources\Hedgehog.png" />
     <Content Include="Content\resources\island-ezh.png" />
     <Content Include="Content\resources\island_1.png" />
@@ -1794,6 +1798,8 @@
     <Content Include="Scripts\polymer\webcomponentsjs\tests\tools\mocha\Readme.md" />
     <Content Include="Views\App\Index.cshtml" />
     <Content Include="Views\Map\Index.cshtml" />
+    <Content Include="Views\Ezh\Index.cshtml" />
+    <Content Include="Views\Ezh2\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
