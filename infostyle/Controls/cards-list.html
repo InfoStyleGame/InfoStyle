@@ -104,10 +104,18 @@
               display: none;
           }
 
+          .task-label {
+              margin-top: 30px;
+              font-family: Lora;
+              font-style: italic;
+              font-size: 16px;
+          }
+
       </style>
       <div class="elem" on-mousedown="{{clickAction}}">
-        <h3 id="h3">Найди стоп-слово</h3>
-
+          <p class="task-label">
+              Кликни по стоп-слову в каждом предложении
+          </p>
           <div id="cardsContainer">
               
           </div>

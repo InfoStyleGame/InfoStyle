@@ -1,34 +1,41 @@
 ﻿<polymer-element name="level-link" attributes="number x y current disable">
     <template>
         <style>
-            .level {
-              position: absolute;
-              width: 40px;
-              height: 40px;
-              border: solid 3px green;
-              border-radius: 50px;
-              color: green;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
+            .level-container {
+                 position: absolute;
+                text-align: center;
             }
+             .level {
+                 display: inline-block;
+                 left: 50%;
+                 margin-left: -40px;
+                 position: relative;
+                 width: 40px;
+                 height: 40px;
+                 border: solid 3px green;
+                 border-radius: 50px;
+                 color: green;
+                 box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
+             }
             .level span {
-              position: absolute;
-              text-align: center;
-              left: 50%;
-              top: 50%;
-              width: 30px;
-              margin-left: -15px;
-              margin-top: -8px;
+                position: absolute;
+                text-align: center;
+                left: 50%;
+                top: 50%;
+                width: 30px;
+                margin-left: -15px;
+                margin-top: -8px;
             }
             .level.current {
-              /* F5A623 — orange */
-              color: #fff;
+                /* F5A623 — orange */
+                color: #fff;
                 background-color: #F5A623;
-              border-color: #F5A623;
+                border-color: #F5A623;
             }
             .level.disable {
-              color: #fff;
-              background-color: lightgrey;
-              border-color: lightgrey;
+                color: #fff;
+                background-color: lightgrey;
+                border-color: lightgrey;
             }
 
             .level a {
@@ -36,7 +43,27 @@
                 font-weight: bold;
             }
         </style>
-        <div class="level {{conditionalStyles}}" style="left: {{x}}px; top: {{y}}px"><span><a href="/App?level={{number}}">{{number}}</a></span></div>
+        <div class="level-container" style="left: {{x}}px; top: {{y}}px">
+            <div class="level {{conditionalStyles}}">
+                <span><a href="/App?level={{number}}">{{number}}</a></span>
+            </div>
+            <div hidden?="{{number!=1}}">
+                Вводные слова<br/>и междометия
+            </div>
+            <div hidden?="{{number!=2}}">
+                Паразиты <br />времени
+            </div>
+            <div hidden?="{{number!=3}}">
+                Расшаркивания
+            </div>
+            <div hidden?="{{number!=4}}">
+                Отглагольные<br />существительные
+            </div>
+            <div hidden?="{{number!=5}}">
+                Модальность
+            </div>
+        </div>
+        
     </template>
     <script>
         Polymer({

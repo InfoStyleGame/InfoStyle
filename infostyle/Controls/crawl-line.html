@@ -88,6 +88,15 @@
                 font-size: 25px;
             }
 
+            paper-button.end {
+                border: solid 1px #006caa;
+                color: #006caa;
+                font-family: "Lora";
+                font-style: italic;
+                font-size: 25px;
+                margin-top: 20px;
+            }
+
             .crawlLineCounters {
                 padding: 10px 0;
                 font-size: 20px;
@@ -107,8 +116,19 @@
     -khtml-user-select: none; /* webkit (konqueror) browsers */
     -ms-user-select: none; /* IE10+ */
 }
+
+            .task-label {
+              margin-top: 30px;
+              font-family: Lora;
+              font-style: italic;
+              font-size: 16px;
+          }
+
+            #answer {
+                margin-bottom: 20px;
+            }
         </style>
-        <p>
+        <p class="task-label">
       Подстрели все стоп-слова:
     </p>
     
@@ -130,7 +150,7 @@
             <div>Штраф за промахи: <span>{{misses}}</span></div>
             <div>Итого баллов: <span>{{points}}</span></div>
             <div>
-                <paper-button on-tap="{{endGame}}">Завершить уровень</paper-button>
+                <paper-button on-tap="{{endGame}}" class="end">Завершить уровень</paper-button>
             </div>
         </div>
         

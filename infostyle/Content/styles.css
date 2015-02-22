@@ -150,3 +150,8 @@ body.main {
   left: 280px;
   top: 120px;
 }
+
+.border {
+    border-bottom: solid 1px #ddd;
+    padding: 20px 0;
+}
