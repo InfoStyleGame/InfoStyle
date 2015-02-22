@@ -18,7 +18,7 @@ namespace Api.Managers
                 {
                     Name = VkApiHelper.GetUserInfo(vkLogin).Name,
                     VKLogin = vkLogin,
-                    LastDailyEditTime = DateTime.Now,
+                    LastDailyEditTime = DateTime.UtcNow,
                     Rank = 1000
                 };
                 db.Users.Add(newUser);
