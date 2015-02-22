@@ -16,6 +16,8 @@ namespace Api.Controllers
             {
                 var scores = context.Scores.Where(s => s.UserId == userId).ToArray();
                 var currentLevel = scores.Any() ? scores.Max(s => s.Level) : defaultLevel;
+                if (currentLevel < 1)
+                    currentLevel = 1;
                 return new UserProgress {CurrentLevel = currentLevel};
             }
         }
