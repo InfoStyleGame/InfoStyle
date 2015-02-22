@@ -113,6 +113,8 @@
           </div>
           <div class="result-panel" hidden?="{{!showResults}}">
               <span>Заработано баллов: {{points}}</span>
+              <span hidden?="{{!clearLine}}">+ 3 (за чистую линию) = {{points+3}}
+              </span>
               <paper-button class="colored" raised>Дальше</paper-button>
           </div>
       </div>
@@ -168,7 +170,12 @@
 
         clickAction: function (e) {
             var t = e.target;
+            if(this.showResults)
+                return;
             if (t.className === 'crossable') {
+                if (e.target.hit )
+                    return;
+                e.target.hit = true;
                 $(e.target).css({ "text-decoration": "line-through", color: "red" });
                 $(e.target).parents("card-item")[0].showPoint = true;
                 this.solvedCounter++;
@@ -177,8 +184,6 @@
                 if (this.cards[this.currentCard])
                     this.cards[this.currentCard].attr("show", true);
                 if (this.solvedCounter == this.totalCounter) {
-                    if (this.clearLine)
-                        this.points += 3;
                     this.showResults = true;
                 }
             } else {
