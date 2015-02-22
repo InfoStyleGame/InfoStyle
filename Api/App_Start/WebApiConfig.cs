@@ -13,7 +13,7 @@ namespace Api
             config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "{controller}/{id}",
+                routeTemplate: "{controller}/{action}/{id}",
                 defaults: new { controller = "Hello", id = RouteParameter.Optional }
             );
 

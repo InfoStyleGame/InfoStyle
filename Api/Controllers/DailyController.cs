@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Http;
 using Api.Helpers;
 using EF;
@@ -27,6 +26,7 @@ namespace Api.Controllers
 	        }
         }
 
+		[HttpPost]
 		public void PostEdit(int textId, string editResult)
 		{
 			int userId = VkAuthHelper.GetCurrentUser(Request.Headers).Id;
@@ -45,9 +45,10 @@ namespace Api.Controllers
 			}
 		}
 
+		[HttpPost]
 	    public DailyCompareViewModel GetEditsToCompare()
 	    {
-		    throw new NotImplementedException();
+		    return null;
 	    }
 
 	}

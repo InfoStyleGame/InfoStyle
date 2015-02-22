@@ -18,7 +18,7 @@ namespace Api.Controllers
             taskMapper = new TaskMapper();
         }
 
-		[HttpGet]
+		[HttpPost]
 		public TaskViewModel[] Card(int level)
 	    {
 			using (var context = new InfostyleEntities())
@@ -30,6 +30,7 @@ namespace Api.Controllers
 			}
 		}
 
+		[HttpPost]
 		public TaskViewModel Get(TaskType type, int level)        {
             using (var context = new InfostyleEntities())
             {
