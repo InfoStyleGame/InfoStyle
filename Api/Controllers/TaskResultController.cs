@@ -11,7 +11,7 @@ namespace Api.Controllers
             var userId = VkAuthHelper.GetCurrentUser(Request.Headers).Id;
             using (var context = new InfostyleEntities())
             {
-				context.Scores.Add(new Score { Id = Guid.NewGuid(), UserId = userId, TaskId = taskId, Value = score });
+                context.User_Tasks.Add(new User_Tasks {Id = Guid.NewGuid(), UserId = userId, TaskId = taskId});
                 context.SaveChanges();
             }
         }

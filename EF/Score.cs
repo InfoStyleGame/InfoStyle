@@ -15,9 +15,9 @@ namespace EF
     public partial class Score
     {
         public System.Guid Id { get; set; }
-        public System.Guid TaskId { get; set; }
         public int UserId { get; set; }
-        public int Value { get; set; }
+        public int Level { get; set; }
+        public int Score1 { get; set; }
     
         public virtual User User { get; set; }
     }

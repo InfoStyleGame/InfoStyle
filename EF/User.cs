@@ -19,6 +19,7 @@ namespace EF
             this.DailyCompares = new HashSet<DailyCompare>();
             this.DailyEdits = new HashSet<DailyEdit>();
             this.Scores = new HashSet<Score>();
+            this.User_Tasks = new HashSet<User_Tasks>();
         }
     
         public int Id { get; set; }
@@ -30,5 +31,6 @@ namespace EF
         public virtual ICollection<DailyCompare> DailyCompares { get; set; }
         public virtual ICollection<DailyEdit> DailyEdits { get; set; }
         public virtual ICollection<Score> Scores { get; set; }
+        public virtual ICollection<User_Tasks> User_Tasks { get; set; }
     }
 }

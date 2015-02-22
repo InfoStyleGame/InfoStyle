@@ -5,18 +5,21 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="e06b437eb67042ffaa1e1bceb589a557" Name="Diagram1">
-        <EntityTypeShape EntityType="InfostyleModel.DailyCompare" Width="1.5" PointX="5.25" PointY="3.25" />
-        <EntityTypeShape EntityType="InfostyleModel.DailyEdit" Width="1.5" PointX="3" PointY="3.125" />
-        <EntityTypeShape EntityType="InfostyleModel.DailyText" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="InfostyleModel.Score" Width="1.5" PointX="0.75" PointY="7" />
-        <EntityTypeShape EntityType="InfostyleModel.Task" Width="1.5" PointX="2.75" PointY="7" />
-        <EntityTypeShape EntityType="InfostyleModel.User" Width="1.5" PointX="0.75" PointY="3.5" />
+        <EntityTypeShape EntityType="InfostyleModel.DailyCompare" Width="1.5" PointX="8.25" PointY="4.625" />
+        <EntityTypeShape EntityType="InfostyleModel.DailyEdit" Width="1.5" PointX="3" PointY="4.5" />
+        <EntityTypeShape EntityType="InfostyleModel.DailyText" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="InfostyleModel.Score" Width="1.5" PointX="4.75" PointY="8" />
+        <EntityTypeShape EntityType="InfostyleModel.Task" Width="1.5" PointX="3.75" PointY="1" />
+        <EntityTypeShape EntityType="InfostyleModel.User_Tasks" Width="1.5" PointX="6" PointY="5" />
+        <EntityTypeShape EntityType="InfostyleModel.User" Width="1.5" PointX="0.75" PointY="4.625" />
         <AssociationConnector Association="InfostyleModel.FK_DailyEditDailyCompare" />
         <AssociationConnector Association="InfostyleModel.FK_DailyEditDailyCompare1" />
         <AssociationConnector Association="InfostyleModel.FK_UserDailyCompare" />
         <AssociationConnector Association="InfostyleModel.FK_DailyTextDailyEdit" />
         <AssociationConnector Association="InfostyleModel.FK_UserDailyEdit" />
-        <AssociationConnector Association="InfostyleModel.FK_ScoresUser" />
+        <AssociationConnector Association="InfostyleModel.FK_Scores_Users" />
+        <AssociationConnector Association="InfostyleModel.FK_User_Tasks_Tasks" />
+        <AssociationConnector Association="InfostyleModel.FK_User_Tasks_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

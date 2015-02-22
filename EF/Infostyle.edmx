@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="InfostyleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="InfostyleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="DailyCompares">
           <Key>
             <PropertyRef Name="Id" />
@@ -40,20 +40,26 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="TaskId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="Value" Type="int" Nullable="false" />
+          <Property Name="Level" Type="int" Nullable="false" />
+          <Property Name="Score" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Tasks">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="Type" />
-            <PropertyRef Name="Level" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Type" Type="int" Nullable="false" />
           <Property Name="Level" Type="int" Nullable="false" />
           <Property Name="Text" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="User_Tasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TaskId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -101,7 +107,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ScoresUser">
+        <Association Name="FK_Scores_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Scores" Type="Self.Scores" Multiplicity="*" />
           <ReferentialConstraint>
@@ -109,6 +115,30 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Scores">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Tasks_Tasks">
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="1" />
+          <End Role="User_Tasks" Type="Self.User_Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Tasks">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Tasks_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="User_Tasks" Type="Self.User_Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Tasks">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -143,6 +173,7 @@
           <EntitySet Name="DailyTexts" EntityType="Self.DailyTexts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Scores" EntityType="Self.Scores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Tasks" EntityType="Self.User_Tasks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_DailyEditDailyCompare" Association="Self.FK_DailyEditDailyCompare">
             <End Role="DailyEdits" EntitySet="DailyEdits" />
@@ -156,9 +187,17 @@
             <End Role="DailyTexts" EntitySet="DailyTexts" />
             <End Role="DailyEdits" EntitySet="DailyEdits" />
           </AssociationSet>
-          <AssociationSet Name="FK_ScoresUser" Association="Self.FK_ScoresUser">
+          <AssociationSet Name="FK_Scores_Users" Association="Self.FK_Scores_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Scores" EntitySet="Scores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Tasks_Tasks" Association="Self.FK_User_Tasks_Tasks">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="User_Tasks" EntitySet="User_Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Tasks_Users" Association="Self.FK_User_Tasks_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="User_Tasks" EntitySet="User_Tasks" />
           </AssociationSet>
           <AssociationSet Name="FK_UserDailyCompare" Association="Self.FK_UserDailyCompare">
             <End Role="Users" EntitySet="Users" />
@@ -179,6 +218,7 @@
           <EntitySet Name="DailyTexts" EntityType="InfostyleModel.DailyText" />
           <EntitySet Name="Scores" EntityType="InfostyleModel.Score" />
           <EntitySet Name="Tasks" EntityType="InfostyleModel.Task" />
+          <EntitySet Name="User_Tasks" EntityType="InfostyleModel.User_Tasks" />
           <EntitySet Name="Users" EntityType="InfostyleModel.User" />
           <AssociationSet Name="FK_DailyEditDailyCompare" Association="InfostyleModel.FK_DailyEditDailyCompare">
             <End Role="DailyEdit" EntitySet="DailyEdits" />
@@ -200,13 +240,19 @@
             <End Role="User" EntitySet="Users" />
             <End Role="DailyEdit" EntitySet="DailyEdits" />
           </AssociationSet>
-          <AssociationSet Name="FK_ScoresUser" Association="InfostyleModel.FK_ScoresUser">
+          <AssociationSet Name="FK_Scores_Users" Association="InfostyleModel.FK_Scores_Users">
             <End Role="User" EntitySet="Users" />
             <End Role="Score" EntitySet="Scores" />
           </AssociationSet>
+          <AssociationSet Name="FK_User_Tasks_Tasks" Association="InfostyleModel.FK_User_Tasks_Tasks">
+            <End Role="Task" EntitySet="Tasks" />
+            <End Role="User_Tasks" EntitySet="User_Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Tasks_Users" Association="InfostyleModel.FK_User_Tasks_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="User_Tasks" EntitySet="User_Tasks" />
+          </AssociationSet>
         </EntityContainer>
-        <EnumType Name="TaskType" a:ExternalTypeName="Enums.TaskType" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
-        <EnumType Name="Subject" a:ExternalTypeName="Enums.Subject" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
         <EntityType Name="DailyCompare">
           <Key>
             <PropertyRef Name="Id" />
@@ -250,21 +296,30 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="TaskId" Type="Guid" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="Value" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="InfostyleModel.FK_ScoresUser" FromRole="Score" ToRole="User" />
+          <Property Name="Level" Type="Int32" Nullable="false" />
+          <Property Name="Score1" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="InfostyleModel.FK_Scores_Users" FromRole="Score" ToRole="User" />
         </EntityType>
         <EntityType Name="Task">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="Type" />
-            <PropertyRef Name="Level" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Type" Type="InfostyleModel.TaskType" Nullable="false" />
-          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Level" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User_Tasks" Relationship="InfostyleModel.FK_User_Tasks_Tasks" FromRole="Task" ToRole="User_Tasks" />
+        </EntityType>
+        <EntityType Name="User_Tasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="TaskId" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Task" Relationship="InfostyleModel.FK_User_Tasks_Tasks" FromRole="User_Tasks" ToRole="Task" />
+          <NavigationProperty Name="User" Relationship="InfostyleModel.FK_User_Tasks_Users" FromRole="User_Tasks" ToRole="User" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -277,7 +332,8 @@
           <Property Name="VKLogin" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DailyCompares" Relationship="InfostyleModel.FK_UserDailyCompare" FromRole="User" ToRole="DailyCompare" />
           <NavigationProperty Name="DailyEdits" Relationship="InfostyleModel.FK_UserDailyEdit" FromRole="User" ToRole="DailyEdit" />
-          <NavigationProperty Name="Scores" Relationship="InfostyleModel.FK_ScoresUser" FromRole="User" ToRole="Score" />
+          <NavigationProperty Name="Scores" Relationship="InfostyleModel.FK_Scores_Users" FromRole="User" ToRole="Score" />
+          <NavigationProperty Name="User_Tasks" Relationship="InfostyleModel.FK_User_Tasks_Users" FromRole="User" ToRole="User_Tasks" />
         </EntityType>
         <Association Name="FK_DailyEditDailyCompare">
           <End Type="InfostyleModel.DailyEdit" Role="DailyEdit" Multiplicity="1" />
@@ -339,8 +395,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EnumType Name="TaskType1" a:ExternalTypeName="EF.Enums.TaskType" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
-        <Association Name="FK_ScoresUser">
+        <Association Name="FK_Scores_Users">
           <End Type="InfostyleModel.User" Role="User" Multiplicity="1" />
           <End Type="InfostyleModel.Score" Role="Score" Multiplicity="*" />
           <ReferentialConstraint>
@@ -352,6 +407,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User_Tasks_Tasks">
+          <End Type="InfostyleModel.Task" Role="Task" Multiplicity="1" />
+          <End Type="InfostyleModel.User_Tasks" Role="User_Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Tasks">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Tasks_Users">
+          <End Type="InfostyleModel.User" Role="User" Multiplicity="1" />
+          <End Type="InfostyleModel.User_Tasks" Role="User_Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Tasks">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="TaskType" a:ExternalTypeName="Enums.TaskType" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -394,9 +474,9 @@
           <EntitySetMapping Name="Scores">
             <EntityTypeMapping TypeName="InfostyleModel.Score">
               <MappingFragment StoreEntitySet="Scores">
-                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Score1" ColumnName="Score" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -404,9 +484,18 @@
           <EntitySetMapping Name="Tasks">
             <EntityTypeMapping TypeName="InfostyleModel.Task">
               <MappingFragment StoreEntitySet="Tasks">
-                <ScalarProperty Name="Level" ColumnName="Level" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Tasks">
+            <EntityTypeMapping TypeName="InfostyleModel.User_Tasks">
+              <MappingFragment StoreEntitySet="User_Tasks">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

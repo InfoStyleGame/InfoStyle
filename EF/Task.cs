@@ -14,9 +14,16 @@ namespace EF
     
     public partial class Task
     {
+        public Task()
+        {
+            this.User_Tasks = new HashSet<User_Tasks>();
+        }
+    
         public System.Guid Id { get; set; }
         public Enums.TaskType Type { get; set; }
-        public string Text { get; set; }
         public int Level { get; set; }
+        public string Text { get; set; }
+    
+        public virtual ICollection<User_Tasks> User_Tasks { get; set; }
     }
 }

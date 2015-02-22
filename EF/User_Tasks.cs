@@ -12,17 +12,13 @@ namespace EF
     using System;
     using System.Collections.Generic;
     
-    public partial class DailyCompare
+    public partial class User_Tasks
     {
-        public int Id { get; set; }
-        public System.DateTime Time { get; set; }
+        public System.Guid Id { get; set; }
+        public System.Guid TaskId { get; set; }
         public int UserId { get; set; }
-        public int EditId { get; set; }
-        public int OpponentEditId { get; set; }
-        public short Score { get; set; }
     
-        public virtual DailyEdit DailyEdit { get; set; }
-        public virtual DailyEdit DailyEdit1 { get; set; }
+        public virtual Task Task { get; set; }
         public virtual User User { get; set; }
     }
 }
