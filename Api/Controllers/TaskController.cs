@@ -18,29 +18,29 @@ namespace Api.Controllers
             taskMapper = new TaskMapper();
         }
 
-		[HttpPost]
-		public TaskViewModel[] Card(int level)
-	    {
-			using (var context = new InfostyleEntities())
-			{
-				var tasks = context.Tasks.Where(t => t.Type == TaskType.Card && t.Level == level)
-					.OrderBy(_ => Guid.NewGuid())
-					.Take(5).ToList();
-				return tasks.Select(t => taskMapper.Parse(t)).ToArray();
-			}
-		}
+        [HttpPost]
+        public TaskViewModel[] Card(int level)
+        {
+            const int count = 5;
+            return GetTasks(TaskType.Card, level, count);
+        }
 
-		[HttpPost]
-		public TaskViewModel Get(TaskType type, int level)        {
+        [HttpPost]
+        public TaskViewModel Get(TaskType type, int level)
+        {
+            var tasks = GetTasks(type, level, 1);
+            if (!tasks.Any())
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            return tasks.Single();
+        }
+
+        private TaskViewModel[] GetTasks(TaskType taskType, int level, int count)
+        {
             using (var context = new InfostyleEntities())
             {
-                var task = context.Tasks.Where(t => t.Type == type && t.Level == level)
-                        .OrderBy(_ => Guid.NewGuid())
-                        .FirstOrDefault();
-                if (task == null)
-					throw new HttpResponseException(HttpStatusCode.NotFound);
-
-                return taskMapper.Parse(task);
+                return context.Tasks.Where(t => t.Type == taskType && t.Level == level)
+                    .OrderBy(_ => Guid.NewGuid())
+                    .Take(count).Select(t => taskMapper.Parse(t)).ToArray();
             }
         }
     }
