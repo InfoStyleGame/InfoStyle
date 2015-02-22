@@ -2,12 +2,13 @@
     <template>
         <style>
             .level {
-              position: relative;
+              position: absolute;
               width: 40px;
               height: 40px;
               border: solid 3px green;
               border-radius: 50px;
               color: green;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
             }
             .level span {
               position: absolute;
@@ -16,16 +17,23 @@
               top: 50%;
               width: 30px;
               margin-left: -15px;
-              margin-top: -10px;
+              margin-top: -8px;
             }
             .level.current {
               /* F5A623 — orange */
-              color: #F5A623;
+              color: #fff;
+                background-color: #F5A623;
               border-color: #F5A623;
             }
             .level.disable {
-              color: lightgrey;
+              color: #fff;
+              background-color: lightgrey;
               border-color: lightgrey;
+            }
+
+            .level a {
+                text-decoration: none;
+                font-weight: bold;
             }
         </style>
         <div class="level {{conditionalStyles}}" style="left: {{x}}px; top: {{y}}px"><span><a href="/App">{{number}}</a></span></div>
