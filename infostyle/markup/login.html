@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>����</title>
+    <title>����</title>
     <link href="/Content/site.css" rel="stylesheet"/>
 <link href="/Content/App.css" rel="stylesheet"/>
 <link href="/Content/styles.css" rel="stylesheet"/>
@@ -21,17 +21,73 @@
     <link href='//fonts.googleapis.com/css?family=RobotoDraft:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=ru'
     rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Lora:400,400italic' rel='stylesheet' type='text/css'>
+
+  <style>
+    .main {
+      margin: 0;
+      padding: 0;
+      background-color: lightgrey;
+    }
+    .content {
+      position: absolute;
+      top: 100px;
+      left: 50%;
+      margin-left: -250px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,.2);
+      display: inline-block;
+      width: 500px;
+      background: #fff;
+    }
+    h1 {
+      font-family: Lora;
+      font-weight: normal;
+      font-style: italic;
+      color: #ffffff;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      background-color: #C48FFF;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .button-container {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .button-container p {
+      font-family: RobotoDraft;
+      font-size: 16px;
+      line-height: 1.5em;
+    }
+
+    .background {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      opacity: 0.2;
+      background-color: grey;
+    }
+  </style>
 </head>
 <body class="main">
     <link rel="import" href="/Scripts/polymer/polymer/polymer.html">
     <link rel="import" href="/Controls/user-info.html">
-    
+
 <script src="http://vk.com/js/api/openapi.js"></script>
 <script src="/Scripts/jquery-1.7.1.min.js"></script>
 
-<h2>������ �����������:</h2>
-<div id="loginstatus"></div>
-<button id="login" onclick="logIn()">�����</button>
+  <div class="background"></div>
+  <div class="content">
+    <h1>Это инфостиль, детка!</h1>
+    <div id="loginstatus"></div>
+    <div class="button-container">
+      <p>Игра про инфостиль.<br>Войди, чтобы начать:</p>
+      <paper-button id="login" onclick="logIn()">Войти через ВКонтакте</paper-button>
+    </div>
+  </div>
+
 
 <script>
     VK.init({
@@ -64,6 +120,6 @@
 
     checkVkLogin(function () { $('#loginstatus').html('Ok') }, function () { $('#loginstatus').html('False') });
 </script>
-    
+
 </body>
 </html>
