@@ -40,7 +40,7 @@ namespace Api.Controllers
 
             using (var context = new InfostyleEntities())
             {
-                var tasks = context.Tasks.Where(t => t.Type == taskType && t.Level == level && !t.User_Tasks.Any())
+                var tasks = context.Tasks.Where(t => t.Type == taskType && t.Level == level && t.User_Tasks.All(u => u.UserId != userId))
                     .OrderBy(_ => Guid.NewGuid())
                     .Take(count).ToArray();
 
