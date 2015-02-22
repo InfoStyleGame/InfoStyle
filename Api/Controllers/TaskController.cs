@@ -25,7 +25,7 @@ namespace Api.Controllers
             return GetTasks(TaskType.Card, level, count);
         }
 
-        [HttpPost]
+        [HttpGet]
         public TaskViewModel Get(TaskType type, int level)
         {
             var tasks = GetTasks(type, level, 1);
@@ -40,7 +40,7 @@ namespace Api.Controllers
 
             using (var context = new InfostyleEntities())
             {
-                var tasks = context.Tasks.Where(t => t.Type == taskType && t.Level == level)
+                var tasks = context.Tasks.Where(t => t.Type == taskType && t.Level == level && !t.User_Tasks.Any())
                     .OrderBy(_ => Guid.NewGuid())
                     .Take(count);
 
