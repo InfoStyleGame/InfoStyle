@@ -31,7 +31,9 @@ namespace Api.Managers
         {
             using (var db = new InfostyleEntities())
             {
-                return db.Scores.Where(s => s.UserId == id).Select(s => s.Score1).Sum();
+                if (db.Scores.Any(s => s.UserId == id))
+                    return db.Scores.Where(s => s.UserId == id).Select(s => s.Score1).Sum();
+                return 0;
             }
         }
     }
