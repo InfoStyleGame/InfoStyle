@@ -148,6 +148,7 @@
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TaskResultController.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
+    <Compile Include="Controllers\UserProgressController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -158,6 +159,7 @@
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Models\TaskViewModel.cs" />
     <Compile Include="Models\UserInfoModel.cs" />
+    <Compile Include="Models\UserProgress.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ranking\Ranker.cs" />
   </ItemGroup>

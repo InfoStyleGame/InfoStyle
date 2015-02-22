@@ -14,9 +14,7 @@
     },
 
     GetUserProgress: function() {
-        return mockDef({
-            CurrentLevel: 1,
-        });
+        return $.get(Api.root + "/userProgress");
     }
 };
 
