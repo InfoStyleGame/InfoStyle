@@ -1,13 +1,13 @@
 ﻿window.Api = {
-    root: "http://norris.kontur:4444/api",
+    root: "http://localhost:666/api",
     GetTask: function (type, level) {
         return $.post(Api.root + "/task/get?type=" + type + "&level=" + level)
-            .fail(function(data) { console.log("Error: " + data); });
+            .fail(function(data) { console.log("Error: " + JSON.stringify(data)); });
     },
 
     GetCards: function() {
         return $.post(Api.root + "/task/card?level=0")
-            .fail(function (data) { console.log("Error: " + data); });
+            .fail(function (data) { console.log("Error: " + JSON.stringify(data)); });
     },
 
     SubmitTaskResults: function(score, taskId) {
