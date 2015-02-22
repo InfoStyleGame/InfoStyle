@@ -16,7 +16,7 @@ namespace EF
     {
         public System.Guid Id { get; set; }
         public Enums.TaskType Type { get; set; }
-        public Enums.Subject Subject { get; set; }
         public string Text { get; set; }
+        public int Level { get; set; }
     }
 }

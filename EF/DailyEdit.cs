@@ -23,8 +23,8 @@ namespace EF
         public int Id { get; set; }
         public int UserId { get; set; }
         public int DailyTextId { get; set; }
-        public System.TimeSpan Time { get; set; }
-        public System.DateTimeOffset TimeTaken { get; set; }
+        public System.DateTime Time { get; set; }
+        public System.TimeSpan TimeTaken { get; set; }
         public string Result { get; set; }
     
         public virtual ICollection<DailyCompare> DailyCompares { get; set; }

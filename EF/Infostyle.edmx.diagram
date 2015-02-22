@@ -16,6 +16,7 @@
         <AssociationConnector Association="InfostyleModel.FK_UserDailyCompare" />
         <AssociationConnector Association="InfostyleModel.FK_DailyTextDailyEdit" />
         <AssociationConnector Association="InfostyleModel.FK_UserDailyEdit" />
+        <AssociationConnector Association="InfostyleModel.FK_ScoresUser" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
