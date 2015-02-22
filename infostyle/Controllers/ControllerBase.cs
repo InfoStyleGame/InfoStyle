@@ -53,7 +53,7 @@ namespace infostyle.Controllers
             return GetBool("http://" + apiHost + ":4444/api/userInfo/isLoggedIn");
         }
 
-        private bool GetBool(string url, int timeout = 5000)
+        private bool GetBool(string url, int timeout = 25000)
         {
             var request = (HttpWebRequest) WebRequest.Create(url);
             request.Timeout = timeout;

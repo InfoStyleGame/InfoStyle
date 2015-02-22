@@ -18,7 +18,7 @@ namespace Api.Helpers
             };
         }
 
-        private static JObject GetJson(string url, int timeout = 5000)
+        private static JObject GetJson(string url, int timeout = 25000)
         {
             var request = WebRequest.Create(url);
             request.Timeout = timeout;
