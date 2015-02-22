@@ -3,7 +3,9 @@
     Layout = "../Shared/_Layout.cshtml";
 }
 
-  <div class="header">
+<link rel="import" href="~/Controls/level-link.html">
+
+<div class="header">
     <div class="content">
       <div class="logo">Это инфостиль, детка!</div>
       <user-info></user-info>
@@ -12,13 +14,13 @@
 
   <div class="content">
     <div class="island-first">
-      <div class="level first current"><span><a href="/App">1</a></span></div>
-      <div class="level second disable"><span>2</span></div>
-      <div class="level third disable"><span>3</span></div>
+        <level-link number="1" x="60" y="150" current="true"></level-link>
+        <level-link number="2" x="150" y="50" disable="true"></level-link>
+        <level-link number="3" x="280" y="120" disable="true"></level-link>
     </div>
     <div class="island-second">
-      <div class="level first disable"><span>4</span></div>
-      <div class="level second disable"><span>5</span></div>
+        <level-link number="4" x="60" y="150" disable="true"></level-link>
+        <level-link number="5" x="150" y="50" disable="true"></level-link>
     </div>
-    <div class="island-ezh"></div>
+      <div class="island-ezh"></div>
   </div>
