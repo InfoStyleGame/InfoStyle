@@ -16,7 +16,7 @@ namespace Api.Controllers
         [HttpGet]
         public bool IsLoggedIn()
         {
-            return VkAuthHelper.GetCurrentUser(Request.Headers) != null;
+            return VkAuthHelper.GetCurrentUserReally(Request.Headers) != null;
         }
     }
 }

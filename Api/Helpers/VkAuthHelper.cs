@@ -30,6 +30,15 @@ namespace Api.Helpers
             return UserManager.GetOrCreateUser(vkLogin);
         }
 
+        //todo выпилить, когда пропадет костыль выше
+        public static User GetCurrentUserReally(HttpRequestHeaders requestParams)
+        {
+            var vkLogin = GetCurrentUserVkLogin(requestParams);
+            if (vkLogin == null)
+                return null;
+            return UserManager.GetOrCreateUser(vkLogin);
+        }
+
         private static string GetCurrentUserVkLogin(HttpRequestHeaders requestParams)
         {
             //todo выпилить на боевой
