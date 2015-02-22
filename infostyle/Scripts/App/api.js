@@ -11,6 +11,12 @@
 
     GetUserInfo: function() {
         return $.get(Api.root + "/userInfo");
+    },
+
+    GetUserProgress: function() {
+        return mockDef({
+            CurrentLevel: 1,
+        });
     }
 };
 

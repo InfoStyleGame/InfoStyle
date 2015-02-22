@@ -12,9 +12,9 @@
     </div>
   </div>
 
-  <div class="content">
+<div class="content">
     <div class="island-first">
-        <level-link number="1" x="60" y="150" current="true"></level-link>
+        <level-link number="1" x="60" y="150" disable="true"></level-link>
         <level-link number="2" x="150" y="50" disable="true"></level-link>
         <level-link number="3" x="280" y="120" disable="true"></level-link>
     </div>
@@ -22,5 +22,15 @@
         <level-link number="4" x="60" y="150" disable="true"></level-link>
         <level-link number="5" x="150" y="50" disable="true"></level-link>
     </div>
-      <div class="island-ezh"></div>
-  </div>
+    <div class="island-ezh"></div>
+</div>
+
+<script>
+    Api.GetUserProgress().done(function(progress) {
+        var l = progress.CurrentLevel;
+        for (var i = 0; i <= l; i++)
+            $('level-link[number=' + i + ']').attr("disable", "false");
+
+        $('level-link[number=' + l + ']').attr("current", "true");
+    });
+</script>
