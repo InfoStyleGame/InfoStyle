@@ -1792,9 +1792,7 @@
     <Content Include="Scripts\polymer\webcomponentsjs\tests\tools\mocha\LICENSE" />
     <Content Include="Scripts\polymer\webcomponentsjs\tests\tools\mocha\Readme.md" />
     <Content Include="Views\App\Index.cshtml" />
-    <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Map\Index.cshtml" />
-    <Content Include="Views\Shared\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

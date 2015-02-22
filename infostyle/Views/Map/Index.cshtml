@@ -21,11 +21,6 @@
 
 <div class="content">
 
-    @if (!Model)
-    {
-        Html.RenderPartial("Login");
-    }
-
     <div class="island-first">
         <img src="/Content/resources/Swamp.png" alt="1st island" />
         <level-link number="1" x="60" y="150" disable="true"></level-link>
@@ -39,7 +34,10 @@
     </div>
     
 </div>
-@*<login-frame></login-frame>*@
+@if (!Model)
+{
+    <login-frame></login-frame>
+}
 
 @if (Model)
 {
