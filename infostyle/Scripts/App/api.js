@@ -1,7 +1,7 @@
 ﻿window.Api = {
-    root: "http://norris.kontur:4444/api",
-    GetTask: function (type, subject) {
-        return $.get(Api.root + "/task/get", { type: type, subject: subject })
+    root: "http://localhost:666/api",
+    GetTask: function (type, level) {
+        return $.post(Api.root + "/task/get?type=" + type + "&level=" + level)
             .fail(function(data) { console.log("Error: " + data); });
     },
 
@@ -31,10 +31,6 @@ window.mockDef = function(result) {
 
 window.TaskTypes = {
     CrawlLine: "CrawlLine"
-};
-
-window.Subjects = {
-    Stop: "Stop"
 };
 
 window.TextTypes = {

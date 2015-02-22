@@ -25,7 +25,7 @@ namespace Api.Controllers
             return GetTasks(TaskType.Card, level, count);
         }
 
-        [HttpGet]
+        [HttpPost]
         public TaskViewModel Get(TaskType type, int level)
         {
             var tasks = GetTasks(type, level, 1);
