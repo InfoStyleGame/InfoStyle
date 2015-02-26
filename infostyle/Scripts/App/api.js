@@ -12,7 +12,8 @@
             .fail(function (data) { console.log("Error: " + JSON.stringify(data)); });
     },
 
-    SubmitTaskResults: function(level, score) {
+    SubmitTaskResults: function (level, score) {
+        level = level - 1;
         return $.post(Api.root + "/taskResult/post?score=" + score + "&level=" + level);
     },
 
