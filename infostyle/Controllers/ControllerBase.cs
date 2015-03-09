@@ -11,6 +11,11 @@ namespace infostyle.Controllers
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(ControllerBase));
 
+        protected virtual bool NeedToCheckLoginState
+        {
+            get { return true; }
+        }
+
         private bool LoginState;
 
         protected void VerifyIsLoggedIn()
@@ -39,20 +44,17 @@ namespace infostyle.Controllers
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             base.OnActionExecuting(filterContext);
-            LoginState = IsLoggedIn();
+            if (NeedToCheckLoginState)
+                LoginState = IsLoggedIn();
         }
 
-        private const string apiHost = "norris.kontur";
-
+        //todo выпилить нафиг и перенести на клиента
         private bool IsLoggedIn()
         {
-            //говно костыль
-            if (!System.Web.HttpContext.Current.Request.Url.ToString().ToLower().Contains(apiHost.ToLower()))
-                return true;
-            return GetBool("http://" + apiHost + ":4444/api/userInfo/isLoggedIn");
+            return GetBool("http://" + Request.Url.Host + ":" + Request.Url.Port + "/api/userInfo/isLoggedIn", Request.Url.Host);
         }
 
-        private bool GetBool(string url, int timeout = 25000)
+        private bool GetBool(string url, string host, int timeout = 25000)
         {
             var request = (HttpWebRequest) WebRequest.Create(url);
             request.Timeout = timeout;
@@ -61,7 +63,7 @@ namespace infostyle.Controllers
             foreach (string cookieKey in Request.Cookies)
             {
                 var cookie = Request.Cookies[cookieKey];
-                request.CookieContainer.Add(new Cookie(cookie.Name, cookie.Values.ToString(), cookie.Path, apiHost));
+                request.CookieContainer.Add(new Cookie(cookie.Name, cookie.Values.ToString(), cookie.Path, host));
             }
 
             var response = request.GetResponse();

@@ -1,5 +1,5 @@
 ﻿window.Api = {
-    root: "http://norris.kontur:4444/api",
+    root: "/api",
     GetTask: function (type, level) {
         level = level - 1;
         return $.post(Api.root + "/task/get?level="+ level +"&type=" + type)
