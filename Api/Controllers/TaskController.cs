@@ -36,7 +36,7 @@ namespace Api.Controllers
 
         private TaskViewModel[] GetTasks(TaskType taskType, int level, int count)
         {
-            var userId = 6;//VkAuthHelper.GetCurrentUser(Request.Headers).Id;
+            var userId = VkAuthHelper.GetCurrentUser(Request.Headers).Id;
 
             using (var context = new InfostyleEntities())
             {
