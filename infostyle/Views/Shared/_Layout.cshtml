@@ -18,6 +18,10 @@
 </head>
 <body class="main">
     <link rel="import" href="~/Scripts/polymer/polymer/polymer.html">
+    <script src="~/Scripts/App/detect-polymer.js"></script>
+    <noscript>
+    <meta HTTP-EQUIV="REFRESH" content="0; url=/Static/BadBrowser.html"> 
+     </noscript>
     <link rel="import" href="~/Controls/user-info.html">
     @RenderBody()
     @RenderSection("scripts", required: false)
