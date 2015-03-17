@@ -8,7 +8,7 @@ namespace infostyle
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-1.7.1.js"));
+                        "~/Scripts/jquery-2.1.3.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui-1.8.20.js"));
