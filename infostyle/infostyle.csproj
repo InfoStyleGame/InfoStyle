@@ -146,6 +146,8 @@
     <Content Include="Content\styles.css" />
     <Content Include="Controls\cards-list.html" />
     <Content Include="Controls\card-item.html" />
+    <Content Include="Controls\infostyle-layout.html" />
+    <Content Include="Controls\polymer-empty.html" />
     <Content Include="Controls\theory-block.html" />
     <Content Include="Controls\login-frame.html" />
     <Content Include="Controls\level-link.html" />
@@ -1455,6 +1457,7 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Controls\crawl-line.html" />
     <Content Include="Static\BadBrowser.html" />
+    <Content Include="Static\Index.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
