@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html>
+		<script>
+			window.totalScore = 0;
+</script>
+
+<link rel="import" href="~/Scripts/polymer/paper-button/paper-button.html">
+<link rel="import" href="~/Controls/crawl-line.html">
+<link rel="import" href="~/Controls/cards-list.html">
+<link rel="import" href="~/Controls/theory-block.html">
+<div class="content">
+	Тут будет контент уровня
+	<theory-block level="@Model.Level"></theory-block>
+	<div class="border"></div>
+	<cards-list level="@Model.Level"></cards-list>
+	<crawl-line style="display:none;" level="@Model.Level"></crawl-line>
+</div>

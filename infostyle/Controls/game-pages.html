@@ -1,0 +1,52 @@
+﻿<polymer-element name="game-pages">
+	<link rel="import" href="/Scripts/polymer/core-animated-pages/core-animated-pages.html">
+	<link rel="import" href="/Scripts/polymer/core-animated-pages/transitions/slide-from-right.html">
+	<link rel="import" href="/Scripts/polymer/paper-item/paper-item.html">
+	<link rel="import" href="/Scripts/polymer/core-menu/core-menu.html">
+	<link rel="import" href="/Scripts/polymer/core-icon/core-icon.html">
+	<link rel="import" href="/Scripts/polymer/flatiron-director/flatiron-director.html">
+	<link rel="import" href="/Scripts/polymer/core-ajax/core-ajax.html">
+	<template>
+		<style>
+		</style>
+		<template id="mainTemplate" is="auto-binding">
+			<core-menu valueattr="hash" selectedModel="{{selectedPage}}">
+				<template repeat="{{page in pages}}">
+					<paper-item hash="{{page.hash}}" noink>
+						<core-icon icon="label-outline"></core-icon>
+						<a href="#{{page.name}}">{{page.name}}</a>
+					</paper-item>
+				</template>
+			</core-menu>
+			<core-animated-pages valueattr="hash" transitions="slide-from-right" id="pages">
+				<section></section>
+			</core-animated-pages>
+			<flatiron-director route="{{selectedPage.page.hash}}" autoHash></flatiron-director>
+			<core-ajax id="ajax" auto url="{{selectedPage.page.url}}"
+					   handleAs="document" on-core-response="{{onResponse}}">
+			</core-ajax>
+		</template>
+	</template>
+	<script>
+		Polymer({
+			ready: function() {
+				var template = this.$.mainTemplate;
+				var element = this;
+				template.pages = [
+					{name: 'map', hash: 'map', url: '/game-pages/game-page-map.html'},
+					{name: 'level', hash: 'level', url: '/game-pages/game-page-level.html'},
+    			];
+				template.addEventListener('template-bound', function (e) {
+					// Use URL hash for initial route. Otherwise, use the first page.
+					this.route = this.route || 'one';
+				});
+				this.onResponse = function (e, detail, sender) {
+					var newPageContent = detail.response.querySelector('body');
+					var pages = element.$.mainTemplate.$.pages;
+					this.injectBoundHTML(newPageContent.innerHTML,
+										 pages.selectedItem);
+				};
+			}
+		});
+	</script>
+</polymer-element>

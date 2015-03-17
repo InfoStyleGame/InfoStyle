@@ -146,6 +146,9 @@
     <Content Include="Content\styles.css" />
     <Content Include="Controls\cards-list.html" />
     <Content Include="Controls\card-item.html" />
+    <Content Include="game-pages\game-page-level.html" />
+    <Content Include="game-pages\game-page-map.html" />
+    <Content Include="Controls\game-pages.html" />
     <Content Include="Controls\infostyle-layout.html" />
     <Content Include="Controls\polymer-empty.html" />
     <Content Include="Controls\theory-block.html" />
@@ -514,6 +517,10 @@
     <Content Include="Scripts\polymer\core-transition\core-transition.html" />
     <Content Include="Scripts\polymer\core-transition\demo.html" />
     <Content Include="Scripts\polymer\core-transition\index.html" />
+    <Content Include="Scripts\polymer\flatiron-director\demo.html" />
+    <Content Include="Scripts\polymer\flatiron-director\director\director.min.js" />
+    <Content Include="Scripts\polymer\flatiron-director\flatiron-director.html" />
+    <Content Include="Scripts\polymer\flatiron-director\index.html" />
     <Content Include="Scripts\polymer\font-roboto\roboto.html" />
     <Content Include="Scripts\polymer\google-code-prettify\bin\prettify.min.css" />
     <Content Include="Scripts\polymer\google-code-prettify\bin\prettify.min.js" />
@@ -1741,6 +1748,14 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\polymer\flatiron-director\AUTHORS" />
+    <Content Include="Scripts\polymer\flatiron-director\bower.json" />
+    <Content Include="Scripts\polymer\flatiron-director\CONTRIBUTING.md" />
+    <Content Include="Scripts\polymer\flatiron-director\director\LICENSE" />
+    <Content Include="Scripts\polymer\flatiron-director\LICENSE" />
+    <Content Include="Scripts\polymer\flatiron-director\PATENTS" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
