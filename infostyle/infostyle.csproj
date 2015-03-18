@@ -143,12 +143,14 @@
     <Content Include="Content\resources\Swamp.png" />
     <Content Include="Content\resources\wave.png" />
     <Content Include="Content\running-style.css" />
+    <Content Include="Content\static.css" />
     <Content Include="Content\styles.css" />
     <Content Include="Controls\cards-list.html" />
     <Content Include="Controls\card-item.html" />
+    <Content Include="game-pages\game-page-login.html" />
     <Content Include="game-pages\game-page-level.html" />
     <Content Include="game-pages\game-page-map.html" />
-    <Content Include="Controls\game-pages.html" />
+    <Content Include="game-pages\game-pages.html" />
     <Content Include="Controls\polymer-empty.html" />
     <Content Include="Controls\theory-block.html" />
     <Content Include="Controls\login-frame.html" />

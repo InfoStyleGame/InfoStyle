@@ -1,4 +1,4 @@
-﻿<polymer-element name="level-link" attributes="number x y current disable">
+﻿<polymer-element name="level-link" attributes="number x y current disable static">
     <template>
         <style>
             .level-container {
@@ -43,7 +43,7 @@
         </style>
         <div class="level-container" style="left: {{x}}px; top: {{y}}px">
             <div class="level {{conditionalStyles}}">
-                <span><a href="/App?level={{number}}">{{number}}</a></span>
+                <span><a href="{{link}}{{number}}">{{number}}</a></span>
             </div>
             <div hidden?="{{number!=1}}">
                 Вводные слова<br/>и междометия
@@ -71,9 +71,8 @@
                 return (this.current ? "current " : "") +
                     (this.disable ? "disable" : "");
             },
-            created: function () {
-                var self = this;
-                
+            ready: function () {
+            	this.link = this.static ? "#level:" : "/App?level="
             },
             computed: {
                 conditionalStyles: "(current ? 'current ' : '') + (disable ? 'disable' : '')"

@@ -2,11 +2,15 @@
 	<link rel="import" href="/Scripts/polymer/core-animated-pages/core-animated-pages.html">
 	<link rel="import" href="/Scripts/polymer/core-animated-pages/transitions/slide-from-right.html">
 	<link rel="import" href="/Scripts/polymer/flatiron-director/flatiron-director.html">
+	<link rel="import" href="/game-pages/game-page-login.html">
 	<link rel="import" href="/game-pages/game-page-map.html">
 	<link rel="import" href="/game-pages/game-page-level.html">
 	<template id="mainTemplate">
 			<div class="content">
-				<core-animated-pages valueattr="hash" selected="{{route}}" transitions="slide-from-right" transitions="slide-from-right">
+				<core-animated-pages valueattr="hash" selected="{{page}}" transitions="slide-from-right" transitions="slide-from-right">
+					<section hash="login" layout vertical center-center>
+						<game-page-login id="game-page-login"></game-page-login>
+					</section>
 					<section hash="map" layout vertical center-center>
 						<game-page-map id="game-page-map"></game-page-map>
 					</section>
@@ -15,13 +19,21 @@
 					</section>
 				</core-animated-pages>
 			</div>
-			<flatiron-director route="{{route}}" autoHash></flatiron-director>
+			<flatiron-director id="flatironDirector" route="{{route}}" autoHash></flatiron-director>
 	</template>
 	<script>
 		Polymer({
 			ready: function () {
 				var element = this;
-				this.route = this.route || 'map';
+				this.route = this.route || 'login';
+				this.$.flatironDirector.addEventListener('director-route', function(route) {
+					if (route.detail.indexOf('level') == 0) {
+						element.page = 'level';
+						var levelNumber = route.detail.substr(6);
+						element.$["game-page-level"].level = levelNumber;
+					} else
+						element.page = route.detail;
+				})
 			}
 		});
 	</script>
