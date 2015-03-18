@@ -1,5 +1,5 @@
+<polymer-element name="cards-list" attributes="level delayed">
 <link href="/Controls/card-item.html" rel="import" />
-<polymer-element name="cards-list" attributes="level">
 
   <template>
       <style>
@@ -130,8 +130,13 @@
 
   <script>
 
-      Polymer({
-        ready: function () {
+  	Polymer({
+		ready: function() {
+			if (!this.delayed)
+				this.activate();
+		},
+
+        activate: function () {
             var self = this;
             Api.GetCards(this.level).done(function (response) {
                 self.initCards(response);

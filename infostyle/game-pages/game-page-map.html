@@ -1,7 +1,9 @@
-﻿<!DOCTYPE html>
-		<link rel="import" href="/Controls/level-link.html">
-		<link rel="import" href="/Controls/login-frame.html">
-
+﻿<polymer-element name="game-page-map">
+	<link rel="import" href="/Controls/level-link.html">
+	<link rel="import" href="/Controls/login-frame.html">
+	<template>
+		<style>
+			</style>
 		<div class="island-first">
 			<img src="/Content/resources/Swamp.png" alt="1st island" />
 			<level-link number="1" x="80" y="50" disable="true"></level-link>
@@ -13,23 +15,21 @@
 		<div class="island-ezh">
 			<a href="ezh"><img src="/Content/resources/Hedgehog.png" alt="2st island" /></a>
 		</div>
-    
-	<!--@if (!Model)-->
-	<!--{-->
-		<login-frame></login-frame>
-	<!--}-->
+		<login-frame delayed="true"></login-frame>
+	</template>
+	<script>
+		Polymer({
+			activate: function () {
+				Api.GetUserProgress().done(function (progress) {
+					var l = progress.CurrentLevel + 1;
+					if (l > 3)
+						l = 3;
+					for (var i = 0; i <= l; i++)
+						$('level-link[number=' + i + ']').attr("disable", "false");
 
-	<!--@if (Model)-->
-	<!--{-->
-		<script>
-			Api.GetUserProgress().done(function (progress) {
-				var l = progress.CurrentLevel + 1;
-				if (l > 3)
-					l = 3;
-				for (var i = 0; i <= l; i++)
-					$('level-link[number=' + i + ']').attr("disable", "false");
-
-				$('level-link[number=' + l + ']').attr("current", "true");
-			});
-		</script>
-	<!--}-->
+					$('level-link[number=' + l + ']').attr("current", "true");
+				});
+			}
+		});
+	</script>
+</polymer-element>

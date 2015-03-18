@@ -1,17 +1,34 @@
 ﻿<!DOCTYPE html>
 <html>
-	<noscript>
-    <meta HTTP-EQUIV="REFRESH" content="0; url=/Static/BadBrowser.html"> 
-     </noscript>
-	<script src="/Scripts/polymer/webcomponentsjs/webcomponents.js"></script>
-	<script src="/Scripts/jquery-2.1.3.js"></script>
-	<link rel="import" href="/Scripts/polymer/polymer/polymer.html">
-	<script src="/Scripts/App/detect-polymer.js"></script>
-	<link rel="import" href="/Controls/infostyle-layout.html">
-	<link rel="import" href="/Controls/game-pages.html">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<title>Игра по инфостилю</title>
+		<noscript>
+			<meta HTTP-EQUIV="REFRESH" content="0; url=/Static/BadBrowser.html"> 
+		</noscript>
+		<script src="/Scripts/polymer/webcomponentsjs/webcomponents.js"></script>
+		<script src="/Scripts/jquery-2.1.3.js"></script>
+		<link rel="import" href="/Scripts/polymer/polymer/polymer.html">
+		<script src="/Scripts/App/detect-polymer.js"></script>
+		<link rel="import" href="/Controls/game-pages.html">
+		<script src="/Scripts/App/Base.js"></script>
+		<script src="/Scripts/App/api.js"></script>
+		<link href="/Content/App.css" rel="stylesheet" />
+		<link href="/Content/Site.css" rel="stylesheet" />
+		<link href="/Content/running-style.css" rel="stylesheet" />
+		<link href="/Content/styles.css" rel="stylesheet" />
+		<link href='http://fonts.googleapis.com/css?family=RobotoDraft:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=ru' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Lora:400,400italic' rel='stylesheet' type='text/css'>
+	</head>
 	<body unresolved>
-		<infostyle-layout>
-			<game-pages></game-pages>
-		</infostyle-layout>
+		<div class="main">
+		    <div class="header">
+				<div class="content">
+					<div class="logo">Это инфостиль, детка!</div>
+				</div>
+			  </div>
+	    </div>
+		<game-pages></game-pages>
 	</body>
 </html>

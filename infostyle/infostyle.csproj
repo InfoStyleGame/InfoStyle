@@ -149,7 +149,6 @@
     <Content Include="game-pages\game-page-level.html" />
     <Content Include="game-pages\game-page-map.html" />
     <Content Include="Controls\game-pages.html" />
-    <Content Include="Controls\infostyle-layout.html" />
     <Content Include="Controls\polymer-empty.html" />
     <Content Include="Controls\theory-block.html" />
     <Content Include="Controls\login-frame.html" />
