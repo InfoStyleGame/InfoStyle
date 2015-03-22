@@ -1,41 +1,37 @@
 ﻿<polymer-element name="user-info">
     <template>
         <style>
-            .user-info {
-              display: inline-block;
+            :host {
               height: 100%;
-              position: absolute;
-              top: 0;
-              right: 20px;
               font-family: "Lora";
               font-style: italic;
             }
-            .user-info div {
+
+            .user-info__info {
               display: inline-block;
               vertical-align: middle;
             }
-            .user-info .aligner {
-              width: 0;
-              height: 100%;
-            }
 
-            .user-info img {
+            .user-info__avatar {
                 margin-right: 10px;
-                border-radius: 50px; 
+                border-radius: 50px;
+                width: 40px; 
+                height: 40px;
+                background-color: #fff;
+                vertical-align: middle;
             }
         </style>
-        <div class="user-info">
-            <div><img src="{{pictureSrc}}" alt="{{name}}"></div>
-            <div>{{name}}<br/>
-                Баллы: {{score}}</div>
-            <div class="aligner"></div>
+        <img class="user-info__avatar" src="{{pictureSrc}}">
+        <div class="user-info__info">
+            {{name}}<br/>
+            Баллы: {{score}}
         </div>
-
     </template>
     <script>
         Polymer({
-            name: "",
-            pictureSrc: "",
+            name: "Иван Иванов",
+            pictureSrc: "/Content/resources/avatar.png",
+            score: 0,
             created: function () {
                 var self = this;
                 Api.GetUserInfo().done(function(info) {

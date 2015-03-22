@@ -9,10 +9,11 @@
 
 .static-header__logo {
 	width: 35px;
+	margin-right: 10px;
 }
 
 .static-header__title {
   font-family: "Lora";
   font-style: italic;
-  font-size: 20px;
+  font-size: 25px;
 }
