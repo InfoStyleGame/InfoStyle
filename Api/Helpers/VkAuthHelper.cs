@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
+using Api.Exceptions;
 using Api.Managers;
 using EF;
 using log4net;
@@ -16,6 +17,14 @@ namespace Api.Helpers
 
         public static User GetCurrentUser(HttpRequestHeaders requestParams)
         {
+            var user = FindCurrentUser(requestParams);
+            if (user == null)
+                throw new UnauthorizedException();
+            return user;
+        }
+
+        public static User FindCurrentUser(HttpRequestHeaders requestParams)
+        {
             var vkLogin = GetCurrentUserVkLogin(requestParams);
             if (vkLogin == null)
                 return null;
@@ -24,11 +33,6 @@ namespace Api.Helpers
 
         private static string GetCurrentUserVkLogin(HttpRequestHeaders requestParams)
         {
-            //todo выпилить на боевой
-            var debugUser = GetUserIdDebugEdition(requestParams);
-            if (debugUser != null)
-                return debugUser;
-
             const string cookieKey = "vk_app_" + VkAuthParameters.VkAppId;
             var cookie = requestParams.GetCookies(cookieKey).FirstOrDefault();
             if (cookie == null)
@@ -45,15 +49,6 @@ namespace Api.Helpers
                 log.Warn("Strange user", ex);
                 return null;
             }
-        }
-
-        private static string GetUserIdDebugEdition(HttpRequestHeaders requestParams)
-        {
-            const string cookieKey = "userId";
-            var cookie = requestParams.GetCookies(cookieKey).FirstOrDefault();
-            if (cookie == null)
-                return null;
-            return cookie[cookieKey].Values.ToString();
         }
 
         private static void VerifyParameters(VkAuthParameters parameters)

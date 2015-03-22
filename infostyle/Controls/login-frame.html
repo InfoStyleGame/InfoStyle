@@ -54,30 +54,40 @@
                 background-color: #006caa;
             }
 
-            paper-button /deep/ .button-content {
-                              padding: 15px 30px 15px 30px;
-            }
+            paper-button / deep/ .button-content {
+                               padding: 15px 30px 15px 30px;
+                           }
         </style>
-        <div class="background"></div>
-        <div class="content">
-            <div id="loginstatus"></div>
-            <div class="button-container">
-                <p>Научитесь писать без&nbsp;лишних слов</p>
-                <paper-button id="login" on-click="{{logIn}}" raised>Войти через ВКонтакте</paper-button>
-            </div>
-        </div>
-    </template>
+            <template if="{{loginVisible}}">
+                <div class="background"></div>
+                <div class="content">
+                    <div id="loginstatus"></div>
+                    <div class="button-container">
+                        <p>Научитесь писать без&nbsp;лишних слов</p>
+                        <paper-button id="login" on-click="{{logIn}}" raised>Войти через ВКонтакте</paper-button>
+                    </div>
+                </div>
+            </template>
+        </template>
     <script src="http://vk.com/js/api/openapi.js"></script>
     <script>
         Polymer({
+            loginVisible: false,
             ready: function () {
                 VK.init({
                     apiId: 4793375
                 });
+                var _this = this;
+                //todo Valera: here it is, listener to 'event' on unauthorized
+                setInterval(function() {
+                    if (window.requireAuthorization) {
+                        _this.loginVisible = true;
+                    }
+                }, 300);
             },
 
             logIn: function () {
-                this.vkLogin(function () { window.location.href = "/" }, function () { alert("Can't login") });
+                this.vkLogin(function () { window.location.reload(); }, function () { alert("Can't login"); });
             },
 
             vkLogin: function(onSuccess, onError) {

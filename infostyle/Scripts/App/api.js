@@ -2,27 +2,37 @@
     root: "/api",
     GetTask: function (type, level) {
         level = level - 1;
-        return $.post(Api.root + "/task/get?level="+ level +"&type=" + type)
-            .fail(function(data) { console.log("Error: " + data); });
+        return this._DoApiCall("/task/get?level=" + level + "&type=" + type, 'POST');
     },
 
     GetCards: function (level) {
         level = level - 1;
-       return $.post(Api.root + "/task/card?level=" + level)
-            .fail(function (data) { console.log("Error: " + JSON.stringify(data)); });
+        return this._DoApiCall("/task/card?level=" + level, 'POST');
     },
 
     SubmitTaskResults: function (level, score) {
         level = level - 1;
-        return $.post(Api.root + "/taskResult/post?score=" + score + "&level=" + level);
+        return this._DoApiCall("/taskResult/post?score=" + score + "&level=" + level, 'POST');
     },
 
     GetUserInfo: function() {
-        return $.get(Api.root + "/userInfo/get");
+        return this._DoApiCall("/userInfo/get", 'GET');
     },
 
     GetUserProgress: function() {
-        return $.get(Api.root + "/userProgress/get");
+        return this._DoApiCall("/userProgress/get", 'get');
+    },
+
+    _DoApiCall: function (url, methodType) {
+        return $.ajax(Api.root + url, {
+            method: methodType
+        }).fail(function (jqXHR) {
+            if (jqXHR.status == 403) {
+                //todo Valera: here it is, 'event' on unauthorized
+                window.requireAuthorization = 1;
+            }
+            console.log("Error: " + JSON.stringify(jqXHR));
+        });
     }
 };
 
