@@ -1,82 +1,61 @@
-﻿<polymer-element name="level-link" attributes="number x y current disable static">
+﻿<polymer-element name="level-link" attributes="number x y current enabled static">
     <template>
         <style>
-            .level-container {
-                 position: absolute;
-                text-align: center;
-            }
-             .level {
-                 display: inline-block;
-                 position: relative;
-                 width: 40px;
-                 height: 40px;
-                 border: solid 3px green;
-                 border-radius: 50px;
-                 color: green;
-                 box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
-             }
-            .level span {
+            .level {
                 position: absolute;
                 text-align: center;
-                left: 50%;
-                top: 50%;
-                width: 30px;
-                margin-left: -15px;
-                margin-top: -8px;
             }
-            .level.current {
-                /* F5A623 — orange */
-                color: #fff;
-                background-color: #F5A623;
-                border-color: #F5A623;
+            .level__balloon {
+                 display: inline-block;
+                 position: relative;
+                 width: 45px;
+                 height: 45px;
+                 border-radius: 50px;
+                 box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .2);
+                 background: #fff;
+             }
+            .level__balloon:after {
+                content: '';
+                width: 0;
+                height: 100%;
+                display: inline-block;
+                vertical-align: middle;
             }
-            .level.disable {
-                color: #fff;
-                background-color: lightgrey;
-                border-color: lightgrey;
+            .level_enabled_true .level__balloon {
+                border-color: #7ed321; /* green */
             }
-
-            .level a {
+            .level_current_true .level__balloon {
+                border-color: #F5A623; /* orange */
+            }
+            .level__link {
                 text-decoration: none;
-                font-weight: bold;
+                color: #404040;
+            }
+            .level__number {
+                font-weight: 500;
+                font-size: 1.2em;
+                width: 30px;
+                vertical-align: middle;
+            }
+            .level__title {
+                font-weight: 500;
             }
         </style>
-        <div class="level-container" style="left: {{x}}px; top: {{y}}px">
-            <div class="level {{conditionalStyles}}">
-                <span><a href="{{link}}{{number}}">{{number}}</a></span>
-            </div>
-            <div hidden?="{{number!=1}}">
-                Вводные слова<br/>и междометия
-            </div>
-            <div hidden?="{{number!=2}}">
-                Паразиты <br />времени
-            </div>
-            <div hidden?="{{number!=3}}">
-                Расшаркивания
-            </div>
-            <div hidden?="{{number!=4}}">
-                Отглагольные<br />существительные
-            </div>
-            <div hidden?="{{number!=5}}">
-                Модальность
-            </div>
+        <div class="level level_enabled_{{enabled}} level_current_{{current}}" style="left: {{x}}px; top: {{y}}px">
+            <a class="level__link" href="{{link}}{{number}}">
+                <div class="level__balloon"><span class="level__number">{{number}}</span></div>
+                <div class="level__title"><content></content></div>
+            </a>
         </div>
         
     </template>
     <script>
         Polymer({
+            enabled: false,
             current: false,
-            disable: false,
-            getConditionalStyles: function() {
-                return (this.current ? "current " : "") +
-                    (this.disable ? "disable" : "");
-            },
-            ready: function () {
-            	this.link = this.static ? "#level:" : "/App?level="
-            },
-            computed: {
-                conditionalStyles: "(current ? 'current ' : '') + (disable ? 'disable' : '')"
+            ready : function() {
+                this.link = this.static ? "#level:" : "/App?level=";
             }
-        });
+        })
     </script>
 </polymer-element>

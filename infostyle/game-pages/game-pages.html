@@ -6,20 +6,24 @@
 	<link rel="import" href="/game-pages/game-page-map.html">
 	<link rel="import" href="/game-pages/game-page-level.html">
 	<template id="mainTemplate">
-			<div class="content">
-				<core-animated-pages valueattr="hash" selected="{{page}}" transitions="slide-from-right" transitions="slide-from-right">
-					<section hash="login" layout vertical center-center>
-						<game-page-login id="game-page-login"></game-page-login>
-					</section>
-					<section hash="map" layout vertical center-center>
-						<game-page-map id="game-page-map"></game-page-map>
-					</section>
-					<section hash="level" layout vertical center-center>
-						<game-page-level id="game-page-level"></game-page-level>
-					</section>
-				</core-animated-pages>
-			</div>
-			<flatiron-director id="flatironDirector" route="{{route}}" autoHash></flatiron-director>
+		<style>
+			.container {
+				max-width: 1000px;
+				margin: 0 auto;
+			}	
+		</style>
+		<core-animated-pages valueattr="hash" selected="{{page}}" transitions="slide-from-right" transitions="slide-from-right" class="container" fit>
+			<section hash="login" layout vertical center>
+				<game-page-login id="game-page-login"></game-page-login>
+			</section>
+			<section hash="map" layout vertical center>
+				<game-page-map id="game-page-map"></game-page-map>
+			</section>
+			<section hash="level" layout vertical center>
+				<game-page-level id="game-page-level"></game-page-level>
+			</section>
+		</core-animated-pages>
+		<flatiron-director id="flatironDirector" route="{{route}}" autoHash></flatiron-director>
 	</template>
 	<script>
 		Polymer({

@@ -1,12 +1,18 @@
-﻿.static-header  {
-  background-color: #C48FFF !important;
-  box-shadow: 0 0 10px rgba(0,0,0,.2);
-  color: white;
-  height: 70px;
+﻿.static-header {
+	background-color: #C48FFF;
+	color: #fff;
 }
 
-.static-header core-toolbar{
-  background-color: #C48FFF !important;
-  color: white;
-	border-width: 0px;
+.static-header__wrapper {
+	width: 1000px;
+}
+
+.static-header__logo {
+	width: 35px;
+}
+
+.static-header__title {
+  font-family: "Lora";
+  font-style: italic;
+  font-size: 20px;
 }
