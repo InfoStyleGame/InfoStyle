@@ -144,7 +144,6 @@
     <Content Include="Content\resources\wave.png" />
     <Content Include="Content\running-style.css" />
     <Content Include="Content\static.css" />
-    <Content Include="Content\styles.css" />
     <Content Include="Controls\cards-list.html" />
     <Content Include="Controls\card-item.html" />
     <Content Include="game-pages\game-page-login.html" />
