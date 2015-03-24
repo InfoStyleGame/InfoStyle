@@ -77,13 +77,6 @@
                 VK.init({
                     apiId: 4793375
                 });
-                var _this = this;
-                //todo Valera: here it is, listener to 'event' on unauthorized
-                setInterval(function() {
-                    if (window.requireAuthorization) {
-                        _this.loginVisible = true;
-                    }
-                }, 300);
             },
 
             logIn: function () {

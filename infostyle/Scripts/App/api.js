@@ -43,10 +43,9 @@
         return $.ajax(Api.root + url, {
             method: methodType
         }).fail(function (jqXHR) {
-            if (jqXHR.status == 403) {
-                //todo Valera: here it is, 'event' on unauthorized
-                window.requireAuthorization = 1;
-            }
+        	if (jqXHR.status == 403) {
+		        window.location.hash = 'login';
+	        }
             console.log("Error: " + JSON.stringify(jqXHR));
         });
     }
