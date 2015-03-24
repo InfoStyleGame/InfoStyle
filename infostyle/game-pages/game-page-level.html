@@ -1,34 +1,38 @@
 ﻿<polymer-element name="game-page-level" attributes="level isActive">
+	<link rel="import" href="/Controls/ist-level.html">
 	<link rel="import" href="/Scripts/polymer/paper-button/paper-button.html">
-	<link rel="import" href="/Controls/crawl-line.html">
-	<link rel="import" href="/Controls/cards-list.html">
-	<link rel="import" href="/Controls/theory-block.html">
 	<template>
-		<theory-block level="{{level}}"></theory-block>
-		<div class="border"></div>
-		<cards-list delayed="true" level="{{level}}" isActive="{{isCardsListActive}}" isCleared="{{isCardsListCleared}}"></cards-list>
-		<crawl-line level="{{level}}" isActive="{{isCrawlLineActive}}" isCleared="{{isCrawlLineCleared}}"></crawl-line>
+		<div id="levelContainer"></div>
+		<paper-button hidden id="exitButton" on-click="{{goToMap}}">Вернуться на карту</paper-button>
 	</template>
     <script>
     	Polymer({
     		isActiveChanged: function () {
     			if (this.isActive)
-					this.activate();
+    				this.activate();
+    			else
+					this.reset();
     		},
 
-    		isCardsListClearedChanged: function () {
-			    this.isCardsListActive = false;
-				this.isCrawlLineActive = true;
+			reset: function() {
+				this.$.levelContainer.innerHTML = '';
+			},
+
+    		activate: function() {
+    			var el = document.createElement("ist-level");
+    			el.level = this.level;
+				el.addEventListener('levelComplete', this.onLevelComplete)
+    			this.$.levelContainer.appendChild(el);
     		},
 
-    		isCrawlLineClearedChanged: function () {
-    			this.isCrawlLineActive = false;
-			    window.location.hash = "map";
-		    },
+			onLevelComplete: function() {
+				this.$.exitButton.removeAttribute('hidden');
+			},
 
-			activate: function() {
-				window.totalScore = 0;
-				this.isCardsListActive = true;
+			goToMap: function () {
+				this.$.exitButton.hidden = '';
+				this.isActive = false;
+				window.location.hash = "map";
 			}
     	});
     </script>

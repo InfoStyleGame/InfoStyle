@@ -1,0 +1,31 @@
+﻿<polymer-element name="ist-level" attributes="level isComplete">
+    <link rel="import" href="/Scripts/polymer/paper-button/paper-button.html">
+	<link rel="import" href="/Controls/crawl-line.html">
+	<link rel="import" href="/Controls/cards-list.html">
+	<link rel="import" href="/Controls/theory-block.html">
+	<template>
+		<theory-block level="{{level}}"></theory-block>
+		<div class="border"></div>
+		<cards-list delayed="true" level="{{level}}" isActive="{{isCardsListActive}}" isCleared="{{isCardsListCleared}}"></cards-list>
+		<crawl-line level="{{level}}" isActive="{{isCrawlLineActive}}" isCleared="{{isCrawlLineCleared}}"></crawl-line>
+	</template>
+    <script>
+    	Polymer({
+    		isCardsListClearedChanged: function () {
+    			this.isCardsListActive = false;
+    			this.isCrawlLineActive = true;
+    		},
+
+    		isCrawlLineClearedChanged: function () {
+    			this.isCrawlLineActive = false;
+    			var levelCompleteEvent = new CustomEvent('levelComplete');
+    			this.dispatchEvent(levelCompleteEvent);
+		    },
+
+    		ready: function () {
+    			this.totalScore = 0;
+    			this.isCardsListActive = true;
+    		}
+    	});
+    </script>
+</polymer-element>

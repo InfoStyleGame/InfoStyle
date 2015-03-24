@@ -146,6 +146,7 @@
     <Content Include="Content\static.css" />
     <Content Include="Controls\cards-list.html" />
     <Content Include="Controls\card-item.html" />
+    <Content Include="Controls\ist-level.html" />
     <Content Include="game-pages\game-page-login.html" />
     <Content Include="game-pages\game-page-level.html" />
     <Content Include="game-pages\game-page-map.html" />

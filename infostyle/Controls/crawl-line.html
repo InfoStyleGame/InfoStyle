@@ -59,9 +59,9 @@
             .marquee .animateMarquee {
                 display: inline-block;
                 padding-left: 100%;
-                -webkit-animation: scroll 10s linear;
-                -moz-animation: scroll 10s linear;
-                animation: scroll 10s linear;
+                -webkit-animation: scroll 65s linear;
+                -moz-animation: scroll 65s linear;
+                animation: scroll 65s linear;
             }
 
             .marquee paper-button {
@@ -151,9 +151,6 @@
 				<div>Вы угадали: <span>{{hits}}</span></div>
 				<div>Штраф за промахи: <span>{{misses}}</span></div>
 				<div>Итого баллов: <span>{{points}}</span></div>
-				<div>
-					<paper-button on-tap="{{endGame}}" class="end">Завершить уровень</paper-button>
-				</div>
 			</div>
         </div>
     </template>
@@ -183,10 +180,6 @@
                     self.initAnimationEnd();
                 });
                 
-            },
-
-            endGame: function() {
-	            this.isCleared = true;
             },
 
             initAnimationEnd: function () {
@@ -241,6 +234,7 @@
                 $(this.$.game).hide();
                 this.buildAnswer();
                 $(this.$.end).show();
+                this.isCleared = true;
                 window.totalScore += this.points;
                 Api.SubmitTaskResults(this.level, window.totalScore);
             },
