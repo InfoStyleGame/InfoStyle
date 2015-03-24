@@ -35,6 +35,7 @@
 						element.page = 'level';
 						var levelNumber = route.detail.substr(6);
 						element.$["game-page-level"].level = levelNumber;
+						element.$["game-page-level"].isActive = true;
 					} else
 						element.page = route.detail;
 				})

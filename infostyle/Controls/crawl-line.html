@@ -1,4 +1,4 @@
-﻿<polymer-element name="crawl-line" attributes="level">
+﻿<polymer-element name="crawl-line" attributes="level isActive isCleared">
     <template>
         <style>
             
@@ -59,9 +59,9 @@
             .marquee .animateMarquee {
                 display: inline-block;
                 padding-left: 100%;
-                -webkit-animation: scroll 65s linear;
-                -moz-animation: scroll 65s linear;
-                animation: scroll 65s linear;
+                -webkit-animation: scroll 10s linear;
+                -moz-animation: scroll 10s linear;
+                animation: scroll 10s linear;
             }
 
             .marquee paper-button {
@@ -128,37 +128,44 @@
                 margin-bottom: 20px;
             }
         </style>
-        <p class="task-label">
-      Подстрели все стоп-слова:
-    </p>
+	    <div class="{{isActive ? '' : 'hidden'}}">
+	    
+			<p class="task-label">
+				Подстрели все стоп-слова:
+			</p>
     
-        <div id="start">
-            <paper-button on-tap="{{startGame}}" class="start">Начать</paper-button>
+			<div id="start">
+				<paper-button on-tap="{{startGame}}" class="start">Начать</paper-button>
+			</div>
+			<div style="display:none" id="game" class="marquee" on-mousedown="{{clickAction}}">
+				<div class="border">
+					<div id="text" class="no_selection crawl-line"></div>
+				</div>
+				<div class="crawlLineCounters">
+					<span>Баллы: <span id="points">{{points}}</span></span>
+				</div>
+			</div>
+			<div id="end" style="display:none;">
+				<div id="answer"></div>
+				<div>Всего стоп-слов: <span>{{stopWordsCount}}</span></div>
+				<div>Вы угадали: <span>{{hits}}</span></div>
+				<div>Штраф за промахи: <span>{{misses}}</span></div>
+				<div>Итого баллов: <span>{{points}}</span></div>
+				<div>
+					<paper-button on-tap="{{endGame}}" class="end">Завершить уровень</paper-button>
+				</div>
+			</div>
         </div>
-        <div style="display:none" id="game" class="marquee" on-mousedown="{{clickAction}}">
-            <div class="border">
-                <div id="text" class="no_selection crawl-line"></div>
-            </div>
-            <div class="crawlLineCounters">
-                <span>Баллы: <span id="points">{{points}}</span></span>
-            </div>
-        </div>
-        <div id="end" style="display:none;">
-            <div id="answer"></div>
-            <div>Всего стоп-слов: <span>{{stopWordsCount}}</span></div>
-            <div>Вы угадали: <span>{{hits}}</span></div>
-            <div>Штраф за промахи: <span>{{misses}}</span></div>
-            <div>Итого баллов: <span>{{points}}</span></div>
-            <div>
-                <paper-button on-tap="{{endGame}}" class="end">Завершить уровень</paper-button>
-            </div>
-        </div>
-        
     </template>
     <script>
         Polymer({
             ready: function () {
             },
+
+            isActiveChanged: function () {
+	            if (this.isActive)
+					$(this).show();
+			},
 
             startGame: function () {
                 this.points = 0;
@@ -179,7 +186,7 @@
             },
 
             endGame: function() {
-                window.location.href = "/Map"
+	            this.isCleared = true;
             },
 
             initAnimationEnd: function () {

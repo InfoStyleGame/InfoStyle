@@ -1,4 +1,4 @@
-<polymer-element name="cards-list" attributes="level delayed">
+<polymer-element name="cards-list" attributes="level delayed isActive isCleared">
 <link href="/Controls/card-item.html" rel="import" />
 
   <template>
@@ -112,7 +112,7 @@
           }
 
       </style>
-      <div class="elem" on-mousedown="{{clickAction}}">
+      <div class="elem {{isActive ? '' : 'hidden'}}"  on-mousedown="{{clickAction}}">
           <p class="task-label">
               Кликни по стоп-слову в каждом предложении
           </p>
@@ -131,6 +131,11 @@
   <script>
 
   	Polymer({
+  		isActiveChanged: function() {
+			if (this.isActive)
+				this.activate();
+		},
+
 		ready: function() {
 			if (!this.delayed)
 				this.activate();
@@ -164,9 +169,10 @@
             window.totalScore += this.points;
         },
 
-        nextTask: function() {
-            $("cards-list").hide();
+        nextTask: function () {
+			$("cards-list").hide();
             $("crawl-line").show();
+	        this.isCleared = true;
         },
 
         buildCard: function(cardData) {
