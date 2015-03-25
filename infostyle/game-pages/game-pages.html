@@ -4,7 +4,6 @@
 	<link rel="import" href="/game-pages/game-page-login.html">
 	<link rel="import" href="/game-pages/game-page-map.html">
 	<link rel="import" href="/game-pages/game-page-level.html">
-	<link rel="import" href="/game-pages/game-page-error.html">
 	<template id="mainTemplate">
 		<style>
 			.container {
@@ -21,9 +20,6 @@
 			</section>
 			<section hash="level" layout vertical center>
 				<game-page-level id="game-page-level"></game-page-level>
-			</section>
-			<section hash="error" layout vertical center>
-				<game-page-error id="game-page-error"></game-page-error>
 			</section>
 		</core-animated-pages>
 		<flatiron-director id="flatironDirector" route="{{route}}" autoHash></flatiron-director>

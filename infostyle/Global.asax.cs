@@ -19,8 +19,7 @@ namespace infostyle
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-
+            
             var l4NetPath = HostingEnvironment.MapPath("~/bin/log4net.config");
             XmlConfigurator.ConfigureAndWatch(new FileInfo(l4NetPath));
         }

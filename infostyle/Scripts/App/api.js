@@ -1,9 +1,10 @@
 ﻿window.Api = {
     root: "/api",
-    theCakeIsALie: false,
+    useFakeApi: false,
+	ignore403: false,
     GetTask: function (type, level) {
 	    var url = "/task/get?level=" + level + "&type=" + type;
-	    if (Api.theCakeIsALie) {
+	    if (Api.useFakeApi) {
             return mockDef(url, mockApi.GetTask_Result);
         }
 	    level = level - 1;
@@ -13,7 +14,7 @@
     GetCards: function (level) {
 	    level = level - 1;
 	    var url = "/task/card?level=" + level;
-	    if (Api.theCakeIsALie) {
+	    if (Api.useFakeApi) {
             return mockDef(url, mockApi.GetCards_Result);
         }
 	    return this._DoApiCall(url, 'POST');
@@ -22,7 +23,7 @@
     SubmitTaskResults: function (level, score) {
 	    level = level - 1;
 	    var url = "/taskResult/post?score=" + score + "&level=" + level;
-	    if (Api.theCakeIsALie) {
+	    if (Api.useFakeApi) {
             return mockDef(url);
         }
 	    return this._DoApiCall(url, 'POST');
@@ -30,7 +31,7 @@
 
     GetUserInfo: function () {
 	    var url = "/userInfo/get";
-	    if (Api.theCakeIsALie) {
+	    if (Api.useFakeApi) {
             return mockDef(url, mockApi.GetUserInfo_Result);
         }
 	    return this._DoApiCall(url, 'GET');
@@ -38,7 +39,7 @@
 
     GetUserProgress: function () {
 	    var url = "/userProgress/get";
-	    if (Api.theCakeIsALie) {
+	    if (Api.useFakeApi) {
             return mockDef(url, mockApi.GetUserProgress_Result);
         }
 	    return this._DoApiCall(url, 'get');
@@ -48,7 +49,7 @@
         return $.ajax(Api.root + url, {
             method: methodType
         }).fail(function (jqXHR) {
-        	if (jqXHR.status == 403) {
+        	if (jqXHR.status == 403 && !Api.ignore403) {
 		        window.location.hash = 'login';
 	        }
             console.log("Error: " + JSON.stringify(jqXHR));

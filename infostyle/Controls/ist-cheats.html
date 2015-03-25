@@ -1,0 +1,28 @@
+﻿<polymer-element name="ist-cheats">
+    <template>
+        <style>
+        </style>
+    </template>
+    <script>
+        Polymer({
+			ready: function() {
+				window.TheCakeIsALie = function() {
+					window.Api.useFakeApi = true;
+					console.log("You don't even care. Do you?");
+					window.location.hash = "#map"
+				};
+				
+				window.ThereReallyWasACake = function() {
+					window.Api.useFakeApi = false;
+					console.log("It's so delicious and moist!");
+					window.location.hash = "#login"
+				};
+
+				window.WeAreAnonymous = function() {
+					window.Api.ignore403 = true;
+					console.log("We are legion!");
+				};
+			}
+        });
+    </script>
+</polymer-element>
