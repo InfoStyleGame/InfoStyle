@@ -1454,9 +1454,9 @@
     <Content Include="Scripts\polymer\webcomponentsjs\workbench\ie10-task-flaking.html" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Controls\crawl-line.html" />
-    <Content Include="Static\BadBrowser.html" />
-    <Content Include="Index.html" />
     <Content Include="Static\Error.html" />
+    <Content Include="Index.html" />
+    <Content Include="Static\BadBrowser.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
