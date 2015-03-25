@@ -58,29 +58,30 @@
                                padding: 15px 30px 15px 30px;
                            }
         </style>
-            <template if="{{loginVisible}}">
-                <div class="background"></div>
-                <div class="content">
-                    <div id="loginstatus"></div>
-                    <div class="button-container">
-                        <p>Научитесь писать без&nbsp;лишних слов</p>
-                        <paper-button id="login" on-click="{{logIn}}" raised>Войти через ВКонтакте</paper-button>
-                    </div>
-                </div>
-            </template>
-        </template>
+	    <div class="content">
+			<div id="loginstatus"></div>
+			<div class="button-container">
+				<p>Научитесь писать без&nbsp;лишних слов</p>
+				<paper-button id="login" on-click="{{logIn}}" raised>Войти через ВКонтакте</paper-button>
+			</div>
+		</div>
+	</template>
     <script src="http://vk.com/js/api/openapi.js"></script>
     <script>
         Polymer({
-            loginVisible: false,
-            ready: function () {
-                VK.init({
+        	ready: function () {
+		        VK.init({
                     apiId: 4793375
                 });
             },
 
             logIn: function () {
-                this.vkLogin(function () { window.location.reload(); }, function () { alert("Can't login"); });
+            	this.vkLogin(function () {
+					window.dispatchEvent(new CustomEvent('vkLogin'))
+	                window.location.hash = "map";
+                }, function() {
+	                window.location.hash = "login";
+                });
             },
 
             vkLogin: function(onSuccess, onError) {
@@ -95,10 +96,5 @@
 
 
         });
-       
-
-        
-
-        
     </script>
 </polymer-element>

@@ -1,10 +1,10 @@
 ﻿<polymer-element name="game-pages">
 	<link rel="import" href="/Scripts/polymer/core-animated-pages/core-animated-pages.html">
-	<link rel="import" href="/Scripts/polymer/core-animated-pages/transitions/slide-from-right.html">
 	<link rel="import" href="/Scripts/polymer/flatiron-director/flatiron-director.html">
 	<link rel="import" href="/game-pages/game-page-login.html">
 	<link rel="import" href="/game-pages/game-page-map.html">
 	<link rel="import" href="/game-pages/game-page-level.html">
+	<link rel="import" href="/game-pages/game-page-error.html">
 	<template id="mainTemplate">
 		<style>
 			.container {
@@ -12,7 +12,7 @@
 				margin: 0 auto;
 			}	
 		</style>
-		<core-animated-pages valueattr="hash" selected="{{page}}" transitions="slide-from-right" transitions="slide-from-right" class="container" fit>
+		<core-animated-pages valueattr="hash" selected="{{page}}" class="container" fit>
 			<section hash="login" layout vertical center>
 				<game-page-login id="game-page-login"></game-page-login>
 			</section>
@@ -21,6 +21,9 @@
 			</section>
 			<section hash="level" layout vertical center>
 				<game-page-level id="game-page-level"></game-page-level>
+			</section>
+			<section hash="error" layout vertical center>
+				<game-page-error id="game-page-error"></game-page-error>
 			</section>
 		</core-animated-pages>
 		<flatiron-director id="flatironDirector" route="{{route}}" autoHash></flatiron-director>
@@ -36,8 +39,10 @@
 						var levelNumber = route.detail.substr(6);
 						element.$["game-page-level"].level = levelNumber;
 						element.$["game-page-level"].isActive = true;
-					} else
+					} else {
 						element.page = route.detail;
+						element.$["game-page-level"].isActive = false;
+					}
 				})
 			}
 		});

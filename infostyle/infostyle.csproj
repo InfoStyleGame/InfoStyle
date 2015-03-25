@@ -146,6 +146,7 @@
     <Content Include="Content\static.css" />
     <Content Include="Controls\cards-list.html" />
     <Content Include="Controls\card-item.html" />
+    <Content Include="game-pages\game-page-error.html" />
     <Content Include="Controls\ist-level.html" />
     <Content Include="game-pages\game-page-login.html" />
     <Content Include="game-pages\game-page-level.html" />
@@ -174,6 +175,7 @@
     <Content Include="markup\styles.css" />
     <Content Include="Scripts\App\Base.js" />
     <Content Include="Scripts\App\api.js" />
+    <Content Include="Scripts\App\error-handler.js" />
     <Content Include="Scripts\App\detect-polymer.js" />
     <Content Include="Scripts\App\empty.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />

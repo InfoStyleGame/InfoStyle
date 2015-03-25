@@ -1,45 +1,57 @@
 ﻿<polymer-element name="user-info">
     <template>
-        <style>
-            :host {
-              height: 100%;
-              font-family: "Lora";
-              font-style: italic;
-            }
+	    <style>
+    		:host {
+    			height: 100%;
+    			font-family: "Lora";
+    			font-style: italic;
+    		}
 
-            .user-info__info {
-              display: inline-block;
-              vertical-align: middle;
-            }
+    		.user-info__info {
+    			display: inline-block;
+    			vertical-align: middle;
+    		}
 
-            .user-info__avatar {
-                margin-right: 10px;
-                border-radius: 50px;
-                width: 40px; 
-                height: 40px;
-                background-color: #fff;
-                vertical-align: middle;
-            }
-        </style>
-        <img class="user-info__avatar" src="{{pictureSrc}}">
-        <div class="user-info__info">
-            {{name}}<br/>
-            Баллы: {{score}}
-        </div>
+    		.user-info__avatar {
+    			margin-right: 10px;
+    			border-radius: 50px;
+    			width: 40px; 
+    			height: 40px;
+    			background-color: #fff;
+    			vertical-align: middle;
+    		}
+    	</style>
+	    <template if="{{loggedIn}}">
+		    <img class="user-info__avatar" src="{{pictureSrc}}">
+			<div class="user-info__info">
+				{{name}}<br/>
+				Баллы: {{score}}
+			</div>
+	    </template>
+        
     </template>
     <script>
         Polymer({
             name: '',
             pictureSrc: '',
             score: 0,
-            created: function () {
-                var self = this;
-                Api.GetUserInfo().done(function(info) {
-                    self.name = info.Name;
-                    self.pictureSrc = info.PictureSrc;
-                    self.score = info.Score;
-                });
-            }
+			loggedIn: false,
+            ready: function () {
+            	this.refresh();
+	            window.addEventListener('vkLogin', this.refresh.bind(this));
+            },
+
+			refresh: function() {
+				Api.GetUserInfo().done(function (info) {
+					this.name = info.Name;
+					this.loggedIn = true;
+					this.pictureSrc = info.PictureSrc;
+					this.score = info.Score;
+				}.bind(this))
+				.fail(function() {
+					this.loggedIn = false;
+				}.bind(this));
+			}
         });
     </script>
 </polymer-element>

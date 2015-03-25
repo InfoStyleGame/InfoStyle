@@ -2,41 +2,46 @@
     root: "/api",
     theCakeIsALie: false,
     GetTask: function (type, level) {
-        if (Api.theCakeIsALie) {
-            return mockDef(mockApi.GetTask_Result);
+	    var url = "/task/get?level=" + level + "&type=" + type;
+	    if (Api.theCakeIsALie) {
+            return mockDef(url, mockApi.GetTask_Result);
         }
-        level = level - 1;
-        return this._DoApiCall("/task/get?level=" + level + "&type=" + type, 'POST');
+	    level = level - 1;
+	    return this._DoApiCall(url, 'POST');
     },
 
     GetCards: function (level) {
-        level = level - 1;
-        if (Api.theCakeIsALie) {
-            return mockDef(mockApi.GetCards_Result);
+	    level = level - 1;
+	    var url = "/task/card?level=" + level;
+	    if (Api.theCakeIsALie) {
+            return mockDef(url, mockApi.GetCards_Result);
         }
-        return this._DoApiCall("/task/card?level=" + level, 'POST');
+	    return this._DoApiCall(url, 'POST');
     },
 
     SubmitTaskResults: function (level, score) {
-        level = level - 1;
-        if (Api.theCakeIsALie) {
-            return mockDef();
+	    level = level - 1;
+	    var url = "/taskResult/post?score=" + score + "&level=" + level;
+	    if (Api.theCakeIsALie) {
+            return mockDef(url);
         }
-        return this._DoApiCall("/taskResult/post?score=" + score + "&level=" + level, 'POST');
+	    return this._DoApiCall(url, 'POST');
     },
 
     GetUserInfo: function () {
-        if (Api.theCakeIsALie) {
-            return mockDef(mockApi.GetUserInfo_Result);
+	    var url = "/userInfo/get";
+	    if (Api.theCakeIsALie) {
+            return mockDef(url, mockApi.GetUserInfo_Result);
         }
-        return this._DoApiCall("/userInfo/get", 'GET');
+	    return this._DoApiCall(url, 'GET');
     },
 
     GetUserProgress: function () {
-        if (Api.theCakeIsALie) {
-            return mockDef(mockApi.GetUserProgress_Result);
+	    var url = "/userProgress/get";
+	    if (Api.theCakeIsALie) {
+            return mockDef(url, mockApi.GetUserProgress_Result);
         }
-        return this._DoApiCall("/userProgress/get", 'get');
+	    return this._DoApiCall(url, 'get');
     },
 
     _DoApiCall: function (url, methodType) {
@@ -51,10 +56,16 @@
     }
 };
 
-window.mockDef = function(result) {
+window.mockDef = function(url, result) {
     var $def = $.Deferred();
     $def.resolve(result);
-    return $def.promise();
+	if (result) {
+		console.log("Mock def result for url " + url + " will be following:");
+		console.log(result);
+	} else {
+		console.log("Mock def result for url " + url + " was called.");
+	}
+	return $def.promise();
 };
 
 window.mockApi = {

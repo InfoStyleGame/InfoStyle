@@ -3,7 +3,7 @@
 	<link rel="import" href="/Scripts/polymer/paper-button/paper-button.html">
 	<template>
 		<div id="levelContainer"></div>
-		<paper-button hidden id="exitButton" on-click="{{goToMap}}">Вернуться на карту</paper-button>
+		<paper-button id="exitButton" on-click="{{goToMap}}">Вернуться на карту</paper-button>
 	</template>
     <script>
     	Polymer({
@@ -21,17 +21,10 @@
     		activate: function() {
     			var el = document.createElement("ist-level");
     			el.level = this.level;
-				el.addEventListener('levelComplete', this.onLevelComplete)
-    			this.$.levelContainer.appendChild(el);
+				this.$.levelContainer.appendChild(el);
     		},
 
-			onLevelComplete: function() {
-				this.$.exitButton.removeAttribute('hidden');
-			},
-
 			goToMap: function () {
-				this.$.exitButton.hidden = '';
-				this.isActive = false;
 				window.location.hash = "map";
 			}
     	});
