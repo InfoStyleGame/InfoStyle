@@ -8,20 +8,23 @@
 			ready: function() {
 				window.TheCakeIsALie = function() {
 					window.Api.useFakeApi = true;
-					console.log("You don't even care. Do you?");
-					window.location.hash = "#map"
+					window.dispatchEvent(new CustomEvent('vkLogin'));
+					window.location.hash = "#map";
+					return "You don't even care. Do you?";
 				};
 				
 				window.ThereReallyWasACake = function() {
 					window.Api.useFakeApi = false;
-					console.log("It's so delicious and moist!");
-					window.location.hash = "#login"
+					window.location.hash = "#login";
+					return "It's so delicious and moist!";
 				};
 
 				window.WeAreAnonymous = function() {
 					window.Api.ignore403 = true;
-					console.log("We are legion!");
+					return "We are legion!";
 				};
+
+				window.I
 			}
         });
     </script>
