@@ -164,3 +164,4 @@ FakesAssemblies/
 *.opt
 /*.suo
 *.user
+.idea
