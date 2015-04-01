@@ -1,31 +1,76 @@
-﻿<polymer-element name="ist-level" attributes="level isComplete">
+﻿<polymer-element name="ist-level" attributes="level">
     <link rel="import" href="/Scripts/polymer/paper-button/paper-button.html">
 	<link rel="import" href="/Controls/crawl-line.html">
 	<link rel="import" href="/Controls/cards-list.html">
 	<link rel="import" href="/Controls/theory-block.html">
 	<template>
-		<theory-block level="{{level}}"></theory-block>
-		<div class="border"></div>
-		<cards-list delayed="true" level="{{level}}" isActive="{{isCardsListActive}}" isCleared="{{isCardsListCleared}}"></cards-list>
-		<crawl-line level="{{level}}" isActive="{{isCrawlLineActive}}" isCleared="{{isCrawlLineCleared}}"></crawl-line>
+        <style>
+            paper-button[raised].action {
+                text-transform: none;
+                background-color: #C48FFF;
+                color: #fff;
+                font-family: "Lora";
+                font-style: italic;
+                font-size: 1.5em;
+                margin: 30px 0 0 0;
+            }
+        </style>
+        <theory-block level="{{level}}"></theory-block>
+		<cards-list delayed="true" level="{{level}}" isActive="{{isCardsListActive}}"></cards-list>
+		<crawl-line level="{{level}}" isActive="{{isCrawlLineActive}}"></crawl-line>
+        <paper-button id="nextTaskButton" class="action" hidden="true" on-tap="{{nextTask}}" raised>Дальше</paper-button>
+        <paper-button id="completeLevelButton" class="action" hidden="true" on-tap="{{goToMap}}" raised>Вернуться на карту</paper-button>
 	</template>
     <script>
     	Polymer({
-    		isCardsListClearedChanged: function () {
-    			this.isCardsListActive = false;
-    			this.isCrawlLineActive = true;
-    		},
-
-    		isCrawlLineClearedChanged: function () {
-    			this.isCrawlLineActive = false;
-    			var levelCompleteEvent = new CustomEvent('levelComplete');
-    			this.dispatchEvent(levelCompleteEvent);
-		    },
-
     		ready: function () {
     			this.totalScore = 0;
-    			this.isCardsListActive = true;
-    		}
+    			this.uncompletedTasks = [
+                    "isCardsListActive",
+                    "isCrawlLineActive"
+                ];
+                this.addEventListener('task-complete', this.onTaskComplete);
+
+                this.nextTask();
+    		},
+
+            onTaskComplete: function(e) {
+                // Сохраняем набранные за задание очки
+                if (e && e.detail && e.detail.points) {
+                    this.totalScore += e.detail.points;
+                }
+
+                // Показываем кнопку «Дальше», если есть незаконченное задание
+                if (this.uncompletedTasks.length > 0) {
+                    this.$["nextTaskButton"].hidden = false;
+                } else {
+                    // Показать «Вернуться на карту», если все задания пройдены
+                    this.$["completeLevelButton"].hidden = false;
+                    this.submitTaskResult();
+                }
+            },
+
+            nextTask: function() {
+                // Скрыть кнопку «Дальше
+                this.$["nextTaskButton"].hidden = true;
+                
+                // Скрыть завершенное задание
+                if (this.inprogressTask)
+                    this[this.inprogressTask] = false;
+
+                // Взять следующее незаконченное задание и активировать его
+                this.inprogressTask = this.uncompletedTasks.shift();
+                this[this.inprogressTask] = true;
+            },
+
+
+            submitTaskResult: function() {
+                Api.SubmitTaskResults(this.level, this.totalScore);
+            },
+
+            goToMap: function() {
+                this.fire('goToMap');
+            }
     	});
     </script>
 </polymer-element>

@@ -1,85 +1,11 @@
-<polymer-element name="cards-list" attributes="level delayed isActive isCleared">
+<polymer-element name="cards-list" attributes="level delayed isActive">
 <link href="/Controls/card-item.html" rel="import" />
 
   <template>
       <style>
-          .elem /deep/ {
-              font-family: Roboto;
-          }
-
-          @-webkit-keyframes point-arise {
-              0% {
-                  opacity: 0;
-                  padding-left: -15px;
-              }
-              100% {
-                  opacity: 1;
-                  padding-left: 0px;
-              }
-          }
-
-          @-moz-keyframes point-arise {
-              0% {
-                  opacity: 0;
-                  padding-left: -15px;
-              }
-              100% {
-                  opacity: 1;
-                  padding-left: 0px;
-              }
-          }
-
-          @keyframes point-arise {
-              0% {
-                  opacity: 0;
-                  padding-left: -15px;
-              }
-              100% {
-                  opacity: 1;
-                  padding-left: 0px;
-              }
-          }
-
-          #core_card {
-              padding: 10px;
-              max-width: 650px;
-              min-width: 400px;
-              display: inline-block;
-              background-color: rgb(255, 251, 235);
-              box-shadow: 0 0 10px rgba(0,0,0,.2);
-          }
-
-          #core_card .text {
-              font-size: 16px;
-          }
-
-          #h3 {
-              font-weight: normal;
-              background: url(chrome-extension://pnoffddplpippgcfjdhbmhkofpnaalpg/packages/cde_polymer_designer/src/polymer_designer/components/element/) transparent;
-          }
-          .point {
-              display: inline-block;
-              font-family: Lora;
-              font-style: italic;
-              font-size: 16px;
-              color: green;
-          }
-
-          .point.hidden {
-              display: inline-block;
-              opacity: 0;
-          }
-
-          .point.showing {
-              -webkit-animation: point-arise 0.2s ease-in;
-              -moz-animation: point-arise 0.2s ease-in;
-              animation: point-arise 0.2s ease-in;
-          }
-
           .result-panel {
               position: relative;
               display: inline-block;
-              
               width: 650px;
               min-width: 400px;
               font-size: 16px;
@@ -95,35 +21,13 @@
               right: 0;
           }
 
-          paper-button.colored {
-              background: #ffffff;
-              color: #006CAA;
-          }
-
-          .hidden {
-              display: none;
-          }
-
-          .task-label {
-              margin-top: 30px;
-              font-family: Lora;
-              font-style: italic;
-              font-size: 16px;
-          }
-
       </style>
-      <div class="elem {{isActive ? '' : 'hidden'}}"  on-mousedown="{{clickAction}}">
-          <p class="task-label">
-              Кликни по стоп-слову в каждом предложении
-          </p>
-          <div id="cardsContainer">
-              
-          </div>
+      <div hidden?="{{!isActive}}" on-mousedown="{{clickAction}}">
+          <h3>Отметь стоп-слово в каждом предложении</h3>
+          <div id="cardsContainer"></div>
           <div class="result-panel" hidden?="{{!showResults}}">
-              <span>Заработано баллов: {{points}}</span>
-              <span hidden?="{{!clearLine}}">+ 3 (за чистую линию) = {{points+3}}
-              </span>
-              <paper-button class="colored" raised on-tap="{{nextTask}}">Дальше</paper-button>
+              <span> Вы заработали {{points}} {{pointsLabel}}</span>
+              <span hidden?="{{!clearLine}}"> (3 балла «за чистую линию»)</span>
           </div>
       </div>
   </template>
@@ -131,13 +35,8 @@
   <script>
 
   	Polymer({
-  		isActiveChanged: function() {
-			if (this.isActive)
-				this.activate();
-		},
-
-		ready: function() {
-			if (!this.delayed)
+		isActiveChanged: function() {
+  			if (this.isActive)
 				this.activate();
 		},
 
@@ -166,13 +65,7 @@
         },
 
         submitTaskResults: function() {
-            window.totalScore += this.points;
-        },
-
-        nextTask: function () {
-			$("cards-list").hide();
-            $("crawl-line").show();
-	        this.isCleared = true;
+            this.fire("task-complete", { points: this.points });
         },
 
         buildCard: function(cardData) {
@@ -201,7 +94,7 @@
             if(this.showResults)
                 return;
             if (t.className === 'crossable') {
-                if (e.target.hit )
+                if (e.target.hit)
                     return;
                 e.target.hit = true;
                 $(e.target).css({ "text-decoration": "line-through", color: "red" });
@@ -212,12 +105,39 @@
                 if (this.cards[this.currentCard])
                     this.cards[this.currentCard].attr("show", true);
                 if (this.solvedCounter == this.totalCounter) {
+                    if (this.clearLine)
+                        this.points += 3;
+                    this.pointsLabel = this.getPointsLabel(this.points);
                     this.showResults = true;
-                    this.submitTaskResults()
+                    this.submitTaskResults();
                 }
             } else {
                 this.clearLine = false;
             }
+        },
+
+        getPointsLabel: function(points) {
+            if (!points)
+                return;
+
+            // 
+            var str         = points.toString(),
+                lastDigit   = +str[str.length-1],
+                label;
+
+            switch (lastDigit) {
+                case 1:
+                    label = "балл";
+                    break;
+                case 2:
+                case 3:
+                case 4:
+                    label = "балла";
+                    break;
+                default:
+                    label = "баллов";
+            }
+            return label;
         }
     });
 

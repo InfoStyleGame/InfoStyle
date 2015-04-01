@@ -1,10 +1,6 @@
-﻿<polymer-element name="crawl-line" attributes="level isActive isCleared">
+﻿<polymer-element name="crawl-line" attributes="level isActive">
     <template>
         <style>
-            
-            .crawl-line {
-            }
-
             .crawl-line:hover {
                 cursor: url(/Content/resources/cursor-gun.png), auto;
             }
@@ -59,9 +55,9 @@
             .marquee .animateMarquee {
                 display: inline-block;
                 padding-left: 100%;
-                -webkit-animation: scroll 65s linear;
-                -moz-animation: scroll 65s linear;
-                animation: scroll 65s linear;
+                -webkit-animation: scroll 20s linear;
+                -moz-animation: scroll 20s linear;
+                animation: scroll 20s linear;
             }
 
             .marquee paper-button {
@@ -72,50 +68,45 @@
             }
 
             .marquee /deep/ .button-content {
-                          padding-left: 0;
-                          padding-right: 0;
-                      }
+                padding-left: 0;
+                padding-right: 0;
+            }
 
             paper-button {
                 text-transform: none;
             }
 
-            paper-button.start {
-                border: solid 1px #006caa;
-                color: #006caa;
+            paper-button[raised].action {
+                text-transform: none;
+                box-shadow: 0 2px 0 #000;
+                background-color: #C48FFF;
+                color: #fff;
                 font-family: "Lora";
                 font-style: italic;
-                font-size: 25px;
-            }
-
-            paper-button.end {
-                border: solid 1px #006caa;
-                color: #006caa;
-                font-family: "Lora";
-                font-style: italic;
-                font-size: 25px;
-                margin-top: 20px;
+                font-size: 1.5em;
+                margin: 0;
             }
 
             .crawlLineCounters {
                 padding: 10px 0;
                 font-size: 20px;
             }
-            .hitStopWord {
+
+            .stop-word_hit {
                 color: red;
                 text-decoration: line-through;
             }
             
-            .missedStopWord {
+            .stop-word_missed {
                 color: red;
             }
 
             .no_selection {
-    -webkit-user-select: none; /* webkit (safari, chrome) browsers */
-    -moz-user-select: none; /* mozilla browsers */
-    -khtml-user-select: none; /* webkit (konqueror) browsers */
-    -ms-user-select: none; /* IE10+ */
-}
+                -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+                -moz-user-select: none; /* mozilla browsers */
+                -khtml-user-select: none; /* webkit (konqueror) browsers */
+                -ms-user-select: none; /* IE10+ */
+            }
 
             .task-label {
               margin-top: 30px;
@@ -128,15 +119,14 @@
                 margin-bottom: 20px;
             }
         </style>
-	    <div class="{{isActive ? '' : 'hidden'}}">
+	    <div hidden?="{{!isActive}}">
 	    
-			<p class="task-label">
-				Подстрели все стоп-слова:
-			</p>
+			<h3>Подстрели все стоп-слова</h3>
     
 			<div id="start">
-				<paper-button on-tap="{{startGame}}" class="start">Начать</paper-button>
+				<paper-button on-tap="{{startGame}}" class="action" raised>Начать</paper-button>
 			</div>
+
 			<div style="display:none" id="game" class="marquee" on-mousedown="{{clickAction}}">
 				<div class="border">
 					<div id="text" class="no_selection crawl-line"></div>
@@ -145,10 +135,11 @@
 					<span>Баллы: <span id="points">{{points}}</span></span>
 				</div>
 			</div>
+
 			<div id="end" style="display:none;">
 				<div id="answer"></div>
 				<div>Всего стоп-слов: <span>{{stopWordsCount}}</span></div>
-				<div>Вы угадали: <span>{{hits}}</span></div>
+				<div>Вы подстрелили: <span>{{hits}}</span></div>
 				<div>Штраф за промахи: <span>{{misses}}</span></div>
 				<div>Итого баллов: <span>{{points}}</span></div>
 			</div>
@@ -156,9 +147,6 @@
     </template>
     <script>
         Polymer({
-            ready: function () {
-            },
-
             isActiveChanged: function () {
 	            if (this.isActive)
 					$(this).show();
@@ -202,12 +190,14 @@
                     }
                 }
 
-                var text = this.$.text, animationEndEvent = whichAnimationEvent();
+                var text                = this.$.text,
+                    animationEndEvent   = whichAnimationEvent();
                 text.addEventListener(animationEndEvent, onAnimationEnd);
 
                 var self = this;
                 function onAnimationEnd(event) {
                     text.removeEventListener(animationEndEvent, onAnimationEnd);
+                    self.showAnswer();
                     self.submitTaskResults();
                 }
 
@@ -220,23 +210,24 @@
                     var $answerWord = $("<span/>").text($(words[i]).text());
                     $answer.append($answerWord);
                     
-                    if (!$(words[i]).hasClass("stopWord"))
+                    if (!$(words[i]).hasClass("stop-word"))
                         continue;
 
                     if (words[i].hit)
-                        $answerWord.addClass("hitStopWord");
+                        $answerWord.addClass("stop-word_hit");
                     else
-                        $answerWord.addClass("missedStopWord");
+                        $answerWord.addClass("stop-word_missed");
                 }
             },
 
-            submitTaskResults: function() {
+            showAnswer: function() {
                 $(this.$.game).hide();
                 this.buildAnswer();
                 $(this.$.end).show();
-                this.isCleared = true;
-                window.totalScore += this.points;
-                Api.SubmitTaskResults(this.level, window.totalScore);
+            },
+
+            submitTaskResults: function() {
+                this.fire('task-complete', { points: this.points });
             },
 
             init: function() {
@@ -253,7 +244,7 @@
                     return $("<span/>").addClass("word").text(datum.Text)[0];
                 } else if (datum.Type == TextTypes.Stop) {
                     this.stopWordsCount++;
-                    return $("<paper-button>/>").addClass("word").addClass("stopWord").text(datum.Text)[0];
+                    return $("<paper-button>/>").addClass("word").addClass("stop-word").text(datum.Text)[0];
                 } else {
                     console.warn("Unknown text type" + datum.Type);
                     return $("<span/>")[0];
@@ -268,13 +259,11 @@
                         this.hits++;
                         e.target.hit = true;
                     }
-
-                    
                 } else {
                     this.points--;
                     this.misses++;
                 }
             }
         });
-</script>
+    </script>
 </polymer-element>
