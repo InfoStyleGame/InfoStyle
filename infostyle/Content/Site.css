@@ -1,6 +1,7 @@
 ﻿body {
-    font-size: .85em;
-    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    font-size: 14px;
+    line-height: 1.5em;
+    font-family: "RobotoDraft", Verdana, Helvetica, Sans-Serif;
     color: #232323;
     background-color: #fff;
 }
@@ -9,6 +10,26 @@ header, footer, nav, section {
     display: block;
 }
 
+body /deep/ h3 {
+    font-weight: 300;
+    margin-top: 2em;
+    font-size: 1.5em;
+}
+
+h3 {
+    font-weight: 300;
+    margin-top: 2em;
+    font-size: 1.4em;
+}
+
+
+body /deep/ .hidden {
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
 
 /* Styles for basic forms
 -----------------------------------------------------------*/
@@ -58,8 +79,4 @@ textarea {
 
 .validation-summary-valid {
     display: none;
-}
-
-.hidden {
-	display: none;
 }
