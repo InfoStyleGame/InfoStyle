@@ -4,6 +4,14 @@
             .level {
                 position: absolute;
                 text-align: center;
+                color: #aaa;
+            }
+            .level_enabled_true {
+                color: #404040;
+            }
+            .level__link {
+                text-decoration: none;
+                color: inherit;
             }
             .level__balloon {
                  display: inline-block;
@@ -11,8 +19,7 @@
                  width: 45px;
                  height: 45px;
                  border-radius: 50px;
-                 box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .2);
-                 background: #fff;
+                 background: #eaeaea;
              }
             .level__balloon:after {
                 content: '';
@@ -22,14 +29,13 @@
                 vertical-align: middle;
             }
             .level_enabled_true .level__balloon {
-                border-color: #7ed321; /* green */
+                background-color: #7ed321; /* green */
             }
             .level_current_true .level__balloon {
-                border-color: #F5A623; /* orange */
+                background-color: #F5A623; /* orange */
             }
-            .level__link {
-                text-decoration: none;
-                color: #404040;
+            .level_enabled_true .level__link:hover .level__balloon {
+                opacity: .75;
             }
             .level__number {
                 font-weight: 500;
@@ -38,7 +44,7 @@
                 vertical-align: middle;
             }
             .level__title {
-                font-weight: 500;
+                line-height: 1.3em;
             }
         </style>
         <div class="level level_enabled_{{enabled}} level_current_{{current}}" style="left: {{x}}px; top: {{y}}px">
