@@ -7,18 +7,19 @@
 	<template id="mainTemplate">
 		<style>
 			.container {
-				max-width: 1000px;
+				width: 1000px;
+				min-width: 800px;
 				margin: 0 auto;
 			}	
 		</style>
 		<core-animated-pages valueattr="hash" selected="{{page}}" class="container" fit>
-			<section hash="login" layout vertical center>
+			<section hash="login">
 				<game-page-login id="game-page-login"></game-page-login>
 			</section>
-			<section hash="map" layout vertical center>
+			<section hash="map">
 				<game-page-map id="game-page-map"></game-page-map>
 			</section>
-			<section hash="level" layout vertical center>
+			<section hash="level">
 				<game-page-level id="game-page-level"></game-page-level>
 			</section>
 		</core-animated-pages>
@@ -29,15 +30,17 @@
 			ready: function () {
 				var element = this;
 				this.route = this.route || 'login';
+				
 				this.$.flatironDirector.addEventListener('director-route', function(route) {
-					if (route.detail.indexOf('level') == 0) {
-						element.page = 'level';
-						var levelNumber = route.detail.substr(6);
-						element.$["game-page-level"].level = levelNumber;
-						element.$["game-page-level"].isActive = true;
-					} else {
-						element.page = route.detail;
-						element.$["game-page-level"].isActive = false;
+					var params = route.detail.split(':');
+
+					if (params.length > 0) {
+						var address = params.shift(),
+							page 	= element.$['game-page-' + address];
+						
+						element.page = address;
+						page.isActive = true;
+						page.params = params;
 					}
 				})
 			}

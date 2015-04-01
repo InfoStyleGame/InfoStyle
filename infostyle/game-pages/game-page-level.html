@@ -1,12 +1,34 @@
-﻿<polymer-element name="game-page-level" attributes="level isActive">
+﻿<polymer-element name="game-page-level" attributes="level isActive params">
 	<link rel="import" href="/Controls/ist-level.html">
 	<link rel="import" href="/Scripts/polymer/paper-button/paper-button.html">
+	<link rel="import" href="/Scripts/polymer/core-icon-button/core-icon-button.html">
 	<template>
-		<div id="levelContainer"></div>
-		<paper-button id="exitButton" on-click="{{goToMap}}">Вернуться на карту</paper-button>
+		<style>
+			.container {
+				position: relative;
+			}
+
+			#levelContainer {
+				padding-bottom: 50px;
+			}
+
+			.exit-button {
+				position: absolute;
+				top: -10px;
+				left: -60px;
+			}
+		</style>
+		<div class="container">
+			<div id="levelContainer"></div>
+			<core-icon-button icon="arrow-back" class="exit-button" on-click="{{goToMap}}"></core-icon-button>
+		</div>
 	</template>
     <script>
     	Polymer({
+    		ready: function() {
+    			this.addEventListener('goToMap', this.goToMap);
+    		},
+
     		isActiveChanged: function () {
     			if (this.isActive)
     				this.activate();
@@ -20,11 +42,12 @@
 
     		activate: function() {
     			var el = document.createElement("ist-level");
-    			el.level = this.level;
+    			el.level = (this.params && this.params.length > 0) ? this.params[0] : '';
 				this.$.levelContainer.appendChild(el);
     		},
 
 			goToMap: function () {
+				this.isActive = false;
 				window.location.hash = "map";
 			}
     	});

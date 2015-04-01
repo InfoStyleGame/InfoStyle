@@ -1,4 +1,4 @@
-﻿<polymer-element name="game-page-map">
+﻿<polymer-element name="game-page-map" attributes="isActive">
 	<link rel="import" href="/Controls/level-link.html">
 	<link rel="import" href="/Controls/login-frame.html">
 	<template>
@@ -18,30 +18,39 @@
 				right: 0;
 			}
 		</style>	
-		<div class="island island_first">
-			<img class="island__image" src="/Content/resources/Swamp.png" alt="1st island" width="592" height="320" />
-			<level-link number="1" x="80" y="50" static="true">Мусор, сэр!</level-link>
-	        <level-link number="2" x="130" y="180" static="true">Позвольте, <br>я считаю...</level-link>
-	        <level-link number="3" x="250" y="120" static="true">Структура <br>в наши дни</level-link>
-	        <level-link number="4" x="430" y="120" static="true">Отглагольные<br />существительные</level-link>
-	        <level-link number="5" x="350" y="230" static="true">Модальность</level-link>
-		</div>
-		<div class="island island_ezh">
-			<a href="ezh"><img class="island__image" src="/Content/resources/Hedgehog.png" alt="2st island" width="463" height="241" /></a>
+		<div id="container">
+			<div class="island island_first">
+				<img class="island__image" src="/Content/resources/Swamp.png" alt="1st island" width="592" height="320" />
+				<level-link number="1" x="80" y="50" static="true">Мусор, сэр!</level-link>
+		        <level-link number="2" x="130" y="180" static="true">Позвольте, <br>я считаю...</level-link>
+		        <level-link number="3" x="250" y="120" static="true">Структура <br>в наши дни</level-link>
+		        <level-link number="4" x="430" y="120" static="true">Отглагольные<br />существительные</level-link>
+		        <level-link number="5" x="350" y="230" static="true">Модальность</level-link>
+			</div>
+			<div class="island island_ezh">
+				<a href="ezh"><img class="island__image" src="/Content/resources/Hedgehog.png" alt="2st island" width="463" height="241" /></a>
+			</div>
 		</div>
 	</template>
 	<script>
 		Polymer({
+			isActiveChanged: function() {
+				if (this.isActive)
+					this.activate();
+			},
+
 			activate: function () {
+				var self = this;
 				Api.GetUserProgress().done(function(progress) {
-		            var l = progress.CurrentLevel + 1;
+					var l 			= progress.CurrentLevel + 1,
+						container 	= self.$.container;
 		            if (l > 3)
 		                l = 3;
-		            for (var i = 0; i <= l; i++)
-		                $('level-link[number=' + i + ']').attr("enabled", "true");
+		            for (var i = 1; i <= l; i++)
+		                $(container.querySelector('level-link[number="' + i + '"]')).attr("enabled", "true");
 
-		            $('level-link[number=' + l + ']').attr("current", "true");
-		        });
+		            $(container.querySelector('level-link[number="' + l + '"]')).attr("current", "true");
+				});
 			}
 		});
 	</script>
