@@ -2,69 +2,37 @@
 
   <template>
     <style>
-      @-webkit-keyframes point-arise {
-        0% {
-          opacity: 0;
-          padding-left: -15px;
-        }
-        100% {
-          opacity: 1;
-          padding-left: 0px;
-        }
+      .card-item__container {
+          margin-bottom: 20px;
       }
 
-      @-moz-keyframes point-arise {
-        0% {
-          opacity: 0;
-          padding-left: -15px;
-        }
-        100% {
-          opacity: 1;
-          padding-left: 0px;
-        }
-      }
-
-      @keyframes point-arise {
-        0% {
-          opacity: 0;
-          padding-left: -15px;
-        }
-        100% {
-          opacity: 1;
-          padding-left: 0px;
-        }
-      }
-
-      #core_card {
-        padding: 10px;
+      .card-item__core-card {
+        padding: 20px 10px;
         width: 650px;
+        box-sizing: border-box;
         display: inline-block;
         background-color: rgb(255, 251, 235);
         box-shadow: 0 0 10px rgba(0,0,0,.2);
       }
 
-      #core_card .text {
-        font-size: 16px;
-      }
-
-      .point {
-          padding-left: 20px;
+      .card-item__point {
         display: inline-block;
         font-family: Lora;
         font-style: italic;
         font-size: 16px;
-        color: green;
+        background-color: #7CD538;
+        width: 20px;
+        padding: 10px;
+        border-radius: 20px;
+        text-align: center;
+        z-index: -100;
+        margin-left: 10px;
       }
 
-      .point.hidden {
-        display: inline-block;
-        opacity: 0;
-      }
-
-      .point.showing {
-        -webkit-animation: point-arise 0.2s ease-in;
-        -moz-animation: point-arise 0.2s ease-in;
-        animation: point-arise 0.2s ease-in;
+      .card-item__point_show {
+        -webkit-animation: point-arise 0.1s ease-in;
+        -moz-animation: point-arise 0.1s ease-in;
+        animation: point-arise 0.1s ease-in;
       }
 
       paper-button {
@@ -73,26 +41,49 @@
         right: 0;
       }
 
-      .hidden {
-        display: none;
-      }
-
       paper-button {
-          height: 10px;
+        height: 10px;
       }
 
-      .row {
-          margin-bottom: 20px;
+      /* Animation */
+
+      @-webkit-keyframes point-arise {
+        0% {
+          opacity: 0;
+          margin-left: -25px;
+        }
+        100% {
+          opacity: 1;
+          margin-left: 10px;
+        }
+      }
+
+      @-moz-keyframes point-arise {
+        0% {
+          opacity: 0;
+          margin-left: -25px;
+        }
+        100% {
+          opacity: 1;
+          margin-left: 10px;
+        }
+      }
+
+      @keyframes point-arise {
+        0% {
+          opacity: 0;
+          margin-left: -25px;
+        }
+        100% {
+          opacity: 1;
+          margin-left: 10px;
+        }
       }
 
     </style>
-    <div class="row" hidden?="{{!show}}">
-      <core-card id="core_card" horizontal layout>
-        <p id="p" class="text">
-          <content></content>
-        </p>
-      </core-card>
-        <div id="div" hidden?="{{!showPoint}}"class="point">+1</div>
+    <div class="card-item__container" hidden?="{{!show}}" horizontal layout center>
+      <core-card class="card-item__core-card"><content></content></core-card>
+      <div hidden?="{{!showPoint}}" class="card-item__point card-item__point_show">+1</div>
     </div>
 
     </template>
