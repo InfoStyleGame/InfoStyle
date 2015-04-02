@@ -1,6 +1,7 @@
 ﻿<polymer-element name="game-page-map" attributes="isActive">
 	<link rel="import" href="/Controls/level-link.html">
 	<link rel="import" href="/Controls/login-frame.html">
+	<link rel="import" href="/Controls/ist-request-email.html">
 	<template>
 		<style>
 			.island {
@@ -30,6 +31,7 @@
 			<div class="island island_ezh">
 				<a href="ezh"><img class="island__image" src="/Content/resources/Hedgehog.png" alt="2st island" width="463" height="241" /></a>
 			</div>
+			<ist-request-email style="position: absolute; left: 0px; bottom: 0px;" shown="true"></ist-request-email>
 		</div>
 	</template>
 	<script>
