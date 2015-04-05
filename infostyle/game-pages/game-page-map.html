@@ -36,23 +36,21 @@
 	</template>
 	<script>
 		Polymer({
-			isActiveChanged: function() {
-				if (this.isActive)
-					this.activate();
+			ready: function (){
+				window.addEventListener('userInfoChanged', this.updateMap.bind(this));
 			},
 
-			activate: function () {
-				var self = this;
+			updateMap: function () {
 				Api.GetUserProgress().done(function(progress) {
-					var l 			= progress.CurrentLevel + 1,
-						container 	= self.$.container;
-		            if (l > 3)
-		                l = 3;
-		            for (var i = 1; i <= l; i++)
+					var levelNumber = progress.CurrentLevel + 1,
+						container 	= this.$.container;
+		            if (levelNumber > 3)
+		                levelNumber = 3;
+		            for (var i = 1; i <= levelNumber; i++)
 		                $(container.querySelector('level-link[number="' + i + '"]')).attr("enabled", "true");
 
-		            $(container.querySelector('level-link[number="' + l + '"]')).attr("current", "true");
-				});
+		            $(container.querySelector('level-link[number="' + levelNumber + '"]')).attr("current", "true");
+				}.bind(this));
 			}
 		});
 	</script>

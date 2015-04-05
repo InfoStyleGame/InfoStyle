@@ -2,6 +2,7 @@
     root: "/api",
     useFakeApi: false,
 	ignore403: false,
+    debugApiCalls: true,
     GetTask: function (type, level) {
 	    var url = "/task/get?level=" + level + "&type=" + type;
 	    if (Api.useFakeApi) {
@@ -52,7 +53,9 @@
         	if (jqXHR.status == 403 && !Api.ignore403) {
 		        window.location.hash = 'login';
 	        }
-            console.log("Error: " + JSON.stringify(jqXHR));
+
+            if (Api.debugApiCalls)
+                console.log("Error: " + JSON.stringify(jqXHR));
         });
     }
 };
@@ -60,12 +63,14 @@
 window.mockDef = function(url, result) {
     var $def = $.Deferred();
     $def.resolve(result);
-	if (result) {
-		console.log("Mock def result for url " + url + " will be following:");
-		console.log(result);
-	} else {
-		console.log("Mock def result for url " + url + " was called.");
-	}
+	if(Api.debugApiCalls) {
+        if (result) {
+            console.log("Mock def result for url " + url + " will be following:");
+            console.log(result);
+        } else {
+            console.log("Mock def result for url " + url + " was called.");
+        }
+    }
 	return $def.promise();
 };
 

@@ -78,7 +78,7 @@
             logIn: function () {
             	this.vkLogin(function () {
 					window.dispatchEvent(new CustomEvent('vkLogin'))
-	                window.location.hash = "map";
+                    window.location.hash = "map";
                 }, function() {
 	                window.location.hash = "login";
                 });
