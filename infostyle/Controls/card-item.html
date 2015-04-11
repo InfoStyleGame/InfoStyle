@@ -4,6 +4,9 @@
     <style>
       .card-item__container {
           margin-bottom: 20px;
+          -webkit-animation: card-shorwing 400ms ease-out;
+          -moz-animation: card-shorwing 400ms ease-out;
+          animation: card-shorwing 400ms ease-out;
       }
 
       .card-item__core-card {
@@ -25,14 +28,14 @@
         padding: 10px;
         border-radius: 20px;
         text-align: center;
-        z-index: -100;
+        z-index: -1;
         margin-left: 10px;
       }
 
       .card-item__point_show {
-        -webkit-animation: point-arise 0.1s ease-in;
-        -moz-animation: point-arise 0.1s ease-in;
-        animation: point-arise 0.1s ease-in;
+        -webkit-animation: point-arise 0.1s ease-out;
+        -moz-animation: point-arise 0.1s ease-out;
+        animation: point-arise 0.1s ease-out;
       }
 
       paper-button {
@@ -77,6 +80,39 @@
         100% {
           opacity: 1;
           margin-left: 10px;
+        }
+      }
+
+      @-webkit-keyframes card-shorwing {
+        from {
+          opacity: 0;
+          transform: translateY(-100%);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      @-moz-keyframes card-shorwing {
+        from {
+          opacity: 0;
+          transform: translateY(-100%);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      @keyframes card-shorwing {
+        from {
+          opacity: 0;
+          transform: translateY(-100%);
+        }
+        to {
+          opacity: 1;
+          transform: none;
         }
       }
 
