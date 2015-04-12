@@ -36,5 +36,17 @@
 		<game-pages fit></game-pages>
 		<ist-cheats></ist-cheats>
 	</core-header-panel>
+
+	<script type="text/javascript">
+		var coreHeaderPanel = document.querySelector("core-header-panel");
+		coreHeaderPanel.addEventListener("scrollTo", function(e) {
+			if (!e.detail || !e.detail.hasOwnProperty("offsetTop"))
+				return;
+
+			var scroller = coreHeaderPanel.scroller;
+			if (scroller.scrollHeight > $(scroller).height())
+            	$(scroller).animate({ scrollTop: e.detail.offsetTop }, 400);
+		});
+	</script>
 </body>
 </html>

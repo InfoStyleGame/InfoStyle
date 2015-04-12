@@ -5,21 +5,34 @@
 	<link rel="import" href="/Controls/theory-block.html">
 	<template>
         <style>
-            paper-button[raised].action {
+            :host /deep/ paper-button {
                 text-transform: none;
-                background-color: #C48FFF;
-                color: #fff;
+            }
+
+            :host /deep/ paper-button.action {
+                font-size: 1.4em;
                 font-family: "Lora";
                 font-style: italic;
-                font-size: 1.5em;
-                margin: 30px 0 0 0;
+                margin: 20px 10px 20px 0;
+            }
+
+            :host /deep/ paper-button.action_next {
+                background-color: #C48FFF;
+                color: #fff;
+            }
+
+            :host /deep/ paper-button.action_back {
+                border: solid 1px #C48FFF;
+                color: #C48FFF;
+                background-color: #fff;
             }
         </style>
         <theory-block level="{{level}}"></theory-block>
 		<cards-list delayed="true" level="{{level}}" isActive="{{isCardsListActive}}"></cards-list>
 		<crawl-line level="{{level}}" isActive="{{isCrawlLineActive}}"></crawl-line>
-        <paper-button id="nextTaskButton" class="action" hidden="true" on-tap="{{nextTask}}" raised>Дальше</paper-button>
-        <paper-button id="completeLevelButton" class="action" hidden="true" on-tap="{{goToMap}}" raised>Вернуться на карту</paper-button>
+        <paper-button id="nextTaskButton" class="action action_next" hidden="true" on-tap="{{nextTask}}" raised>Дальше</paper-button>
+        <paper-button id="goToMapButton" class="action action_back" hidden="true" on-tap="{{goToMap}}">Вернуться на карту</paper-button>
+        <paper-button id="nextLevelButton" class="action action_next" hidden="true" on-tap="{{nextLevel}}">Следующий уровень</paper-button>
 	</template>
     <script>
     	Polymer({
@@ -45,7 +58,8 @@
                     this.$["nextTaskButton"].hidden = false;
                 } else {
                     // Показать «Вернуться на карту», если все задания пройдены
-                    this.$["completeLevelButton"].hidden = false;
+                    this.$["goToMapButton"].hidden = false;
+                    this.$["nextLevelButton"].hidden = false;
                     this.submitTaskResult();
                 }
             },
@@ -70,6 +84,10 @@
 
             goToMap: function() {
                 this.fire('goToMap');
+            },
+
+            nextLevel: function() {
+                this.fire('nextLevel', { nextLevel: +this.level+1 });
             }
     	});
     </script>

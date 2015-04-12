@@ -26,7 +26,12 @@
     <script>
     	Polymer({
     		ready: function() {
+    			var self = this;
     			this.addEventListener('goToMap', this.goToMap);
+    			this.addEventListener('nextLevel', function(e) {
+    				this.isActive = false;
+    				window.location.hash = "level:" + e.detail.nextLevel;
+    			});
     		},
 
     		isActiveChanged: function () {
@@ -40,9 +45,12 @@
 				this.$.levelContainer.innerHTML = '';
 			},
 
-    		activate: function() {
+    		activate: function(level) {
     			var el = document.createElement("ist-level");
-    			el.level = (this.params && this.params.length > 0) ? this.params[0] : '';
+    			if (level)
+    				el.level = level;
+    			else
+    				el.level = (this.params && this.params.length > 0) ? this.params[0] : '';
 				this.$.levelContainer.appendChild(el);
     		},
 

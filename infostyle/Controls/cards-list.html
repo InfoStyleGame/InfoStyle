@@ -3,7 +3,7 @@
 
   <template>
       <style>
-          .result-panel {
+          #resultPanel {
               position: relative;
               display: inline-block;
               width: 650px;
@@ -25,9 +25,8 @@
       <div hidden?="{{!isActive}}" on-mousedown="{{clickAction}}">
           <h3>Отметь стоп-слово в каждом предложении</h3>
           <div id="cardsContainer"></div>
-          <div class="result-panel" hidden?="{{!showResults}}">
-              <span> Вы заработали {{points}} {{pointsLabel}}</span>
-              <span hidden?="{{!clearLine}}"> (3 балла «за чистую линию»)</span>
+          <div id="resultPanel">
+              <span hidden?="{{!showResults}}"> Вы заработали {{points}} {{pointsLabel}} <span hidden?="{{!clearLine}}"> (3 балла «за чистую линию»)</span></span>
           </div>
       </div>
   </template>
@@ -97,18 +96,22 @@
                 if (e.target.hit)
                     return;
                 e.target.hit = true;
-                $(e.target).css({ "text-decoration": "line-through", color: "red" });
+                $(e.target).css({ "text-decoration": "line-through", color: "#aaa" });
                 $(e.target).parents("card-item")[0].showPoint = true;
                 this.solvedCounter++;
                 this.points++;
                 this.currentCard++;
-                if (this.cards[this.currentCard])
-                    this.cards[this.currentCard].attr("show", true);
+                if (this.cards[this.currentCard]) {
+                    var card = this.cards[this.currentCard];
+                    card.attr("show", true);
+                    this.fire("scrollTo", { offsetTop: card[0].offsetTop });
+                }
                 if (this.solvedCounter == this.totalCounter) {
                     if (this.clearLine)
                         this.points += 3;
                     this.pointsLabel = this.getPointsLabel(this.points);
                     this.showResults = true;
+                    this.fire("scrollTo", { offsetTop: this.$["resultPanel"].offsetTop });
                     this.submitTaskResults();
                 }
             } else {
@@ -120,7 +123,6 @@
             if (!points)
                 return;
 
-            // 
             var str         = points.toString(),
                 lastDigit   = +str[str.length-1],
                 label;

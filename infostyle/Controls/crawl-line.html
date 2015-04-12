@@ -72,28 +72,13 @@
                 padding-right: 0;
             }
 
-            paper-button {
-                text-transform: none;
-            }
-
-            paper-button[raised].action {
-                text-transform: none;
-                box-shadow: 0 2px 0 #000;
-                background-color: #C48FFF;
-                color: #fff;
-                font-family: "Lora";
-                font-style: italic;
-                font-size: 1.5em;
-                margin: 0;
-            }
-
             .crawlLineCounters {
                 padding: 10px 0;
                 font-size: 20px;
             }
 
             .stop-word_hit {
-                color: red;
+                color: #aaa;
                 text-decoration: line-through;
             }
             
@@ -124,7 +109,7 @@
 			<h3>Подстрели все стоп-слова</h3>
     
 			<div id="start">
-				<paper-button on-tap="{{startGame}}" class="action" raised>Начать</paper-button>
+				<paper-button on-tap="{{startGame}}" class="action action_next" raised>Начать</paper-button>
 			</div>
 
 			<div style="display:none" id="game" class="marquee" on-mousedown="{{clickAction}}">
@@ -258,6 +243,7 @@
                         this.points++;
                         this.hits++;
                         e.target.hit = true;
+                        $(e).addClass("stop-word_hit");
                     }
                 } else {
                     this.points--;
