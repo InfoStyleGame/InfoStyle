@@ -1,25 +1,30 @@
 <polymer-element name="cards-list" attributes="level delayed isActive">
 <link href="/Controls/card-item.html" rel="import" />
 
-  <template>
-      <style>
-          #resultPanel {
-              position: relative;
-              display: inline-block;
-              width: 650px;
-              min-width: 400px;
-              font-size: 16px;
-              font-family: Lora;
-              font-style: italic;
-              padding: 0.7em 0;
-          }
+<template>
+    <style>
+        :host /deep/ .word:hover {
+            background: lightgrey;
+            cursor: url(/Content/resources/cursor-gun.png), auto;
+        }
 
-          paper-button {
-              text-transform: none;
-              position: absolute;
-              top: 0;
-              right: 0;
-          }
+        #resultPanel {
+            position: relative;
+            display: inline-block;
+            width: 650px;
+            min-width: 400px;
+            font-size: 16px;
+            font-family: Lora;
+            font-style: italic;
+            padding: 0.7em 0;
+        }
+
+        paper-button {
+            text-transform: none;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
 
       </style>
       <div hidden?="{{!isActive}}" on-mousedown="{{clickAction}}">
@@ -77,14 +82,26 @@
         },
 
         buildWord: function (datum) {
+            // TODO: Включать в стоп-слова прилегающие знаки препинания
             if (datum.Type == TextTypes.Normal) {
-                return $("<span/>").text(datum.Text);
+                return $("<span/>").html(this.wrapWords(datum.Text));
             } else if (datum.Type == TextTypes.Stop) {
                 this.stopWordsCount++;
-                return $("<span>/>").addClass("crossable").text(datum.Text);
+                return $("<span>/>").addClass("crossable").html(this.wrapWords(datum.Text));
             } else {
                 console.warn("Unknown text type" + datum.Type);
                 return $("<span/>");
+            }
+        },
+
+        wrapWords: function(t) {
+            var a       = t.split(' '), 
+                inject  = '';
+            if (a.length) {
+                $(a).each(function(i, item) {
+                    inject += '<span class="word">'+item+'</span> ';
+                });
+                return inject;
             }
         },
 
@@ -92,12 +109,13 @@
             var t = e.target;
             if(this.showResults)
                 return;
-            if (t.className === 'crossable') {
-                if (e.target.hit)
+            var phrase = $(t).parent('.crossable');
+            if (phrase) {
+                if (phrase[0].hit)
                     return;
-                e.target.hit = true;
-                $(e.target).css({ "text-decoration": "line-through", color: "#aaa" });
-                $(e.target).parents("card-item")[0].showPoint = true;
+                phrase[0].hit = true;
+                phrase.css({ "text-decoration": "line-through", color: "#aaa" });
+                phrase.parents("card-item")[0].showPoint = true;
                 this.solvedCounter++;
                 this.points++;
                 this.currentCard++;
