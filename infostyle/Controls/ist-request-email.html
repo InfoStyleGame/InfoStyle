@@ -1,4 +1,4 @@
-﻿<polymer-element name="ist-request-email" attributes="shown">
+﻿<polymer-element name="ist-request-email" attributes="mode">
     <link rel="import" href="/Scripts/polymer/paper-button/paper-button.html">
     <link rel="import" href="/Scripts/polymer/paper-input/paper-input.html">
     <link rel="import" href="/Scripts/polymer/core-label/core-label.html">
@@ -7,20 +7,31 @@
     <template>
         <style>
         </style>
-        <template if="{{shown}}">
+        <template if="{{mode=='requesting'}}">
             <p>А когда будет новый уровень?...</p>
             <core-label>
                 Оставь свой e-mail - мы напишем!
-                <paper-input label="E-mail"></paper-input>
-                <paper-button>
+                <paper-input label="E-mail" value="{{email}}"></paper-input>
+                <paper-button on-click="{{submitEmail}}">
                     <core-icon icon="check" aria-label="check" role="img"></core-icon>
                 </paper-button>
             </core-label>
         </template>
+        <template if="{{mode=='submitted'}}">
+            <p>Спасибо!</p>
+            <paper-button on-click="{{hide}}">Закрыть</paper-button>
+        </template>
     </template>
     <script>
         Polymer({
-            ready: function() {}
+            submitEmail: function() {
+                Api.SubmitEmail(this.email);
+                this.mode = 'submitted';
+            },
+
+            hide: function(){
+                this.mode = 'hidden';
+            }
         });
     </script>
 </polymer-element>

@@ -43,7 +43,7 @@
 	    if (Api.useFakeApi) {
             return mockDef(url, mockApi.GetUserProgress_Result);
         }
-	    return this._DoApiCall(url, 'get');
+	    return this._DoApiCall(url, 'GET');
     },
 
     _DoApiCall: function (url, methodType) {
@@ -57,6 +57,14 @@
             if (Api.debugApiCalls)
                 console.log("Error: " + JSON.stringify(jqXHR));
         });
+    },
+
+    SubmitEmail: function(){
+        var url = "/emails/put";
+        if (Api.useFakeApi) {
+            return mockDef(url);
+        }
+        return this._DoApiCall(url, 'PUT');
     }
 };
 
