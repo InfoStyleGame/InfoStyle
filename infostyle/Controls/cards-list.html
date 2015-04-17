@@ -109,10 +109,8 @@
             var t = e.target;
             if(this.showResults)
                 return;
-            var phrase = $(t).parent('.crossable');
-            if (phrase) {
-                if (phrase[0].hit)
-                    return;
+            var phrase = $(t).parent(".crossable");
+            if (phrase && phrase[0] && !phrase[0].hit) {
                 phrase[0].hit = true;
                 phrase.css({ "text-decoration": "line-through", color: "#aaa" });
                 phrase.parents("card-item")[0].showPoint = true;
