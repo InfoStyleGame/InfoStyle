@@ -1,4 +1,4 @@
-﻿<polymer-element name="theory-block" attributes="level">
+﻿<polymer-element name="theory-block" attributes="level isActive">
     <template>
         <style>
             h1 {
@@ -7,49 +7,130 @@
                 font-style: italic;
                 font-size: 35px;
                 margin-top: 40px;
+                margin-bottom: 40px;
             }
             p {
-                max-width: 600px;
                 line-height: 1.5em;
             }
-            .examples {
+
+            .block {
+                position: relative;
+                padding-right: 300px;
+                min-width: 600px;
+            }
+
+            .block__content {
+            }
+
+            .block__note {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 250px;
+            }
+
+            .note_text {
+                padding-left: 10px;
+                border-left: solid 2px #000;
+            }
+
+            .note_video {
+                background: #eee;
+                border-radius: 3px;
+                border: solid 1px #aaa;
+                height: 120px;
+                width: 200px;
+            }
+
+            .example-container {
+                display: block;
+            }
+
+            .example {
+                display: table-cell;
+                padding-right: 50px;
                 font-style: italic;
                 font-family: Lora, serif;
-                font-size: 14px;
+            }
+
+            .example_right {
+                position: relative;
+            }
+
+            .example_right::before {
+                content: '→';
+                font-family: sans-serif;
+                font-size: 30px;
+                font-style: normal;
+                position: absolute;
+                top: 0;
+                right: 100%;
+                padding-right: 15px;
+            }
+            .separator {
+                border-top: solid 1px #aaa;
+                margin: 40px 0;
             }
         </style>
-        <span hidden?="{{level!=1}}">
-            <h1>Мусор, сэр!</h1>
-            <h3>Общеизвестность</h3>            
-            <p>Вводные слова, которые обозначают очевидность и известность фактов, требуют доказательств. Иначе они снижают доверие к тексту. <br>
-            Примеры: <span class="examples">все знают, по всеобщему признанию, доподлинно известно.</span></p>
-            <h3>Мусорные слова</h3>
-            <p>Все слова, которые не несут смысловой нагрузки, засоряют текст. <br>
-            Примеры: <span class="examples">почему-то, что-то, ну, просто</span></p>
+        <span hidden?="{{level!=1}}" header="Мусор, сэр!">
+            <div class="block">
+                <div class="block__content">
+                    <p>Вводные слова, которые обозначают очевидность и известность фактов, требуют доказательств. Иначе они снижают доверие к тексту.</p>
+                    <p>Вводные слова, которые обозначают очевидность и известность фактов, требуют доказательств. Иначе они снижают доверие к тексту.</p>
+                    <div class="example-container">
+                        <p class="example">все знают, по всеобщему признанию, доподлинно известно.</p>
+                        <p class="example example_right">все знают, по всеобщему признанию, доподлинно известно.</p>
+                    </div>
+                    <div class="separator"></div>
+                </div>
+                <div class="block__note">
+                    <div class="note_video"></div>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block__content">
+                    <p>Вводные слова, которые обозначают очевидность и известность фактов, требуют доказательств. Иначе они снижают доверие к тексту.</p>
+                    <div class="example-container">
+                        <p class="example">все знают, по всеобщему признанию, доподлинно известно.</p>
+                        <p class="example example_right">все знают, по всеобщему признанию, доподлинно известно.</p>
+                    </div>
+                    <p>Вводные слова, которые обозначают очевидность и известность фактов, требуют доказательств. Иначе они снижают доверие к тексту.</p>
+                    <div class="example-container">
+                        <p class="example">все знают, по всеобщему признанию, доподлинно известно.</p>
+                        <p class="example example_right">все знают, по всеобщему признанию, доподлинно известно.</p>
+                    </div>
+                    <div class="separator"></div>
+                </div>
+                <div class="block__note">
+                    <div class="note_text"><a href="http://glvrd.ru/" target="blank">Главред</a> — отличный сервис проверки текста на наличие стоп-слов. Но не забывайте, что только человек учитывает все нюансы смысла.</div>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block__content">
+                    Часто удалить стоп-слово недостаточно для убедительного текста, нужна редактура, но это следующий уровень мастерства. Пока сосредоточимся на простом.
+                </div>
+            </div>
         </span>
-        <span hidden?="{{level!=2}}">
-            <h1>Позвольте, я считаю...</h1>
+        <span hidden?="{{level!=2}}" header="Позвольте, я считаю...">
             <h3> Расшаркивания</h3>         
             <p>Излишняя уважительность нарушает ход мысли, усложняет чтение текста. <br>
-            Примеры: <span class="examples">видите ли, к сожалению, с вашего позволения, разрешите, позвольте.</span></p>
+            Примеры: <span class="example">видите ли, к сожалению, с вашего позволения, разрешите, позвольте.</span></p>
             <h3>Вводные слова - мнения</h3>
 
             <p>Вводные слова, которые выражают мнение, снижают объективность текста.
-            Примеры: <span class="examples">по их мнению, как по мне, кажется, мы считаем.</span></p>
+            Примеры: <span class="example">по их мнению, как по мне, кажется, мы считаем.</span></p>
 
         </span>
-        <span hidden?="{{level!=3}}">
-            <h1>Структура в наши дни</h1>
+        <span hidden?="{{level!=3}}" header="Структура в наши дни">
             <h3>Паразиты времени </h3>          
             <p>Указание времени имеет смысл только в сравнении, иначе оно засоряет текст.
-            Примеры: <span class="examples">в наши дни, сегодня, в последнее время</span></p>
+            Примеры: <span class="example">в наши дни, сегодня, в последнее время</span></p>
             <h3>Структурные вводные слова</h3>
 
             <p>Мысли в тексте отделяются знаками препинания или абзацами, поэтому структурные вводные слова не нужны.</p>
 
         </span>
-        <span hidden?="{{level!=4}}">
-            <h1>Отглагольные существительные</h1>
+        <span hidden?="{{level!=4}}" header="Отглагольные существительные">
             <h3>Усилители, качественные прилагательные</h3>
             <p>Усилители снижают убедительность текста. Докажите фактами, а не эпитетами:
             очень
@@ -63,8 +144,7 @@
             богатый
             </p>
         </span>
-        <span hidden?="{{level!=5}}">
-            <h1>Модальность</h1>
+        <span hidden?="{{level!=5}}" header="Модальность">
             <h3>Определения</h3> 
             <p>Отглагольные формы слов
             Существительные образованные от глаголов более слабые.
