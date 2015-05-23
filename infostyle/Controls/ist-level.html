@@ -28,10 +28,10 @@
                 background-color: #fff;
             }
         </style>
-        <div id="header">Тут будет общий заголовок из теории</div>
+        <h1>{{$.theoryBlock.headerText}}</h1>
         <ist-level-progressbar id="progressbar" stagesCount="3" currentStage="0"></ist-level-progressbar>
         <div id="theory">
-            <theory-block id="theory-control" level="{{level}}"></theory-block>
+            <theory-block id="theoryBlock" level="{{level}}"></theory-block>
             <paper-button id="toCurrentTaskButton" class="action action_next" on-tap="{{toCurrentTask}}" raised>К задачам</paper-button>
         </div>
 		<div id="task" hidden="true">

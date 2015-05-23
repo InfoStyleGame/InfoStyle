@@ -1,4 +1,4 @@
-﻿<polymer-element name="theory-block" attributes="level isActive">
+﻿<polymer-element name="theory-block" attributes="level isActive headerText">
     <template>
         <style>
             h1 {
@@ -72,7 +72,7 @@
                 margin: 40px 0;
             }
         </style>
-        <span hidden?="{{level!=1}}" header="Мусор, сэр!">
+        <span hidden?="{{level!=1}}" header="Мусор, сэр!" level="1">
             <div class="block">
                 <div class="block__content">
                     <p>Вводные слова, которые обозначают очевидность и известность фактов, требуют доказательств. Иначе они снижают доверие к тексту.</p>
@@ -111,7 +111,7 @@
                 </div>
             </div>
         </span>
-        <span hidden?="{{level!=2}}" header="Позвольте, я считаю...">
+        <span hidden?="{{level!=2}}" header="Позвольте, я считаю..." level="2">
             <h3> Расшаркивания</h3>         
             <p>Излишняя уважительность нарушает ход мысли, усложняет чтение текста. <br>
             Примеры: <span class="example">видите ли, к сожалению, с вашего позволения, разрешите, позвольте.</span></p>
@@ -121,7 +121,7 @@
             Примеры: <span class="example">по их мнению, как по мне, кажется, мы считаем.</span></p>
 
         </span>
-        <span hidden?="{{level!=3}}" header="Структура в наши дни">
+        <span hidden?="{{level!=3}}" header="Структура в наши дни" level="3">
             <h3>Паразиты времени </h3>          
             <p>Указание времени имеет смысл только в сравнении, иначе оно засоряет текст.
             Примеры: <span class="example">в наши дни, сегодня, в последнее время</span></p>
@@ -130,7 +130,7 @@
             <p>Мысли в тексте отделяются знаками препинания или абзацами, поэтому структурные вводные слова не нужны.</p>
 
         </span>
-        <span hidden?="{{level!=4}}" header="Отглагольные существительные">
+        <span hidden?="{{level!=4}}" header="Отглагольные существительные" level="4">
             <h3>Усилители, качественные прилагательные</h3>
             <p>Усилители снижают убедительность текста. Докажите фактами, а не эпитетами:
             очень
@@ -144,7 +144,7 @@
             богатый
             </p>
         </span>
-        <span hidden?="{{level!=5}}" header="Модальность">
+        <span hidden?="{{level!=5}}" header="Модальность" level="5">
             <h3>Определения</h3> 
             <p>Отглагольные формы слов
             Существительные образованные от глаголов более слабые.
@@ -152,6 +152,11 @@
         </span>
     </template>
     <script>
-        Polymer({});
+        Polymer({
+            attached: function(){
+                var el = this.shadowRoot.querySelector('[level="' + this.level +'"]');
+                this.headerText = $(el).attr('header');
+            }
+        });
     </script>
 </polymer-element>
