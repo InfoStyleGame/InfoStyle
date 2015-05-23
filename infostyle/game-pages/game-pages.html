@@ -4,6 +4,7 @@
 	<link rel="import" href="/game-pages/game-page-login.html">
 	<link rel="import" href="/game-pages/game-page-map.html">
 	<link rel="import" href="/game-pages/game-page-level.html">
+	<link rel="import" href="/Controls/ist-level-progressbar-test.html">
 	<template id="mainTemplate">
 		<style>
 			.container {
@@ -22,6 +23,9 @@
 			<section hash="level">
 				<game-page-level id="game-page-level"></game-page-level>
 			</section>
+			<section hash="test-progressbar">
+				<ist-level-progressbar-test id="game-page-test-progressbar"></ist-level-progressbar-test>
+			</section>
 		</core-animated-pages>
 		<flatiron-director id="flatironDirector" route="{{route}}" autoHash></flatiron-director>
 	</template>
@@ -33,7 +37,6 @@
 				
 				this.$.flatironDirector.addEventListener('director-route', function(route) {
 					var params = route.detail.split(':');
-
 					if (params.length > 0) {
 						var address = params.shift(),
 							page 	= element.$['game-page-' + address];

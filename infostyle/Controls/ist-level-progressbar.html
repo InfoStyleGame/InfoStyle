@@ -1,0 +1,68 @@
+<polymer-element name="ist-level-progressbar" attributes="stagesCount currentStage">
+    <template>
+        <style>
+            .circle {
+                border-radius: 50%;
+                width: 20px;
+                height: 20px;
+                border: solid 1px black;
+                display: inline-block;
+            }
+            .active {
+                background-color: yellow;
+            }
+            .cleared {
+                background-color: green;
+            }
+            .empty {
+                background-color: white;
+            }
+        </style>
+        <div>
+            <template repeat="{{stage in stages}}">
+                <template if="{{stage.isActive}}">
+                    <span class="circle active"></span>
+                </template>
+                <template if="{{stage.isCleared}}">
+                    <span class="circle cleared"></span>
+                </template>
+                <template if="{{!stage.isCleared && !stage.isActive}}">
+                    <span class="circle empty"></span>
+                </template>
+                <template if="{{!stage.isLast}}">
+                    <span>&mdash;</span>
+                </template>
+            </template>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            ready: function () {
+                this.initStages();
+            },
+
+            initStages: function () {
+                if (this.stagesCount <= 0 || this.currentStage < 0 || this.currentStage > this.stagesCount - 1) {
+                    console.warn("Incorrect configuration of ist-level-progressbar");
+                    return;
+                }
+                this.stages = [];
+                for (var i = 0; i < this.stagesCount; i++) {
+                    var stage = {};
+                    if (this.currentStage > i)
+                        stage.isCleared = true;
+                    if (this.currentStage == i)
+                        stage.isActive = true;
+                    if (i == this.stagesCount - 1)
+                        stage.isLast = true;
+                    this.stages.push(stage);
+
+                }
+            },
+
+            currentStageChanged: function(){
+                this.initStages();
+            }
+        });
+    </script>
+</polymer-element>

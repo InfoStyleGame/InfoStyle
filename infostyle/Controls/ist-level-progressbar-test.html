@@ -1,0 +1,25 @@
+<polymer-element name="ist-level-progressbar-test">
+    <link href="/Scripts/polymer/paper-button/paper-button.html" rel="import" />
+    <link href="/Controls/ist-level-progressbar.html" rel="import" />
+    <template>
+        <h3>Static</h3>
+        <div>
+            <ist-level-progressbar stagesCount="3" currentStage="0"></ist-level-progressbar>
+            <ist-level-progressbar stagesCount="3" currentStage="1"></ist-level-progressbar>
+            <ist-level-progressbar stagesCount="3" currentStage="2"></ist-level-progressbar>
+        </div>
+        <h3>Dynamic</h3>
+        <div>
+            <ist-level-progressbar id="dynamic" stagesCount="3" currentStage="0"></ist-level-progressbar>
+            <paper-button on-tap="{{next}}">+1</paper-button>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            ready: function() {},
+            next: function () {
+                $(this.$.dynamic).attr('currentStage', parseInt($(this.$.dynamic).attr('currentStage')) + 1);
+            }
+        });
+    </script>
+</polymer-element>
