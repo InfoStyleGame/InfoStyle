@@ -1,38 +1,73 @@
 <polymer-element name="ist-level-progressbar" attributes="stagesCount currentStage">
     <template>
         <style>
+            .container {
+                margin: 30px 0;
+            }
             .circle {
                 border-radius: 50%;
                 width: 20px;
                 height: 20px;
                 border: solid 1px black;
                 display: inline-block;
+                margin-right: 100px;
+                text-align: center;
+            }
+            .circle:last-of-type {
+                margin-right: 0;
+            }
+            .circle::before {
+                content: '';
+                width: 0;
+                height: 100%;
+                display: inline-block;
+                vertical-align: middle;
+            }
+            .checked {
+                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAKCAMAAACzB5/1AAAAY1BMVEUAAAAAAAAAgAAuiwArgAA7iQA3kgA5jgA+kQA9kgA8jwA+kwA9kgA8kwA9kgA9kQA8kQA8kwA9kQA9kwA+kwA9kwA9kwA+kgA9kgA9kgA9kgA+kwA9kwA+kgA9kwA9kgA+kwDzC5TzAAAAIHRSTlMAAQQLDA0OJCU/QEJgamxtb3+Cnqq/wcLDxMXG5fT19i1DD/MAAABSSURBVHjaTcxHDoAwDETRAKF3CD3A3P+UjCWE+at5kmWjNWP4Uwc4VQtgCjiqVC6pOeLo4TNTU4ul7AX4gVopVpyQNpGUi/f4e1reOCi1S971AJqnBagJNqXpAAAAAElFTkSuQmCC);
+                display: inline-block;
+                vertical-align: middle;
+                width: 14px;
+                height: 10px;
             }
             .active {
-                background-color: yellow;
+                background-color: #FFD966;
             }
             .cleared {
-                background-color: green;
+                background-color: #B6D7A8;
             }
             .empty {
                 background-color: white;
             }
+            .circle-wrapper {
+                position: relative;
+                display: inline-block;
+            }
+            .circle-wrapper::before {
+                z-index: -1;
+                position: absolute;
+                top: 10px;
+                left: 0;
+                width: 100%;
+                content: '';
+                display: inline-block;
+                border-top: solid 1px;
+            }
         </style>
-        <div>
-            <template repeat="{{stage in stages}}">
-                <template if="{{stage.isActive}}">
-                    <span class="circle active"></span>
+        <div class="container">
+            <div class="circle-wrapper">
+                <template repeat="{{stage in stages}}">
+                    <template if="{{stage.isActive}}">
+                        <span class="circle active"></span>
+                    </template>
+                    <template if="{{stage.isCleared}}">
+                        <span class="circle cleared"><div class="checked"></div></span>
+                    </template>
+                    <template if="{{!stage.isCleared && !stage.isActive}}">
+                        <span class="circle empty"></span>
+                    </template>
                 </template>
-                <template if="{{stage.isCleared}}">
-                    <span class="circle cleared"></span>
-                </template>
-                <template if="{{!stage.isCleared && !stage.isActive}}">
-                    <span class="circle empty"></span>
-                </template>
-                <template if="{{!stage.isLast}}">
-                    <span>&mdash;</span>
-                </template>
-            </template>
+            </div>
         </div>
     </template>
     <script>
