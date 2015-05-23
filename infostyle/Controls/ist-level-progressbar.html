@@ -77,8 +77,9 @@
             },
 
             initStages: function () {
-                if (this.stagesCount <= 0 || this.currentStage < 0 || this.currentStage > this.stagesCount - 1) {
+                if (this.stagesCount <= 0 || this.currentStage < 0 || this.currentStage > this.stagesCount) {
                     console.warn("Incorrect configuration of ist-level-progressbar");
+                    console.warn('currentStage = ' + this.currentStage);
                     return;
                 }
                 this.stages = [];

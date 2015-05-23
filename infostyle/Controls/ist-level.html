@@ -3,6 +3,7 @@
 	<link rel="import" href="/Controls/crawl-line.html">
 	<link rel="import" href="/Controls/cards-list.html">
 	<link rel="import" href="/Controls/theory-block.html">
+    <link rel="import" href="/Controls/ist-level-progressbar.html">
 	<template>
         <style>
             :host /deep/ paper-button {
@@ -27,24 +28,31 @@
                 background-color: #fff;
             }
         </style>
-        <theory-block level="{{level}}"></theory-block>
-		<cards-list delayed="true" level="{{level}}" isActive="{{isCardsListActive}}"></cards-list>
-		<crawl-line level="{{level}}" isActive="{{isCrawlLineActive}}"></crawl-line>
-        <paper-button id="nextTaskButton" class="action action_next" hidden="true" on-tap="{{nextTask}}" raised>Дальше</paper-button>
-        <paper-button id="goToMapButton" class="action action_back" hidden="true" on-tap="{{goToMap}}">Вернуться на карту</paper-button>
-        <paper-button id="nextLevelButton" class="action action_next" hidden="true" on-tap="{{nextLevel}}">Следующий уровень</paper-button>
+        <div id="header">Тут будет общий заголовок из теории</div>
+        <ist-level-progressbar id="progressbar" stagesCount="3" currentStage="0"></ist-level-progressbar>
+        <div id="theory">
+            <theory-block id="theory-control" level="{{level}}"></theory-block>
+            <paper-button id="toCurrentTaskButton" class="action action_next" on-tap="{{toCurrentTask}}" raised>К задачам</paper-button>
+        </div>
+		<div id="task" hidden="true">
+            <cards-list delayed="true" level="{{level}}" isActive="{{currentTask == 'cardsList'}}"></cards-list>
+            <crawl-line level="{{level}}" isActive="{{currentTask == 'crawlLine'}}"></crawl-line>
+            <paper-button id="backToTheoryButton" class="action action_back" on-tap="{{backToTheory}}" raised>Назад к теории</paper-button>
+            <paper-button id="nextTaskButton" class="action action_next" hidden="true" on-tap="{{nextTask}}" raised>Дальше</paper-button>
+        </div>
+        <div id="levelComplete" hidden="true">
+            <paper-button id="nextLevelButton" class="action action_next" on-tap="{{nextLevel}}">Следующий уровень</paper-button>
+        </div>
 	</template>
     <script>
     	Polymer({
     		ready: function () {
     			this.totalScore = 0;
-    			this.uncompletedTasks = [
-                    "isCardsListActive",
-                    "isCrawlLineActive"
+    			this.tasks = [
+                    "cardsList",
+                    "crawlLine"
                 ];
                 this.addEventListener('task-complete', this.onTaskComplete);
-
-                this.nextTask();
     		},
 
             onTaskComplete: function(e) {
@@ -54,36 +62,39 @@
                 }
 
                 // Показываем кнопку «Дальше», если есть незаконченное задание
-                if (this.uncompletedTasks.length > 0) {
-                    this.$["nextTaskButton"].hidden = false;
+                if (this.tasks.length > 0) {
+                    this.$.nextTaskButton.hidden = false;
                 } else {
                     // Показать «Вернуться на карту», если все задания пройдены
-                    this.$["goToMapButton"].hidden = false;
-                    this.$["nextLevelButton"].hidden = false;
-                    this.submitTaskResult();
+                    this.$.levelComplete.hidden = false;
+                    this.$.progressbar.currentStage = parseInt(this.$.progressbar.currentStage) + 1;
                 }
+            },
+
+            backToTheory: function(){
+                this.$.theory.hidden = false;
+                this.$.task.hidden = true;
+            },
+
+            toCurrentTask: function(){
+                if(!this.currentTask)
+                    this.nextTask();
+                this.$.theory.hidden = true;
+                this.$.task.hidden = false;
             },
 
             nextTask: function() {
                 // Скрыть кнопку «Дальше
-                this.$["nextTaskButton"].hidden = true;
+                this.$.nextTaskButton.hidden = true;
                 
-                // Скрыть завершенное задание
-                if (this.inprogressTask)
-                    this[this.inprogressTask] = false;
-
                 // Взять следующее незаконченное задание и активировать его
-                this.inprogressTask = this.uncompletedTasks.shift();
-                this[this.inprogressTask] = true;
+                this.currentTask = this.tasks.shift();
+                this.$.progressbar.currentStage = parseInt(this.$.progressbar.currentStage) + 1;
             },
 
 
             submitTaskResult: function() {
                 Api.SubmitTaskResults(this.level, this.totalScore);
-            },
-
-            goToMap: function() {
-                this.fire('goToMap');
             },
 
             nextLevel: function() {
