@@ -10,6 +10,24 @@ header, footer, nav, section {
     display: block;
 }
 
+body /deep/ h1 {
+    font-weight: normal;
+    font-family: Lora;
+    font-style: italic;
+    font-size: 35px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+h1 {
+    font-weight: normal;
+    font-family: Lora;
+    font-style: italic;
+    font-size: 35px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
 body /deep/ h3 {
     font-weight: 300;
     margin-top: 2em;
@@ -22,13 +40,26 @@ h3 {
     font-size: 1.4em;
 }
 
-
-body /deep/ .hidden {
-    display: none;
+body /deep/ paper-button {
+    text-transform: none;
 }
 
-.hidden {
-    display: none;
+body /deep/ paper-button.action {
+    font-size: 1.4em;
+    font-family: "Lora";
+    font-style: italic;
+    margin: 20px 10px 20px 0;
+}
+
+body /deep/ paper-button.action_next {
+    background-color: #C48FFF;
+    color: #fff;
+}
+
+body /deep/ paper-button.action_back {
+    border: solid 1px #C48FFF;
+    color: #C48FFF;
+    background-color: #fff;
 }
 
 /* Styles for basic forms
