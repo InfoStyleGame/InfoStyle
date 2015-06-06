@@ -11,11 +11,11 @@ namespace Api.Controllers
 	{
 		public List<Task> GetTasks(TaskType taskType, int level, int count, int userId)
 		{
+			var levelInfo = LevelsRepo.Instance.Levels[level];
+			var allTasks = (taskType == TaskType.Card ? levelInfo.Cards : levelInfo.CrawlLines).Shuffle().ToList();
 			using (var context = new InfostyleEntities())
 			{
 				var userSolvedTasks = context.Users.First(u => u.Id == userId).User_Tasks;
-				var allTasks = context.Tasks.Where(t => t.Type == taskType && t.Level == level).ToList();
-				allTasks.ShuffleInPlace();
 				var allSolvedTasks = new HashSet<Guid>(userSolvedTasks.Select(ut => ut.TaskId));
 				var notSolvedTasks = allTasks.Where(t => !allSolvedTasks.Contains(t.Id)).Take(count).ToList();
 				var solvedTasks = allTasks.Where(t => allSolvedTasks.Contains(t.Id)).Take(count - notSolvedTasks.Count).ToList();

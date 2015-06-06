@@ -1,6 +1,6 @@
 using System.Linq;
+using Api.Controllers;
 using Api.Models;
-using EF;
 
 namespace Api.Helpers
 {
@@ -11,7 +11,6 @@ namespace Api.Helpers
             return new TaskViewModel
             {
                 Id = task.Id,
-                Type = task.Type,
                 Data = new TaskData {Text = Parse(task.Text)},
             };
         }

@@ -86,9 +86,6 @@
     <Compile Include="Score.cs">
       <DependentUpon>Infostyle.tt</DependentUpon>
     </Compile>
-    <Compile Include="Task.cs">
-      <DependentUpon>Infostyle.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

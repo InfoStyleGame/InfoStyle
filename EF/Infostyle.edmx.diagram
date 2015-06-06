@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="InfostyleModel.DailyEdit" Width="1.5" PointX="3" PointY="4.5" />
         <EntityTypeShape EntityType="InfostyleModel.DailyText" Width="1.5" PointX="0.75" PointY="1.125" />
         <EntityTypeShape EntityType="InfostyleModel.Score" Width="1.5" PointX="4.75" PointY="8" />
-        <EntityTypeShape EntityType="InfostyleModel.Task" Width="1.5" PointX="3.75" PointY="1" />
         <EntityTypeShape EntityType="InfostyleModel.User_Tasks" Width="1.5" PointX="6" PointY="5" />
         <EntityTypeShape EntityType="InfostyleModel.User" Width="1.5" PointX="0.75" PointY="4.625" />
         <AssociationConnector Association="InfostyleModel.FK_DailyEditDailyCompare" />
@@ -18,7 +17,6 @@
         <AssociationConnector Association="InfostyleModel.FK_DailyTextDailyEdit" />
         <AssociationConnector Association="InfostyleModel.FK_UserDailyEdit" />
         <AssociationConnector Association="InfostyleModel.FK_Scores_Users" />
-        <AssociationConnector Association="InfostyleModel.FK_User_Tasks_Tasks" />
         <AssociationConnector Association="InfostyleModel.FK_User_Tasks_Users" />
       </Diagram>
     </edmx:Diagrams>

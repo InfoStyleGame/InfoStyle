@@ -18,7 +18,6 @@ namespace EF
         public System.Guid TaskId { get; set; }
         public int UserId { get; set; }
     
-        public virtual Task Task { get; set; }
         public virtual User User { get; set; }
     }
 }

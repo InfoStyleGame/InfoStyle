@@ -29,7 +29,6 @@ namespace EF
         public virtual DbSet<DailyEdit> DailyEdits { get; set; }
         public virtual DbSet<DailyText> DailyTexts { get; set; }
         public virtual DbSet<Score> Scores { get; set; }
-        public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<User_Tasks> User_Tasks { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }

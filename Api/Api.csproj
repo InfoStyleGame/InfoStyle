@@ -136,7 +136,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.config" />
+    <Content Include="Tasks\level-1.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tasks\level-0.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\ExceptionHandlingAttribute.cs" />
@@ -147,6 +155,10 @@
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\DailyController.cs" />
     <Compile Include="Controllers\HelloController.cs" />
+    <Compile Include="Controllers\LevelInfo.cs" />
+    <Compile Include="Controllers\LevelInfo_Load_should.cs" />
+    <Compile Include="Controllers\LevelsRepo.cs" />
+    <Compile Include="Controllers\Task.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TaskResultController.cs" />
     <Compile Include="Controllers\TaskRepo.cs" />
