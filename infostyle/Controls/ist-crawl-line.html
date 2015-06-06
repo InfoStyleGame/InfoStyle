@@ -1,0 +1,94 @@
+﻿<polymer-element name="ist-crawl-line" attributes="data speed onItemClick onEnd">
+    <template>
+        <style>
+            .crawl-line:hover {
+                cursor: url(/Content/resources/cursor-gun.png), auto;
+            }
+
+            .marquee {
+                display: block;
+                width: 1000px;
+                font-size: 30px;
+                white-space: nowrap;
+                overflow: hidden;
+
+            }
+
+            .border {
+                border: solid 1px grey;
+            }
+
+            .marquee paper-button {
+                cursor: url(/Content/resources/cursor-gun.png), auto;
+                padding: 0 !important;
+                margin: 0;
+                min-width: 0;
+            }
+
+            .marquee /deep/ .button-content {
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            .no_selection {
+                -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+                -moz-user-select: none; /* mozilla browsers */
+                -khtml-user-select: none; /* webkit (konqueror) browsers */
+                -ms-user-select: none; /* IE10+ */
+            }
+        </style>
+        <div id="text" style="background: #ccc">
+            <!--<div class="border">-->
+                <!--<div id="text" class="no_selection crawl-line"></div>-->
+            <!--</div>-->
+        </div>
+        <div style="clear: both;"></div>
+    </template>
+    <script src="/Scripts/external/jquery-marquee/jquery.marquee.hacked.js"></script>
+    <script>
+        Polymer({
+            start: function () {
+                this.initContent();
+                setTimeout(function(){
+                    $(this.$.text).marquee((
+                    {
+                        //speed in milliseconds of the marquee
+                        duration: 1000,
+                        //time in milliseconds before the marquee will start animating
+                        delayBeforeStart: 0,
+                        //'left' or 'right'
+                        direction: 'left'
+                    })).bind('finished', function(){
+                        $(this.$.text).marquee('destroy');
+                        if(this.onEnd)
+                            this.onEnd();
+                    }.bind(this));
+                }.bind(this), 1000);
+            },
+
+            initContent: function() {
+                var text = this.$.text;
+                $(text).html('');
+                this.stopWordsCount = 0;
+                if(this.data && this.data.length) {
+                    for (var i = 0; i < this.data.length; i++) {
+                        var word = this.buildWord(this.data[i]);
+                        text.appendChild(word);
+                    }
+                }
+            },
+
+            buildWord: function(datum) {
+                if (datum.Type == TextTypes.Normal) {
+                    return $("<span/>").addClass("word").text(datum.Text)[0];
+                } else if (datum.Type == TextTypes.Stop) {
+                    this.stopWordsCount++;
+                    return $("<paper-button>/>").addClass("word").addClass("stop-word").text(datum.Text)[0];
+                } else {
+                    console.warn("Unknown text type" + datum.Type);
+                    return $("<span/>")[0];
+                }
+            }
+        });
+    </script>
+</polymer-element>

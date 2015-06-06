@@ -1,0 +1,35 @@
+<polymer-element name="ist-crawl-line-test">
+    <link href="/Scripts/polymer/paper-button/paper-button.html" rel="import" />
+    <link href="/Controls/ist-crawl-line.html" rel="import" />
+    <template>
+        <div style="padding-top: 50px;">
+            <ist-crawl-line id="line"></ist-crawl-line>
+        </div>
+        <paper-button on-tap="{{start}}">start</paper-button>
+        <paper-button on-tap="{{stop}}">stop</paper-button>
+        <paper-button on-tap="{{pause}}">pause</paper-button>
+        <paper-button on-tap="{{speedUp}}">speed up</paper-button>
+        <paper-button on-tap="{{speedDown}}">speed down</paper-button>
+    </template>
+    <script>
+        Polymer({
+            ready: function() {},
+            start: function () {
+                this.$.line.data = [
+                    {Type: TextTypes.Normal, Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit"}
+                ];
+                this.$.line.speed = 1;
+                this.$.line.onEnd = function(){
+                    console.log("end");
+                };
+                this.$.line.onItemClick = function(){
+                    console.log("click");
+                };
+                this.$.line.start();
+            },
+            stop: function () {
+
+            }
+        });
+    </script>
+</polymer-element>
