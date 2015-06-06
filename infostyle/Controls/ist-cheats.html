@@ -1,21 +1,32 @@
 ﻿<polymer-element name="ist-cheats">
-    <template>
-        <style>
-        </style>
-    </template>
+	<script src="/Scripts/external/persist/persist.js"></script>
     <script>
         Polymer({
 			ready: function() {
-				window.TheCakeIsALie = function() {
+				window.store = new Persist.Store('Infostyle');
+				window.TheCakeIsALie = function(noRedirect) {
 					window.Api.useFakeApi = true;
-					window.dispatchEvent(new CustomEvent('vkLogin'));
-					window.location.hash = "#map";
+					window.dispatchEvent(new CustomEvent('userInfoRefresh'));
+					if(!noRedirect)
+						window.location.hash = "#map";
+					window.store.set("TheCakeIsALie", "1");
 					return "You don't even care. Do you?";
 				};
-				
+
+				var cakeBootstrap = function(){
+					window.store.get("TheCakeIsALie",function(ok, val){
+						if(ok && val === "1")
+							window.TheCakeIsALie(true);
+					});
+					window.removeEventListener("userInfoReady", cakeBootstrap);
+				};
+
+				window.addEventListener("userInfoReady", cakeBootstrap);
+
 				window.ThereReallyWasACake = function() {
 					window.Api.useFakeApi = false;
 					window.location.hash = "#login";
+					window.store.set("TheCakeIsALie", "0");
 					return "It's so delicious and moist!";
 				};
 
@@ -23,8 +34,6 @@
 					window.Api.ignore403 = true;
 					return "We are legion!";
 				};
-
-				window.I
 			}
         });
     </script>

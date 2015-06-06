@@ -61,9 +61,14 @@
     <script>
         Polymer({
         	ready: function () {
-		        VK.init({
-                    apiId: 4793375
-                });
+                try {
+                    VK.init({
+                        apiId: 4793375
+                    });
+                }
+                catch(exc){
+                    console.error("Failed to initialize VK api");
+                }
             },
 
             logIn: function () {

@@ -38,13 +38,16 @@
             score: 0,
             loggedIn: false,
             ready: function () {
-                this.refresh();
-                window.addEventListener('vkLogin', this.refresh.bind(this));
+                this.refresh()
+                        .always(function(){
+                            window.addEventListener('userInfoRefresh', this.refresh.bind(this));
+                            window.dispatchEvent(new CustomEvent("userInfoReady"));
+                        }.bind(this))
+
             },
 
             refresh: function () {
-                console.log("refreshing userInfo");
-                Api.GetUserInfo()
+                return Api.GetUserInfo()
                         .done(function (info) {
                             this.name = info.Name;
                             this.loggedIn = true;
