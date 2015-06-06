@@ -149,8 +149,10 @@
     <Compile Include="Controllers\HelloController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TaskResultController.cs" />
+    <Compile Include="Controllers\TaskRepo.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Controllers\UserProgressController.cs" />
+    <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Exceptions\UnauthorizedException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
